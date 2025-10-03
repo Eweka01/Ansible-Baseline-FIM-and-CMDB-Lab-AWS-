@@ -69,6 +69,8 @@ The deployment playbook automatically handles the differences between Amazon Lin
 
 ## 📋 Prerequisites
 
+> **Note**: This lab is designed specifically for AWS EC2 deployment. Local testing components have been removed to focus on cloud infrastructure automation.
+
 ### 1. SSH Key Setup
 
 Make sure you have your SSH key (`key-p3.pem`) in one of these locations:

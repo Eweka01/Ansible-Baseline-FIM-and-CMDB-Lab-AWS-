@@ -1,69 +1,74 @@
-# Ansible Baseline, FIM, and CMDB Lab
+# Ansible Baseline, FIM, and CMDB Lab - AWS Deployment
 
-This lab provides a comprehensive environment for learning and practicing:
-- **Ansible Baseline**: Automated system configuration and compliance
+This lab provides a comprehensive environment for learning and practicing infrastructure automation on AWS EC2 instances:
+- **Ansible Baseline**: Automated system configuration and compliance across mixed OS environments
 - **File Integrity Monitoring (FIM)**: Real-time file change detection and alerting
 - **Configuration Management Database (CMDB)**: Asset and configuration tracking
 
-## Lab Structure
+## 🎯 Lab Overview
+
+This lab is designed for **AWS EC2 deployment** and supports mixed operating systems:
+- **Amazon Linux 2023** (manage-node-1)
+- **Ubuntu 24.04** (manage-node-2, manage-node-3)
+
+## 📁 Lab Structure
 
 ```
 ├── ansible/                 # Ansible configuration and playbooks
-│   ├── playbooks/          # Main playbooks for system configuration
+│   ├── playbooks/          # AWS deployment playbooks
+│   │   ├── setup-aws-instances.yml  # Main AWS deployment
+│   │   └── templates/      # AWS-specific templates
 │   ├── roles/              # Reusable Ansible roles
-│   ├── inventory/          # Host inventory files
+│   ├── inventory/          # AWS instances inventory
+│   │   └── aws-instances   # Your 3 EC2 instances
 │   └── group_vars/         # Group-specific variables
 ├── fim/                    # File Integrity Monitoring
 │   ├── agents/             # FIM agent configurations
-│   ├── rules/              # Monitoring rules and policies
-│   └── reports/            # Generated reports and logs
+│   └── rules/              # Monitoring rules and policies
 ├── cmdb/                   # Configuration Management Database
-│   ├── data/               # CMDB data files
 │   ├── schemas/            # Data schemas and templates
-│   └── scripts/            # Data collection and management scripts
-├── monitoring/             # Monitoring and alerting
-│   ├── dashboards/         # Monitoring dashboards
-│   └── alerts/             # Alert configurations
+│   └── scripts/            # Data collection scripts
 ├── tests/                  # Test scenarios and validation
-└── docs/                   # Additional documentation
+├── docs/                   # Documentation
+├── AWS-DEPLOYMENT-GUIDE.md # Step-by-step AWS deployment guide
+├── TROUBLESHOOTING-GUIDE.md # Error solutions and fixes
+└── setup-aws-ssh.sh        # SSH connectivity setup
 ```
 
-## Prerequisites
+## 🚀 Quick Start - AWS Deployment
 
-- Ansible 2.9+
-- Python 3.7+
-- Docker (optional, for containerized services)
-- Linux/Unix environment
+1. **Setup SSH Connectivity**:
+   ```bash
+   ./setup-aws-ssh.sh
+   ```
 
-## Quick Start
-
-1. **Setup Ansible Environment**:
+2. **Deploy to AWS Instances**:
    ```bash
    cd ansible
-   ansible-playbook -i inventory/hosts playbooks/setup-baseline.yml
+   ansible-playbook -i inventory/aws-instances playbooks/setup-aws-instances.yml
    ```
 
-2. **Deploy FIM Agents**:
+3. **Verify Deployment**:
    ```bash
-   cd fim
-   ./deploy-agents.sh
+   # Check FIM agent status
+   ansible -i inventory/aws-instances all -m shell -a "systemctl status fim-agent"
+   
+   # Check CMDB data collection
+   ansible -i inventory/aws-instances all -m shell -a "ls -la /var/lib/cmdb/data/"
    ```
 
-3. **Initialize CMDB**:
-   ```bash
-   cd cmdb
-   python3 scripts/init-cmdb.py
-   ```
+## 🎓 Learning Objectives
 
-## Learning Objectives
-
-- Understand Ansible automation for system baseline configuration
+- Deploy Ansible automation across mixed OS environments (Amazon Linux + Ubuntu)
 - Implement file integrity monitoring for security compliance
 - Build and maintain a configuration management database
-- Integrate all components for comprehensive infrastructure management
+- Handle OS-specific differences in package management and services
+- Troubleshoot deployment issues in cloud environments
 
-## Lab Scenarios
+## 📚 Documentation
 
-See the `tests/` directory for various lab scenarios and exercises.
+- **[AWS-DEPLOYMENT-GUIDE.md](AWS-DEPLOYMENT-GUIDE.md)** - Complete deployment instructions
+- **[TROUBLESHOOTING-GUIDE.md](TROUBLESHOOTING-GUIDE.md)** - Common errors and solutions
+- **[NEXT-STEPS.md](NEXT-STEPS.md)** - Advanced usage and extensions
 
 # Ansible-Baseline-FIM-and-CMDB-Lab-AWS-

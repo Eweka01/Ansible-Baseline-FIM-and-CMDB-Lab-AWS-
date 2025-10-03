@@ -2,6 +2,8 @@
 
 This document records all the errors encountered during the AWS lab deployment and their solutions. This serves as a reference for troubleshooting similar issues in the future.
 
+> **Note**: This lab is designed specifically for AWS EC2 deployment. Local testing components have been removed to focus on cloud infrastructure automation.
+
 ## Table of Contents
 1. [Ansible Configuration Errors](#ansible-configuration-errors)
 2. [Inventory Parsing Errors](#inventory-parsing-errors)
