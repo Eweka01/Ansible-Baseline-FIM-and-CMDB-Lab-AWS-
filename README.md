@@ -28,6 +28,16 @@ This lab is designed for **AWS EC2 deployment** and supports mixed operating sys
 ├── cmdb/                   # Configuration Management Database
 │   ├── schemas/            # Data schemas and templates
 │   └── scripts/            # Data collection scripts
+├── logs/                   # Organized log files
+│   ├── ansible/            # Ansible execution logs
+│   ├── fim/                # FIM agent logs
+│   ├── cmdb/               # CMDB collector logs
+│   └── deployment/         # Deployment logs
+├── data/                   # Data files and test results
+│   ├── test-results/       # FIM baseline and test data
+│   ├── reports/            # Generated reports
+│   ├── test-files/         # Test files for monitoring
+│   └── cmdb-test-data/     # CMDB collected data
 ├── tests/                  # Test scenarios and validation
 ├── docs/                   # Documentation
 ├── AWS-DEPLOYMENT-GUIDE.md # Step-by-step AWS deployment guide

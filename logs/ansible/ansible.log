@@ -3063,3 +3063,459 @@ Origin: <adhoc 'shell' task>
 2025-10-03 16:05:47,782 p=26045 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
 2025-10-03 16:05:47,782 p=26045 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
 2025-10-03 16:05:47,782 p=26045 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:17,311 p=28230 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:19:17,313 p=28230 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:19:17,408 p=28230 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:19:17,417 p=28230 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:19:17,418 p=28230 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:19:21,054 p=28230 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:19:30,776 p=28230 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:19:32,273 p=28230 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:19:32,277 p=28230 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:19:32,277 p=28230 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:32,277 p=28230 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:32,277 p=28230 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:35,971 p=28291 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:19:35,971 p=28291 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:19:36,052 p=28291 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:19:36,060 p=28291 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:19:36,061 p=28291 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:19:36,706 p=28291 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:19:36,755 p=28291 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:19:36,802 p=28291 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:19:36,803 p=28291 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:19:36,803 p=28291 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:36,803 p=28291 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:36,803 p=28291 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:40,755 p=28340 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:19:40,756 p=28340 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:19:40,808 p=28340 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:19:40,814 p=28340 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:19:40,815 p=28340 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:19:41,412 p=28340 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:19:41,427 p=28340 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:19:41,483 p=28340 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:19:41,484 p=28340 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:19:41,484 p=28340 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:41,484 p=28340 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:41,484 p=28340 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:46,251 p=28379 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:19:46,251 p=28379 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:19:46,302 p=28379 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:19:46,308 p=28379 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:19:46,309 p=28379 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:19:48,201 p=28379 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:19:48,300 p=28379 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:19:48,302 p=28379 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:19:48,305 p=28379 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:19:48,305 p=28379 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:48,305 p=28379 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:48,305 p=28379 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:52,034 p=28433 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:19:52,035 p=28433 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:19:52,096 p=28433 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:19:52,105 p=28433 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:19:52,107 p=28433 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:19:52,755 p=28433 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:19:52,786 p=28433 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:19:52,849 p=28433 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:19:52,850 p=28433 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:19:52,850 p=28433 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:52,850 p=28433 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:52,850 p=28433 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:57,361 p=28499 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:19:57,363 p=28499 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:19:57,416 p=28499 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:19:57,423 p=28499 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:19:57,424 p=28499 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:19:58,000 p=28499 u=osamudiameneweka n=ansible ERROR| [ERROR]: Task failed: Module failed: non-zero return code
+Origin: <adhoc 'shell' task>
+
+{'action': 'shell', 'args': {'_raw_params': 'ls -la /opt/lab-environment/system-info.txt'}, 'timeout': 0, [...]
+
+
+2025-10-03 16:19:58,001 p=28499 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-3]: FAILED! => changed=true 
+  cmd: ls -la /opt/lab-environment/system-info.txt
+  delta: '0:00:00.005895'
+  end: '2025-10-03 20:19:58.013051'
+  msg: non-zero return code
+  rc: 2
+  start: '2025-10-03 20:19:58.007156'
+  stderr: 'ls: cannot access ''/opt/lab-environment/system-info.txt'': No such file or directory'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 16:19:58,010 p=28499 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-1]: FAILED! => changed=true 
+  cmd: ls -la /opt/lab-environment/system-info.txt
+  delta: '0:00:00.004935'
+  end: '2025-10-03 20:19:58.033659'
+  msg: non-zero return code
+  rc: 2
+  start: '2025-10-03 20:19:58.028724'
+  stderr: 'ls: cannot access ''/opt/lab-environment/system-info.txt'': No such file or directory'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 16:19:58,087 p=28499 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-2]: FAILED! => changed=true 
+  cmd: ls -la /opt/lab-environment/system-info.txt
+  delta: '0:00:00.004998'
+  end: '2025-10-03 20:19:58.098485'
+  msg: non-zero return code
+  rc: 2
+  start: '2025-10-03 20:19:58.093487'
+  stderr: 'ls: cannot access ''/opt/lab-environment/system-info.txt'': No such file or directory'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 16:19:58,087 p=28499 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:19:58,087 p=28499 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:58,087 p=28499 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:19:58,087 p=28499 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:02,269 p=28525 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:20:02,269 p=28525 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:20:02,323 p=28525 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:20:02,329 p=28525 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:20:02,329 p=28525 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:20:02,895 p=28525 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:20:02,918 p=28525 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:20:02,968 p=28525 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:20:02,969 p=28525 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:20:02,969 p=28525 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:02,969 p=28525 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:02,969 p=28525 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:08,432 p=28555 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:20:08,433 p=28555 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:20:08,485 p=28555 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:20:08,491 p=28555 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:20:08,491 p=28555 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:20:09,147 p=28555 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:20:09,253 p=28555 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:20:09,255 p=28555 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:20:09,255 p=28555 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:09,255 p=28555 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:13,746 p=28590 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:20:13,746 p=28590 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:20:13,797 p=28590 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:20:13,804 p=28590 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:20:13,805 p=28590 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:20:14,458 p=28590 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:20:14,459 p=28590 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:20:14,459 p=28590 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:18,660 p=28616 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:20:18,661 p=28616 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:20:18,713 p=28616 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:20:18,720 p=28616 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:20:18,720 p=28616 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:20:19,601 p=28616 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:20:19,806 p=28616 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:20:19,807 p=28616 u=osamudiameneweka n=ansible ERROR| [ERROR]: Task failed: Module failed: non-zero return code
+Origin: <adhoc 'shell' task>
+
+{'action': 'shell', 'args': {'_raw_params': 'sudo fail2ban-client status'}, 'timeout': 0, 'async_val': 0, 'poll': 15}
+
+
+2025-10-03 16:20:19,808 p=28616 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-1]: FAILED! => changed=true 
+  cmd: sudo fail2ban-client status
+  delta: '0:00:00.124807'
+  end: '2025-10-03 20:20:19.824447'
+  msg: non-zero return code
+  rc: 255
+  start: '2025-10-03 20:20:19.699640'
+  stderr: '2025-10-03 20:20:19,813 fail2ban                [40464]: ERROR   Failed to access socket path: /var/run/fail2ban/fail2ban.sock. Is fail2ban running?'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 16:20:19,808 p=28616 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:20:19,808 p=28616 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:19,808 p=28616 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:19,808 p=28616 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:24,101 p=28640 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:20:24,101 p=28640 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:20:24,233 p=28640 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:20:24,239 p=28640 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:20:24,240 p=28640 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:20:24,834 p=28640 u=osamudiameneweka n=ansible ERROR| [ERROR]: Task failed: Module failed: non-zero return code
+Origin: <adhoc 'shell' task>
+
+{'action': 'shell', 'args': {'_raw_params': "sudo sshd -T | grep -E '(PermitRootLogin|PasswordAuthentication)'"}, [...]
+
+
+2025-10-03 16:20:24,835 p=28640 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-3]: FAILED! => changed=true 
+  cmd: sudo sshd -T | grep -E '(PermitRootLogin|PasswordAuthentication)'
+  delta: '0:00:00.025461'
+  end: '2025-10-03 20:20:24.845810'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-03 20:20:24.820349'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 16:20:24,938 p=28640 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-2]: FAILED! => changed=true 
+  cmd: sudo sshd -T | grep -E '(PermitRootLogin|PasswordAuthentication)'
+  delta: '0:00:00.027615'
+  end: '2025-10-03 20:20:24.950227'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-03 20:20:24.922612'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 16:20:24,958 p=28640 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-1]: FAILED! => changed=true 
+  cmd: sudo sshd -T | grep -E '(PermitRootLogin|PasswordAuthentication)'
+  delta: '0:00:00.059177'
+  end: '2025-10-03 20:20:24.977752'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-03 20:20:24.918575'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 16:20:24,958 p=28640 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:20:24,958 p=28640 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:24,958 p=28640 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:24,958 p=28640 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:29,580 p=28662 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:20:29,580 p=28662 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:20:29,631 p=28662 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:20:29,637 p=28662 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:20:29,638 p=28662 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:20:30,209 p=28662 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:20:30,212 p=28662 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:20:30,277 p=28662 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:20:30,278 p=28662 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:20:30,278 p=28662 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:30,278 p=28662 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:30,278 p=28662 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:35,127 p=28699 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:20:35,127 p=28699 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:20:35,181 p=28699 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:20:35,187 p=28699 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:20:35,188 p=28699 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:20:35,778 p=28699 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:20:35,809 p=28699 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:20:35,912 p=28699 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:20:35,913 p=28699 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:20:35,914 p=28699 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:35,914 p=28699 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:35,914 p=28699 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:42,884 p=28755 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:20:42,885 p=28755 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:20:42,939 p=28755 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:20:42,946 p=28755 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:20:42,946 p=28755 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:20:43,552 p=28755 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:20:43,614 p=28755 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:20:43,640 p=28755 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:20:43,642 p=28755 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:20:43,642 p=28755 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:43,642 p=28755 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:43,642 p=28755 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:48,049 p=28785 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:20:48,049 p=28785 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:20:48,103 p=28785 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 16:20:48,110 p=28785 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:20:48,111 p=28785 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 16:20:50,585 p=28785 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:20:57,648 p=28785 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:20:59,530 p=28785 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:20:59,531 p=28785 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 16:20:59,532 p=28785 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:59,532 p=28785 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:20:59,532 p=28785 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:22:22,560 p=29424 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:22:22,562 p=29424 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:22:22,651 p=29424 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************************************************************
+2025-10-03 16:22:22,660 p=29424 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:22:22,661 p=29424 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************************************************************
+2025-10-03 16:22:24,113 p=29424 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:22:24,770 p=29424 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:22:24,820 p=29424 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:22:24,824 p=29424 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************************************************************
+2025-10-03 16:22:24,824 p=29424 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:22:24,824 p=29424 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:22:24,824 p=29424 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:22:56,787 p=29691 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:22:56,788 p=29691 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:22:56,866 p=29691 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************************************************************
+2025-10-03 16:22:56,875 p=29691 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:22:56,876 p=29691 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************************************************************
+2025-10-03 16:22:57,501 p=29691 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 16:22:57,558 p=29691 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 16:22:57,565 p=29691 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 16:22:57,567 p=29691 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************************************************************
+2025-10-03 16:22:57,567 p=29691 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:22:57,567 p=29691 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:22:57,567 p=29691 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
