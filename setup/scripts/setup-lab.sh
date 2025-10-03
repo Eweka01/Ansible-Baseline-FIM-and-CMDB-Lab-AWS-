@@ -1,21 +1,56 @@
 #!/bin/bash
 
+# =============================================================================
 # Lab Environment Setup Script
-# Automated setup for Ansible Baseline, FIM, and CMDB lab
+# =============================================================================
+#
+# This script provides automated setup for the Ansible Baseline, FIM, and CMDB
+# lab. It handles all aspects of lab initialization including dependency
+# installation, configuration, and initial testing.
+#
+# Features:
+# - Sets up Python virtual environment
+# - Installs all required dependencies
+# - Configures lab components
+# - Runs initial tests and validation
+# - Generates setup reports
+# - Handles error recovery and cleanup
+#
+# Usage:
+#     ./setup-lab.sh [--clean] [--verbose] [--skip-tests]
+#
+# Options:
+#     --clean      Clean existing setup before installing
+#     --verbose    Enable verbose output
+#     --skip-tests Skip running tests after setup
+#
+# Prerequisites:
+# - Python 3.7+ installed
+# - pip package manager
+# - Internet connectivity
+# - Appropriate system permissions
+#
+# Author: Ansible Baseline, FIM, and CMDB Lab
+# Version: 1.0.0
+# =============================================================================
 
-set -e
+set -e  # Exit on any error
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+# =============================================================================
+# Configuration and Setup
+# =============================================================================
 
-# Configuration
-LAB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-LOG_FILE="$LAB_DIR/setup.log"
-INSTALL_USER="${SUDO_USER:-$USER}"
+# Color codes for terminal output
+RED='\033[0;31m'      # Red for errors and failures
+GREEN='\033[0;32m'    # Green for success and passes
+YELLOW='\033[1;33m'   # Yellow for warnings
+BLUE='\033[0;34m'     # Blue for information
+NC='\033[0m'          # No Color (reset)
+
+# Lab configuration
+LAB_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"  # Get script directory
+LOG_FILE="$LAB_DIR/setup.log"                            # Setup log file
+INSTALL_USER="${SUDO_USER:-$USER}"                       # User running the script
 
 # Logging functions
 log_info() {

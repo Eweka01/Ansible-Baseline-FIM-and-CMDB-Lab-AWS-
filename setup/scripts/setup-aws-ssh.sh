@@ -1,23 +1,52 @@
 #!/bin/bash
 
+# =============================================================================
 # AWS SSH Setup Script
-# Sets up SSH connectivity to your AWS EC2 instances
+# =============================================================================
+#
+# This script sets up SSH connectivity to your AWS EC2 instances for the
+# Ansible Baseline, FIM, and CMDB lab. It handles mixed OS environments
+# (Amazon Linux + Ubuntu) and ensures proper SSH configuration.
+#
+# Features:
+# - Tests SSH connections to all 3 AWS instances
+# - Creates SSH config file for easy access
+# - Verifies SSH key permissions
+# - Handles mixed OS environments (Amazon Linux + Ubuntu)
+# - Provides detailed connection status
+#
+# Usage:
+#     ./setup-aws-ssh.sh
+#
+# Prerequisites:
+# - SSH key file (key-p3.pem) in common locations
+# - AWS instances running and accessible
+# - Internet connectivity
+#
+# Author: Ansible Baseline, FIM, and CMDB Lab
+# Version: 1.0.0
+# =============================================================================
 
-set -e
+set -e  # Exit on any error
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+# =============================================================================
+# Configuration and Setup
+# =============================================================================
+
+# Color codes for terminal output
+RED='\033[0;31m'      # Red for errors and failures
+GREEN='\033[0;32m'    # Green for success and passes
+YELLOW='\033[1;33m'   # Yellow for warnings
+BLUE='\033[0;34m'     # Blue for information
+NC='\033[0m'          # No Color (reset)
 
 # AWS instance information
 # Format: "hostname:ip:user"
+# Note: manage-node-1 uses ec2-user (Amazon Linux), others use ubuntu (Ubuntu)
 INSTANCES=(
-    "manage-node-1:18.234.152.228:ec2-user"
-    "manage-node-2:54.242.234.69:ubuntu"
-    "manage-node-3:13.217.82.23:ubuntu"
+    "manage-node-1:18.234.152.228:ec2-user"  # Amazon Linux 2023
+    "manage-node-2:54.242.234.69:ubuntu"     # Ubuntu 24.04
+    "manage-node-3:13.217.82.23:ubuntu"      # Ubuntu 24.04
 )
 
 # Logging functions

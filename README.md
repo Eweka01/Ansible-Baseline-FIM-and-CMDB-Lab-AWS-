@@ -41,17 +41,17 @@ This lab is designed for **AWS EC2 deployment** and supports mixed operating sys
 ├── tests/                  # Test scenarios and validation
 │   ├── scripts/            # Test scripts with documentation
 │   └── TESTING-GUIDE.md    # Comprehensive testing guide
-├── docs/                   # Documentation
-├── AWS-DEPLOYMENT-GUIDE.md # Step-by-step AWS deployment guide
-├── TROUBLESHOOTING-GUIDE.md # Error solutions and fixes
-└── setup-aws-ssh.sh        # SSH connectivity setup
+├── setup/                  # Setup scripts and documentation
+│   ├── scripts/            # Setup and deployment scripts
+│   ├── guides/             # Comprehensive guides and documentation
+│   └── docs/               # Additional documentation
 ```
 
 ## 🚀 Quick Start - AWS Deployment
 
 1. **Setup SSH Connectivity**:
    ```bash
-   ./setup-aws-ssh.sh
+   ./setup/scripts/setup-aws-ssh.sh
    ```
 
 2. **Deploy to AWS Instances**:
@@ -79,9 +79,11 @@ This lab is designed for **AWS EC2 deployment** and supports mixed operating sys
 
 ## 📚 Documentation
 
-- **[HOW-TO-USE-THIS-LAB.md](HOW-TO-USE-THIS-LAB.md)** - **Complete user guide with step-by-step instructions**
-- **[AWS-DEPLOYMENT-GUIDE.md](AWS-DEPLOYMENT-GUIDE.md)** - Complete deployment instructions
-- **[TROUBLESHOOTING-GUIDE.md](TROUBLESHOOTING-GUIDE.md)** - Common errors and solutions
-- **[NEXT-STEPS.md](NEXT-STEPS.md)** - Advanced usage and extensions
+- **[setup/README.md](setup/README.md)** - **Setup scripts and documentation overview**
+- **[setup/guides/HOW-TO-USE-THIS-LAB.md](setup/guides/HOW-TO-USE-THIS-LAB.md)** - Complete user guide with step-by-step instructions
+- **[setup/guides/AWS-DEPLOYMENT-GUIDE.md](setup/guides/AWS-DEPLOYMENT-GUIDE.md)** - Complete deployment instructions
+- **[setup/guides/TROUBLESHOOTING-GUIDE.md](setup/guides/TROUBLESHOOTING-GUIDE.md)** - Common errors and solutions
+- **[setup/guides/NEXT-STEPS.md](setup/guides/NEXT-STEPS.md)** - Advanced usage and extensions
+- **[tests/TESTING-GUIDE.md](tests/TESTING-GUIDE.md)** - Comprehensive testing guide
 
 # Ansible-Baseline-FIM-and-CMDB-Lab-AWS-
