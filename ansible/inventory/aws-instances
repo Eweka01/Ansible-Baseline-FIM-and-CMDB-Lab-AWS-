@@ -1,0 +1,90 @@
+# AWS EC2 Instances Inventory
+# Configured for your 3 AWS instances
+
+[all:vars]
+# Global variables for all AWS instances
+ansible_user=ubuntu
+ansible_ssh_private_key_file=~/Desktop/key-p3.pem
+ansible_python_interpreter=/usr/bin/python3
+ansible_ssh_common_args='-o StrictHostKeyChecking=no'
+ansible_ssh_retries=3
+ansible_timeout=30
+
+# Lab environment variables
+lab_environment=production
+timezone=UTC
+
+# Security baseline settings
+security_level=production
+enable_firewall=yes
+enable_selinux=false  # Ubuntu doesn't use SELinux by default
+
+# AWS specific settings
+aws_region=us-east-1
+aws_availability_zone=us-east-1a
+instance_type=t2.micro
+
+[webservers]
+# Web server group - using manage-node-1 (Amazon Linux)
+manage-node-1 ansible_host=18.234.152.228 ansible_user=ec2-user
+
+[webservers:vars]
+# Web server specific variables
+http_port=80
+https_port=443
+web_root=/var/www/html
+ssl_enabled=true
+service_type=web
+
+[databases]
+# Database server group - using manage-node-2
+manage-node-2 ansible_host=54.242.234.69 ansible_user=ubuntu
+
+[databases:vars]
+# Database specific variables
+db_type=mysql
+db_port=3306
+db_root_password=secure_password_123
+db_backup_enabled=true
+service_type=database
+
+[monitoring]
+# Monitoring server group - using manage-node-3
+manage-node-3 ansible_host=13.217.82.23 ansible_user=ubuntu
+
+[monitoring:vars]
+# Monitoring specific variables
+monitoring_type=prometheus
+grafana_port=3000
+prometheus_port=9090
+service_type=monitoring
+
+[aws_instances:children]
+# All AWS instances
+webservers
+databases
+monitoring
+
+[aws_instances:vars]
+# Common variables for all AWS instances
+environment=production
+backup_enabled=true
+monitoring_enabled=true
+alerting_enabled=true
+fim_enabled=true
+cmdb_enabled=true
+
+# AWS specific configurations
+aws_cloudwatch_enabled=true
+aws_ssm_enabled=false
+aws_backup_enabled=false
+
+# Security groups and networking
+security_group_name=default
+vpc_enabled=true
+public_subnet=true
+
+# Instance metadata
+launch_time=2025-10-03T14:35:00Z
+platform=Linux/UNIX
+architecture=x86_64

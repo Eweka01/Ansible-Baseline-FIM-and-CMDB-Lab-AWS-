@@ -1,0 +1,64 @@
+{
+  "monitored_paths": [
+    "/etc",
+    "/usr/bin",
+    "/usr/sbin",
+    "/var/log",
+    "/home",
+    "/opt",
+    "/root",
+    "/var/www",
+    "/var/lib/mysql"
+  ],
+  "excluded_paths": [
+    "/tmp",
+    "/var/tmp",
+    "/var/cache",
+    "/var/log/*.log",
+    "/proc",
+    "/sys",
+    "/dev",
+    "/var/lib/docker",
+    "/var/lib/containers",
+    "/run",
+    "/var/run",
+    "/var/lib/apt",
+    "/var/cache/apt"
+  ],
+  "scan_interval": 300,
+  "report_interval": 3600,
+  "alert_on_change": true,
+  "log_file": "/var/log/fim-agent.log",
+  "report_file": "/var/log/fim-reports.json",
+  "hash_algorithm": "sha256",
+  "notification": {
+    "enabled": true,
+    "email": {
+      "enabled": false,
+      "smtp_server": "localhost",
+      "smtp_port": 587,
+      "username": "",
+      "password": "",
+      "to_addresses": ["admin@{{ ansible_hostname }}.local"]
+    },
+    "webhook": {
+      "enabled": false,
+      "url": "",
+      "headers": {}
+    }
+  },
+  "advanced": {
+    "deep_scan": false,
+    "scan_hidden_files": true,
+    "follow_symlinks": false,
+    "max_file_size": 104857600,
+    "concurrent_scans": 4
+  },
+  "aws_specific": {
+    "instance_id": "{{ ansible_ec2_instance_id | default('unknown') }}",
+    "instance_type": "{{ instance_type | default('t2.micro') }}",
+    "availability_zone": "{{ aws_availability_zone | default('us-east-1a') }}",
+    "region": "{{ aws_region | default('us-east-1') }}",
+    "service_type": "{{ service_type | default('general') }}"
+  }
+}

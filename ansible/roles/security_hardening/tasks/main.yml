@@ -1,0 +1,132 @@
+---
+# Main tasks for security_hardening role
+
+- name: "Install security packages"
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - fail2ban
+    - ufw
+    - aide
+    - rkhunter
+    - chkrootkit
+    - auditd
+    - auditd-plugins
+
+- name: "Configure SSH security settings"
+  template:
+    src: sshd_config.j2
+    dest: /etc/ssh/sshd_config
+    backup: yes
+    mode: '0600'
+  notify: restart ssh
+
+- name: "Configure fail2ban"
+  template:
+    src: fail2ban.j2
+    dest: /etc/fail2ban/jail.local
+    mode: '0644'
+  notify: restart fail2ban
+
+- name: "Configure UFW firewall"
+  ufw:
+    state: enabled
+    policy: deny
+    direction: incoming
+  when: security.firewall.enabled | default(true)
+
+- name: "Allow SSH through firewall"
+  ufw:
+    rule: allow
+    port: "{{ security.firewall.ssh_port | default(22) }}"
+    proto: tcp
+  when: security.firewall.allow_ssh | default(true)
+
+- name: "Configure auditd"
+  template:
+    src: auditd.conf.j2
+    dest: /etc/audit/auditd.conf
+    backup: yes
+    mode: '0640'
+  notify: restart auditd
+
+- name: "Configure audit rules"
+  template:
+    src: audit.rules.j2
+    dest: /etc/audit/rules.d/audit.rules
+    mode: '0640'
+  notify: restart auditd
+
+- name: "Initialize AIDE database"
+  command: aide --init
+  args:
+    creates: /var/lib/aide/aide.db.new.gz
+  when: ansible_os_family == "Debian"
+
+- name: "Initialize AIDE database (RedHat)"
+  command: aide --init
+  args:
+    creates: /var/lib/aide/aide.db.new.gz
+  when: ansible_os_family == "RedHat"
+
+- name: "Move AIDE database to production"
+  command: mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+  when: ansible_os_family == "Debian"
+
+- name: "Move AIDE database to production (RedHat)"
+  command: mv /var/lib/aide/aide.db.new.gz /var/lib/aide/aide.db.gz
+  when: ansible_os_family == "RedHat"
+
+- name: "Configure AIDE cron job"
+  cron:
+    name: "AIDE integrity check"
+    minute: "0"
+    hour: "2"
+    job: "/usr/bin/aide --check"
+    user: root
+
+- name: "Set secure file permissions"
+  file:
+    path: "{{ item.path }}"
+    mode: "{{ item.mode }}"
+    owner: "{{ item.owner | default('root') }}"
+    group: "{{ item.group | default('root') }}"
+  loop:
+    - { path: "/etc/passwd", mode: "0644" }
+    - { path: "/etc/shadow", mode: "0600" }
+    - { path: "/etc/group", mode: "0644" }
+    - { path: "/etc/gshadow", mode: "0600" }
+    - { path: "/etc/ssh/sshd_config", mode: "0600" }
+    - { path: "/etc/audit/auditd.conf", mode: "0640" }
+
+- name: "Configure password policy"
+  template:
+    src: common-password.j2
+    dest: /etc/pam.d/common-password
+    backup: yes
+    mode: '0644'
+  when: ansible_os_family == "Debian"
+
+- name: "Configure password policy (RedHat)"
+  template:
+    src: system-auth.j2
+    dest: /etc/pam.d/system-auth
+    backup: yes
+    mode: '0644'
+  when: ansible_os_family == "RedHat"
+
+- name: "Set up security monitoring script"
+  template:
+    src: security-check.sh.j2
+    dest: /usr/local/bin/security-check.sh
+    mode: '0755'
+
+- name: "Create security check cron job"
+  cron:
+    name: "Daily security check"
+    minute: "30"
+    hour: "1"
+    job: "/usr/local/bin/security-check.sh"
+    user: root
+

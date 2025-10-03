@@ -1,0 +1,37 @@
+{
+  "monitored_paths": [
+    "./test-files",
+    "./ansible",
+    "./fim",
+    "./cmdb"
+  ],
+  "excluded_paths": [
+    "./venv",
+    "./.git",
+    "*.pyc",
+    "*.log",
+    "__pycache__"
+  ],
+  "scan_interval": 30,
+  "report_interval": 300,
+  "alert_on_change": true,
+  "log_file": "./fim-agent.log",
+  "report_file": "./fim-reports.json",
+  "hash_algorithm": "sha256",
+  "notification": {
+    "enabled": false,
+    "email": {
+      "enabled": false
+    },
+    "webhook": {
+      "enabled": false
+    }
+  },
+  "advanced": {
+    "deep_scan": false,
+    "scan_hidden_files": true,
+    "follow_symlinks": false,
+    "max_file_size": 104857600,
+    "concurrent_scans": 2
+  }
+}

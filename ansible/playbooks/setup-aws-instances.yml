@@ -1,0 +1,358 @@
+---
+# AWS EC2 Instances Setup Playbook
+# This playbook sets up the lab environment on your AWS EC2 instances
+
+- name: "AWS Lab Environment Setup"
+  hosts: aws_instances
+  become: yes
+  gather_facts: yes
+  
+  vars:
+    playbook_start_time: "{{ ansible_date_time.iso8601 }}"
+  
+  pre_tasks:
+    - name: "Display setup information"
+      debug:
+        msg:
+          - "Setting up lab environment on {{ inventory_hostname }}"
+          - "Instance: {{ ansible_hostname }} ({{ ansible_host }})"
+          - "Environment: {{ environment | default('production') }}"
+          - "OS: {{ ansible_distribution }} {{ ansible_distribution_version }}"
+          - "Instance Type: {{ instance_type | default('t2.micro') }}"
+          - "Playbook started at: {{ playbook_start_time }}"
+    
+    - name: "Wait for SSH to be ready"
+      wait_for_connection:
+        delay: 10
+        timeout: 300
+  
+  tasks:
+    - name: "Update package cache (Ubuntu/Debian)"
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
+    
+    - name: "Update package cache (Amazon Linux)"
+      yum:
+        update_cache: yes
+      when: ansible_distribution == "Amazon"
+    
+    - name: "Install essential packages (Ubuntu/Debian)"
+      apt:
+        name:
+          - python3
+          - python3-pip
+          - python3-venv
+          - curl
+          - wget
+          - vim
+          - htop
+          - tree
+          - unzip
+          - git
+          - htop
+          - iotop
+          - sysstat
+          - fail2ban
+          - ufw
+          - auditd
+          - aide
+          - rkhunter
+          - chkrootkit
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
+    
+    - name: "Install essential packages (Amazon Linux)"
+      yum:
+        name:
+          - python3
+          - python3-pip
+          - wget
+          - vim
+          - htop
+          - tree
+          - unzip
+          - git
+          - iotop
+          - sysstat
+          - fail2ban
+          - audit
+          - aide
+          - rkhunter
+          - chkrootkit
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "Amazon"
+    
+    - name: "Create virtual environment directory"
+      file:
+        path: /opt/lab-env
+        state: directory
+        mode: '0755'
+      become: yes
+
+    - name: "Create virtual environment"
+      command: python3 -m venv /opt/lab-env
+      become: yes
+
+    - name: "Install Python dependencies in virtual environment"
+      pip:
+        name:
+          - psutil
+          - watchdog
+          - pyyaml
+          - jinja2
+          - requests
+          - paramiko
+          - cryptography
+        state: present
+        virtualenv: /opt/lab-env
+      become: yes
+    
+    - name: "Create lab directories"
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+        owner: root
+        group: root
+      loop:
+        - /opt/lab-environment
+        - /var/lib/fim
+        - /var/lib/cmdb/data
+        - /var/log/fim
+        - /var/log/cmdb
+        - /etc/fim
+        - /etc/cmdb
+    
+    - name: "Copy lab files to instances"
+      copy:
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: "{{ item.mode | default('0644') }}"
+        owner: root
+        group: root
+      loop:
+        - { src: "../../fim/agents/fim-agent.py", dest: "/opt/lab-environment/fim-agent.py", mode: "0755" }
+        - { src: "../../fim/agents/fim-config.json", dest: "/etc/fim/fim-config.json" }
+        - { src: "../../cmdb/scripts/cmdb-collector.py", dest: "/opt/lab-environment/cmdb-collector.py", mode: "0755" }
+        - { src: "../../requirements.txt", dest: "/opt/lab-environment/requirements.txt" }
+    
+    - name: "Configure FIM for AWS instances"
+      template:
+        src: fim-config-aws.j2
+        dest: /etc/fim/fim-config.json
+        mode: '0644'
+        owner: root
+        group: root
+      notify: restart fim-agent
+    
+    - name: "Create FIM systemd service"
+      template:
+        src: fim-agent.service.j2
+        dest: /etc/systemd/system/fim-agent.service
+        mode: '0644'
+        owner: root
+        group: root
+      notify: 
+        - reload systemd
+        - restart fim-agent
+    
+    - name: "Create CMDB collection service"
+      template:
+        src: cmdb-collector.service.j2
+        dest: /etc/systemd/system/cmdb-collector.service
+        mode: '0644'
+        owner: root
+        group: root
+      notify: reload systemd
+    
+    - name: "Create CMDB collection timer"
+      template:
+        src: cmdb-collector.timer.j2
+        dest: /etc/systemd/system/cmdb-collector.timer
+        mode: '0644'
+        owner: root
+        group: root
+      notify: reload systemd
+    
+    - name: "Enable and start services"
+      systemd:
+        name: "{{ item }}"
+        enabled: yes
+        state: started
+        daemon_reload: yes
+      loop:
+        - fim-agent
+        - cmdb-collector.timer
+    
+    - name: "Configure UFW firewall (Ubuntu/Debian)"
+      ufw:
+        state: enabled
+        policy: deny
+        direction: incoming
+      when: 
+        - (enable_firewall | default(true)) | bool
+        - ansible_os_family == "Debian"
+    
+    - name: "Allow SSH through UFW firewall (Ubuntu/Debian)"
+      ufw:
+        rule: allow
+        port: "22"
+        proto: tcp
+      when: 
+        - (enable_firewall | default(true)) | bool
+        - ansible_os_family == "Debian"
+    
+    - name: "Allow HTTP through UFW firewall (Ubuntu/Debian)"
+      ufw:
+        rule: allow
+        port: "80"
+        proto: tcp
+      when: 
+        - (enable_firewall | default(true)) | bool
+        - ansible_os_family == "Debian"
+        - service_type | default('') == 'web'
+    
+    - name: "Allow HTTPS through UFW firewall (Ubuntu/Debian)"
+      ufw:
+        rule: allow
+        port: "443"
+        proto: tcp
+      when: 
+        - (enable_firewall | default(true)) | bool
+        - ansible_os_family == "Debian"
+        - service_type | default('') == 'web'
+    
+    - name: "Configure iptables firewall (Amazon Linux)"
+      blockinfile:
+        path: /etc/sysconfig/iptables
+        block: |
+          *filter
+          :INPUT DROP [0:0]
+          :FORWARD DROP [0:0]
+          :OUTPUT ACCEPT [0:0]
+          -A INPUT -i lo -j ACCEPT
+          -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+          -A INPUT -p tcp --dport 22 -j ACCEPT
+          {% if service_type | default('') == 'web' %}
+          -A INPUT -p tcp --dport 80 -j ACCEPT
+          -A INPUT -p tcp --dport 443 -j ACCEPT
+          {% endif %}
+          COMMIT
+        create: yes
+      when: 
+        - (enable_firewall | default(true)) | bool
+        - ansible_distribution == "Amazon"
+      notify: restart iptables
+    
+    - name: "Start and enable iptables (Amazon Linux)"
+      systemd:
+        name: iptables
+        enabled: yes
+        state: started
+      when:
+        - (enable_firewall | default(true)) | bool
+        - ansible_distribution == "Amazon"
+      ignore_errors: yes
+    
+    - name: "Configure fail2ban"
+      template:
+        src: fail2ban-aws.j2
+        dest: /etc/fail2ban/jail.local
+        mode: '0644'
+        owner: root
+        group: root
+      notify: restart fail2ban
+    
+    - name: "Start and enable fail2ban"
+      systemd:
+        name: fail2ban
+        enabled: yes
+        state: started
+    
+    - name: "Create system information file"
+      template:
+        src: system-info-aws.j2
+        dest: /etc/system-info
+        mode: '0644'
+        owner: root
+        group: root
+    
+    - name: "Initialize FIM baseline"
+      command: /opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --init-baseline
+      args:
+        creates: /var/lib/fim/baseline.json
+      register: fim_init
+      changed_when: fim_init.rc == 0
+    
+    - name: "Run initial CMDB collection"
+      command: /opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py
+      register: cmdb_init
+      changed_when: cmdb_init.rc == 0
+    
+    - name: "Test FIM agent"
+      command: /opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once
+      register: fim_test
+      changed_when: false
+    
+    - name: "Test CMDB collector"
+      command: /opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py --help
+      register: cmdb_test
+      changed_when: false
+    
+    - name: "Display test results"
+      debug:
+        msg:
+          - "FIM agent test: {{ 'PASSED' if fim_test.rc == 0 else 'FAILED' }}"
+          - "CMDB collector test: {{ 'PASSED' if cmdb_test.rc == 0 else 'FAILED' }}"
+          - "FIM baseline initialized: {{ 'YES' if fim_init.rc == 0 else 'NO' }}"
+          - "CMDB initial collection: {{ 'SUCCESS' if cmdb_init.rc == 0 else 'FAILED' }}"
+  
+  post_tasks:
+    - name: "Create setup completion marker"
+      file:
+        path: /etc/aws-lab-setup-completed
+        state: touch
+        mode: '0644'
+        owner: root
+        group: root
+    
+    - name: "Display completion information"
+      debug:
+        msg:
+          - "AWS lab setup completed for {{ inventory_hostname }}"
+          - "Instance: {{ ansible_hostname }} ({{ ansible_host }})"
+          - "Setup completed at: {{ ansible_date_time.iso8601 }}"
+          - "Services running:"
+          - "  - FIM Agent: {{ 'RUNNING' if fim_test.rc == 0 else 'FAILED' }}"
+          - "  - CMDB Collector: {{ 'RUNNING' if cmdb_test.rc == 0 else 'FAILED' }}"
+          - "  - Firewall: {{ 'ENABLED' if enable_firewall | default(true) else 'DISABLED' }}"
+          - "  - Fail2ban: ENABLED"
+          - "Next steps:"
+          - "1. Check logs: tail -f /var/log/fim-agent.log"
+          - "2. Check CMDB data: ls -la /var/lib/cmdb/data/"
+          - "3. Test FIM: /opt/lab-environment/fim-agent.py --scan-once"
+          - "4. Test CMDB: /opt/lab-environment/cmdb-collector.py"
+  
+  handlers:
+    - name: restart fim-agent
+      systemd:
+        name: fim-agent
+        state: restarted
+    
+    - name: restart fail2ban
+      systemd:
+        name: fail2ban
+        state: restarted
+    
+    - name: restart iptables
+      systemd:
+        name: iptables
+        state: restarted
+    
+    - name: reload systemd
+      systemd:
+        daemon_reload: yes

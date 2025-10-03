@@ -1,0 +1,154 @@
+# Global variables for all hosts in the lab environment
+
+# System Configuration
+system:
+  timezone: "{{ timezone | default('UTC') }}"
+  locale: "en_US.UTF-8"
+  hostname_prefix: "lab-"
+  
+# Package Management
+packages:
+  essential:
+    - curl
+    - wget
+    - vim
+    - htop
+    - tree
+    - unzip
+    - git
+    - python3-pip
+    - python3-venv
+  
+  security:
+    - fail2ban
+    - ufw
+    - aide
+    - rkhunter
+    - chkrootkit
+  
+  monitoring:
+    - htop
+    - iotop
+    - nethogs
+    - sysstat
+
+# Security Configuration
+security:
+  firewall:
+    enabled: "{{ enable_firewall | default(true) }}"
+    default_policy: deny
+    allow_ssh: true
+    ssh_port: 22
+  
+  selinux:
+    enabled: "{{ enable_selinux | default(true) }}"
+    policy: targeted
+  
+  users:
+    - name: ansible
+      groups: [sudo, docker]
+      shell: /bin/bash
+      authorized_keys: []
+  
+  ssh:
+    permit_root_login: false
+    password_authentication: false
+    pubkey_authentication: true
+    max_auth_tries: 3
+    client_alive_interval: 300
+
+# Network Configuration
+network:
+  dns_servers:
+    - 8.8.8.8
+    - 8.8.4.4
+    - 1.1.1.1
+  
+  ntp_servers: "{{ ntp_servers | default(['0.pool.ntp.org', '1.pool.ntp.org']) }}"
+
+# Logging Configuration
+logging:
+  rsyslog:
+    enabled: true
+    remote_logging: false
+    log_retention_days: 30
+  
+  logrotate:
+    enabled: true
+    max_size: 100M
+    rotate_count: 4
+
+# Backup Configuration
+backup:
+  enabled: "{{ backup_enabled | default(false) }}"
+  schedule: "0 2 * * *"  # Daily at 2 AM
+  retention_days: 30
+  destinations:
+    - /backup/local
+    # - /backup/remote  # Uncomment for remote backup
+
+# Monitoring Configuration
+monitoring:
+  enabled: "{{ monitoring_enabled | default(true) }}"
+  metrics_retention: 30d
+  alerting_enabled: "{{ alerting_enabled | default(false) }}"
+  
+  services:
+    - nginx
+    - mysql
+    - ssh
+    - cron
+
+# FIM Configuration
+fim:
+  enabled: "{{ fim_enabled | default(false) }}"
+  scan_interval: "{{ fim_scan_interval | default(300) }}"
+  report_interval: "{{ fim_report_interval | default(3600) }}"
+  alert_on_change: "{{ fim_alert_on_change | default(true) }}"
+  
+  monitored_paths:
+    - /etc
+    - /usr/bin
+    - /usr/sbin
+    - /var/log
+    - /home
+    - /opt
+  
+  excluded_paths:
+    - /tmp
+    - /var/tmp
+    - /var/cache
+    - /var/log/*.log
+    - /proc
+    - /sys
+    - /dev
+
+# CMDB Configuration
+cmdb:
+  enabled: true
+  data_collection_interval: 3600
+  auto_discovery: true
+  
+  collected_data:
+    - system_info
+    - network_config
+    - installed_packages
+    - running_services
+    - file_permissions
+    - user_accounts
+    - cron_jobs
+    - environment_variables
+
+# Lab Environment Settings
+lab:
+  environment: "{{ environment | default('development') }}"
+  version: "1.0.0"
+  created_date: "{{ ansible_date_time.iso8601 }}"
+  
+  features:
+    ansible_baseline: true
+    fim_monitoring: true
+    cmdb_tracking: true
+    security_hardening: true
+    monitoring: true
+

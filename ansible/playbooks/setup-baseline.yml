@@ -1,0 +1,71 @@
+---
+# Ansible Baseline Setup Playbook
+# This playbook establishes a secure baseline configuration for all lab hosts
+
+- name: "Lab Environment Baseline Configuration"
+  hosts: all
+  become: yes
+  gather_facts: yes
+  
+  vars:
+    playbook_start_time: "{{ ansible_date_time.iso8601 }}"
+  
+  pre_tasks:
+    - name: "Display playbook information"
+      debug:
+        msg:
+          - "Starting baseline configuration for {{ inventory_hostname }}"
+          - "Environment: {{ environment | default('development') }}"
+          - "Playbook started at: {{ playbook_start_time }}"
+  
+  roles:
+    - role: system_baseline
+      tags: [baseline, system]
+    
+    - role: security_hardening
+      tags: [baseline, security]
+    
+    - role: package_management
+      tags: [baseline, packages]
+    
+    - role: network_config
+      tags: [baseline, network]
+    
+    - role: logging_setup
+      tags: [baseline, logging]
+    
+    - role: monitoring_setup
+      tags: [baseline, monitoring]
+      when: monitoring.enabled | default(true)
+    
+    - role: backup_setup
+      tags: [baseline, backup]
+      when: backup.enabled | default(false)
+  
+  post_tasks:
+    - name: "Gather final system facts"
+      setup:
+        gather_subset: min
+    
+    - name: "Display completion information"
+      debug:
+        msg:
+          - "Baseline configuration completed for {{ inventory_hostname }}"
+          - "System uptime: {{ ansible_uptime_seconds | int // 3600 }} hours"
+          - "Available memory: {{ ansible_memtotal_mb }} MB"
+          - "CPU cores: {{ ansible_processor_vcpus }}"
+    
+    - name: "Create baseline completion marker"
+      file:
+        path: /etc/ansible-baseline-completed
+        state: touch
+        mode: '0644'
+      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
+    
+    - name: "Log baseline completion"
+      lineinfile:
+        path: /var/log/ansible-baseline.log
+        line: "{{ ansible_date_time.iso8601 }} - Baseline configuration completed on {{ inventory_hostname }}"
+        create: yes
+        mode: '0644'
+

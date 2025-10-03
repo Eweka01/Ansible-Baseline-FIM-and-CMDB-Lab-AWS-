@@ -1,0 +1,26 @@
+---
+# Monitoring setup tasks
+
+- name: "Install monitoring tools"
+  package:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - htop
+    - iotop
+    - nethogs
+    - sysstat
+
+- name: "Configure system monitoring"
+  template:
+    src: monitoring.conf.j2
+    dest: /etc/monitoring.conf
+    mode: '0644'
+
+- name: "Enable monitoring services"
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  loop:
+    - sysstat

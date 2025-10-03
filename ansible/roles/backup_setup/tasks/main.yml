@@ -1,0 +1,24 @@
+---
+# Backup setup tasks
+
+- name: "Create backup directories"
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop: "{{ backup.destinations }}"
+
+- name: "Configure backup script"
+  template:
+    src: backup.sh.j2
+    dest: /usr/local/bin/backup-system.sh
+    mode: '0755'
+
+- name: "Setup backup cron job"
+  cron:
+    name: "System backup"
+    minute: "0"
+    hour: "2"
+    job: "/usr/local/bin/backup-system.sh"
+    user: root
+  when: backup.enabled | default(false)

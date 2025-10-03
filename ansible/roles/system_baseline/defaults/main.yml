@@ -1,0 +1,47 @@
+---
+# Default variables for system_baseline role
+
+# System configuration
+system_hostname_prefix: "lab-"
+system_timezone: "UTC"
+system_locale: "en_US.UTF-8"
+
+# Essential packages to install
+system_packages:
+  essential:
+    - curl
+    - wget
+    - vim
+    - htop
+    - tree
+    - unzip
+    - git
+    - python3-pip
+    - python3-venv
+    - software-properties-common
+
+# System limits
+system_limits:
+  max_open_files: 65536
+  max_processes: 32768
+
+# Kernel parameters
+kernel_parameters:
+  - { name: "vm.swappiness", value: "10" }
+  - { name: "net.core.rmem_max", value: "16777216" }
+  - { name: "net.core.wmem_max", value: "16777216" }
+  - { name: "fs.file-max", value: "2097152" }
+
+# System services to enable
+system_services:
+  - ssh
+  - cron
+  - rsyslog
+  - systemd-resolved
+
+# System services to disable
+system_services_disabled:
+  - bluetooth
+  - cups
+  - avahi-daemon
+

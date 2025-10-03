@@ -1,0 +1,27 @@
+---
+# Package management tasks
+
+- name: "Update package cache (Debian)"
+  apt:
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: "Update package cache (RedHat)"
+  yum:
+    update_cache: yes
+  when: ansible_os_family == "RedHat"
+
+- name: "Install essential packages"
+  package:
+    name: "{{ packages.essential }}"
+    state: present
+
+- name: "Install security packages"
+  package:
+    name: "{{ packages.security }}"
+    state: present
+
+- name: "Install monitoring packages"
+  package:
+    name: "{{ packages.monitoring }}"
+    state: present

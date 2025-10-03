@@ -1,0 +1,25 @@
+---
+# Logging setup tasks
+
+- name: "Configure rsyslog"
+  template:
+    src: rsyslog.conf.j2
+    dest: /etc/rsyslog.conf
+    backup: yes
+  notify: restart rsyslog
+
+- name: "Configure logrotate"
+  template:
+    src: logrotate.conf.j2
+    dest: /etc/logrotate.conf
+    backup: yes
+
+- name: "Create log directories"
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: '0755'
+  loop:
+    - /var/log/ansible
+    - /var/log/fim
+    - /var/log/cmdb

@@ -1,0 +1,11 @@
+[Unit]
+Description=CMDB Data Collection Timer for {{ ansible_hostname }}
+Requires=cmdb-collector.service
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+RandomizedDelaySec=300
+
+[Install]
+WantedBy=timers.target

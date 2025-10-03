@@ -1,0 +1,28 @@
+---
+galaxy_info:
+  author: Lab Administrator
+  description: System baseline configuration role
+  company: Lab Environment
+  license: MIT
+  min_ansible_version: 2.9
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+    - name: CentOS
+      versions:
+        - 7
+        - 8
+    - name: RHEL
+      versions:
+        - 7
+        - 8
+        - 9
+  galaxy_tags:
+    - system
+    - baseline
+    - configuration
+
+dependencies: []
+

@@ -1,0 +1,16 @@
+---
+# Handlers for system_baseline role
+
+- name: restart services
+  systemd:
+    name: "{{ item }}"
+    state: restarted
+  loop:
+    - ssh
+    - rsyslog
+  listen: restart services
+
+- name: reload sysctl
+  command: sysctl --system
+  listen: reload sysctl
+

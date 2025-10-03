@@ -1,0 +1,25 @@
+---
+# Network configuration tasks
+
+- name: "Configure DNS servers"
+  lineinfile:
+    path: /etc/resolv.conf
+    line: "nameserver {{ item }}"
+    create: yes
+  loop: "{{ network.dns_servers }}"
+
+- name: "Configure NTP servers"
+  lineinfile:
+    path: /etc/ntp.conf
+    line: "server {{ item }}"
+    create: yes
+  loop: "{{ network.ntp_servers }}"
+  when: ansible_os_family == "Debian"
+
+- name: "Configure NTP servers (RedHat)"
+  lineinfile:
+    path: /etc/chrony.conf
+    line: "server {{ item }}"
+    create: yes
+  loop: "{{ network.ntp_servers }}"
+  when: ansible_os_family == "RedHat"

@@ -1,0 +1,14 @@
+2025-10-03 14:32:51,991 - INFO - Collecting system information
+2025-10-03 14:32:52,035 - INFO - Collecting hardware information
+2025-10-03 14:32:53,041 - INFO - Collecting software information
+2025-10-03 14:32:53,063 - INFO - Data saved to ./cmdb-test-data/cmdb-test-data-20251003-143253.json
+2025-10-03 14:32:53,063 - INFO - Data saved to ./cmdb-test-data/system_info-20251003-143253.json
+2025-10-03 14:32:53,063 - INFO - Data saved to ./cmdb-test-data/hardware_info-20251003-143253.json
+2025-10-03 14:32:53,066 - INFO - Data saved to ./cmdb-test-data/software_info-20251003-143253.json
+2025-10-03 14:34:21,296 - INFO - Collecting system information
+2025-10-03 14:34:21,333 - INFO - Collecting hardware information
+2025-10-03 14:34:22,340 - INFO - Collecting software information
+2025-10-03 14:34:22,378 - INFO - Data saved to ./cmdb-test-data/cmdb-test-data-20251003-143422.json
+2025-10-03 14:34:22,378 - INFO - Data saved to ./cmdb-test-data/system_info-20251003-143422.json
+2025-10-03 14:34:22,378 - INFO - Data saved to ./cmdb-test-data/hardware_info-20251003-143422.json
+2025-10-03 14:34:22,382 - INFO - Data saved to ./cmdb-test-data/software_info-20251003-143422.json

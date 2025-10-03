@@ -1,0 +1,13 @@
+{
+  "timestamp": "2025-10-03T14:34:21.256730",
+  "changes": [
+    {
+      "type": "modified",
+      "file": "./test-files/test1.txt",
+      "old_hash": "68a1ab880ea2b0e75936ac21c28747bd23ca8b90b924e13c6d6b6cb14d07815f",
+      "new_hash": "8f34d6b1482dc9e4480cb5474414e652cc64eb47692519e4f659ec93052b556f",
+      "timestamp": "2025-10-03T14:34:21.256724"
+    }
+  ],
+  "total_changes": 1
+}

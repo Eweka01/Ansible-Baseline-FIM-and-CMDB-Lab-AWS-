@@ -1,0 +1,251 @@
+---
+# File Integrity Monitoring Rules
+# YAML-based rules for FIM configuration
+
+# Global FIM Settings
+fim_global:
+  enabled: true
+  scan_mode: "continuous"  # continuous, scheduled, on-demand
+  hash_algorithm: "sha256"
+  alert_threshold: 1  # Alert on any change
+  
+# Path-based Monitoring Rules
+monitoring_rules:
+  # Critical system directories
+  - name: "System Configuration"
+    paths:
+      - "/etc"
+    priority: "critical"
+    scan_interval: 300  # 5 minutes
+    alert_on_change: true
+    exclude_patterns:
+      - "*.log"
+      - "*.tmp"
+      - "*.cache"
+    include_patterns:
+      - "*.conf"
+      - "*.cfg"
+      - "*.ini"
+      - "passwd"
+      - "shadow"
+      - "group"
+      - "gshadow"
+  
+  # System binaries
+  - name: "System Binaries"
+    paths:
+      - "/usr/bin"
+      - "/usr/sbin"
+      - "/bin"
+      - "/sbin"
+    priority: "high"
+    scan_interval: 600  # 10 minutes
+    alert_on_change: true
+    exclude_patterns:
+      - "*.pyc"
+      - "*.pyo"
+    include_patterns:
+      - "*"
+  
+  # User directories
+  - name: "User Directories"
+    paths:
+      - "/home"
+      - "/root"
+    priority: "medium"
+    scan_interval: 1800  # 30 minutes
+    alert_on_change: true
+    exclude_patterns:
+      - "*/.*"
+      - "*/tmp/*"
+      - "*/cache/*"
+      - "*/Downloads/*"
+      - "*/Desktop/*"
+    include_patterns:
+      - "*.sh"
+      - "*.py"
+      - "*.pl"
+      - "*.rb"
+  
+  # Application directories
+  - name: "Application Directories"
+    paths:
+      - "/opt"
+      - "/usr/local"
+    priority: "medium"
+    scan_interval: 3600  # 1 hour
+    alert_on_change: true
+    exclude_patterns:
+      - "*/logs/*"
+      - "*/tmp/*"
+      - "*/cache/*"
+    include_patterns:
+      - "*/bin/*"
+      - "*/conf/*"
+      - "*/config/*"
+  
+  # Log directories (monitor structure, not content)
+  - name: "Log Directories"
+    paths:
+      - "/var/log"
+    priority: "low"
+    scan_interval: 7200  # 2 hours
+    alert_on_change: false  # Don't alert on log changes
+    exclude_patterns:
+      - "*.log"
+      - "*.log.*"
+    include_patterns:
+      - "*.conf"
+      - "*.cfg"
+
+# File Type Rules
+file_type_rules:
+  # Executable files
+  - name: "Executable Files"
+    patterns:
+      - "*.exe"
+      - "*.bin"
+      - "*.sh"
+      - "*.py"
+      - "*.pl"
+      - "*.rb"
+    priority: "high"
+    alert_on_change: true
+    scan_interval: 300
+  
+  # Configuration files
+  - name: "Configuration Files"
+    patterns:
+      - "*.conf"
+      - "*.cfg"
+      - "*.ini"
+      - "*.yaml"
+      - "*.yml"
+      - "*.json"
+      - "*.xml"
+    priority: "high"
+    alert_on_change: true
+    scan_interval: 300
+  
+  # Script files
+  - name: "Script Files"
+    patterns:
+      - "*.sh"
+      - "*.bash"
+      - "*.zsh"
+      - "*.csh"
+      - "*.ksh"
+    priority: "medium"
+    alert_on_change: true
+    scan_interval: 600
+
+# Alert Rules
+alert_rules:
+  # Critical alerts
+  - name: "Critical System Files"
+    conditions:
+      - path_contains: "/etc/passwd"
+      - path_contains: "/etc/shadow"
+      - path_contains: "/etc/group"
+      - path_contains: "/etc/sudoers"
+    alert_level: "critical"
+    notification_channels: ["email", "webhook", "syslog"]
+    escalation_time: 300  # 5 minutes
+  
+  # High priority alerts
+  - name: "System Binaries"
+    conditions:
+      - path_contains: "/usr/bin/"
+      - path_contains: "/usr/sbin/"
+      - path_contains: "/bin/"
+      - path_contains: "/sbin/"
+    alert_level: "high"
+    notification_channels: ["email", "syslog"]
+    escalation_time: 900  # 15 minutes
+  
+  # Medium priority alerts
+  - name: "User Files"
+    conditions:
+      - path_contains: "/home/"
+      - path_contains: "/root/"
+    alert_level: "medium"
+    notification_channels: ["syslog"]
+    escalation_time: 1800  # 30 minutes
+
+# Compliance Rules
+compliance_rules:
+  # PCI DSS requirements
+  pci_dss:
+    enabled: true
+    requirements:
+      - monitor_cardholder_data: true
+      - monitor_system_configs: true
+      - monitor_access_logs: true
+      - alert_on_unauthorized_changes: true
+  
+  # SOX compliance
+  sox:
+    enabled: false
+    requirements:
+      - monitor_financial_systems: true
+      - audit_trail_required: true
+      - change_approval_required: true
+  
+  # HIPAA compliance
+  hipaa:
+    enabled: false
+    requirements:
+      - monitor_phi_access: true
+      - encrypt_sensitive_data: true
+      - audit_healthcare_systems: true
+
+# Reporting Rules
+reporting_rules:
+  # Daily reports
+  daily_report:
+    enabled: true
+    schedule: "0 6 * * *"  # 6 AM daily
+    format: "html"
+    include_charts: true
+    email_recipients: ["admin@lab.local"]
+  
+  # Weekly summary
+  weekly_summary:
+    enabled: true
+    schedule: "0 8 * * 1"  # 8 AM Monday
+    format: "pdf"
+    include_trends: true
+    email_recipients: ["admin@lab.local", "security@lab.local"]
+  
+  # Monthly compliance report
+  monthly_compliance:
+    enabled: true
+    schedule: "0 9 1 * *"  # 9 AM 1st of month
+    format: "pdf"
+    include_compliance_status: true
+    email_recipients: ["compliance@lab.local"]
+
+# Integration Rules
+integration_rules:
+  # SIEM integration
+  siem:
+    enabled: false
+    endpoint: ""
+    api_key: ""
+    log_format: "cef"
+  
+  # Ticketing system
+  ticketing:
+    enabled: false
+    system: "jira"  # jira, servicenow, etc.
+    endpoint: ""
+    credentials: ""
+    auto_create_tickets: false
+  
+  # Slack integration
+  slack:
+    enabled: false
+    webhook_url: ""
+    channel: "#security"
+    mention_users: ["@security-team"]
+

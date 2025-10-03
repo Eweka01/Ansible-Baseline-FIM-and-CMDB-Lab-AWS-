@@ -1,0 +1,121 @@
+---
+# Main tasks for system_baseline role
+
+- name: "Update package cache"
+  package:
+    update_cache: yes
+  when: ansible_os_family == "Debian"
+
+- name: "Update package cache (RedHat)"
+  yum:
+    update_cache: yes
+  when: ansible_os_family == "RedHat"
+
+- name: "Install essential packages"
+  package:
+    name: "{{ system_packages.essential }}"
+    state: present
+
+- name: "Set system timezone"
+  timezone:
+    name: "{{ system.timezone }}"
+
+- name: "Configure system locale"
+  locale_gen:
+    name: "{{ system.locale }}"
+    state: present
+  when: ansible_os_family == "Debian"
+
+- name: "Set system locale (RedHat)"
+  lineinfile:
+    path: /etc/locale.conf
+    line: "LANG={{ system.locale }}"
+    create: yes
+  when: ansible_os_family == "RedHat"
+
+- name: "Configure system limits"
+  pam_limits:
+    domain: "*"
+    limit_type: "{{ item.type }}"
+    limit_item: "{{ item.item }}"
+    value: "{{ item.value }}"
+  loop:
+    - { type: "soft", item: "nofile", value: "{{ system_limits.max_open_files }}" }
+    - { type: "hard", item: "nofile", value: "{{ system_limits.max_open_files }}" }
+    - { type: "soft", item: "nproc", value: "{{ system_limits.max_processes }}" }
+    - { type: "hard", item: "nproc", value: "{{ system_limits.max_processes }}" }
+
+- name: "Configure kernel parameters"
+  sysctl:
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+    state: present
+    reload: yes
+  loop: "{{ kernel_parameters }}"
+
+- name: "Make kernel parameters persistent"
+  lineinfile:
+    path: /etc/sysctl.conf
+    line: "{{ item.name }} = {{ item.value }}"
+    regexp: "^{{ item.name | regex_escape() }}"
+    state: present
+  loop: "{{ kernel_parameters }}"
+
+- name: "Enable system services"
+  systemd:
+    name: "{{ item }}"
+    enabled: yes
+    state: started
+  loop: "{{ system_services }}"
+
+- name: "Disable unnecessary services"
+  systemd:
+    name: "{{ item }}"
+    enabled: no
+    state: stopped
+  loop: "{{ system_services_disabled }}"
+  ignore_errors: yes
+
+- name: "Create lab user"
+  user:
+    name: "{{ item.name }}"
+    groups: "{{ item.groups | join(',') }}"
+    shell: "{{ item.shell }}"
+    state: present
+    create_home: yes
+  loop: "{{ security.users }}"
+  when: security.users is defined
+
+- name: "Configure sudo for lab user"
+  lineinfile:
+    path: /etc/sudoers.d/lab-users
+    line: "{{ item.name }} ALL=(ALL) NOPASSWD:ALL"
+    create: yes
+    mode: '0440'
+    validate: 'visudo -cf %s'
+  loop: "{{ security.users }}"
+  when: security.users is defined
+
+- name: "Set up SSH directory for lab user"
+  file:
+    path: "/home/{{ item.name }}/.ssh"
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+    mode: '0700'
+  loop: "{{ security.users }}"
+  when: security.users is defined
+
+- name: "Create system information file"
+  template:
+    src: system-info.j2
+    dest: /etc/system-info
+    mode: '0644'
+  notify: restart services
+
+- name: "Set up log rotation for system logs"
+  template:
+    src: logrotate-system.j2
+    dest: /etc/logrotate.d/system-logs
+    mode: '0644'
+

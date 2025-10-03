@@ -1,0 +1,30 @@
+[Unit]
+Description=FIM Agent for {{ ansible_hostname }}
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --config /etc/fim/fim-config.json
+WorkingDirectory=/opt/lab-environment
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=fim-agent
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/fim /var/log
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=32768
+
+[Install]
+WantedBy=multi-user.target

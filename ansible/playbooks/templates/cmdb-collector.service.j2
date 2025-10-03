@@ -1,0 +1,28 @@
+[Unit]
+Description=CMDB Data Collector for {{ ansible_hostname }}
+After=network.target
+Wants=network.target
+
+[Service]
+Type=oneshot
+User=root
+Group=root
+ExecStart=/opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py --output-dir /var/lib/cmdb/data
+WorkingDirectory=/opt/lab-environment
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=cmdb-collector
+
+# Security settings
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/cmdb /var/log
+
+# Resource limits
+LimitNOFILE=65536
+LimitNPROC=32768
+
+[Install]
+WantedBy=multi-user.target
