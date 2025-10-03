@@ -1,7 +1,25 @@
 #!/usr/bin/env python3
 """
-Local CMDB Test Script
-Tests CMDB functionality without requiring system directories
+CMDB Test Script
+================
+
+This script provides comprehensive testing of the Configuration Management Database (CMDB)
+collector functionality. It tests all aspects of CMDB including system information
+collection, hardware detection, software inventory, and data validation.
+
+Features:
+- Tests system information collection
+- Validates hardware information gathering
+- Tests software and package detection
+- Validates network interface detection
+- Tests data storage and retrieval
+- Validates JSON schema compliance
+
+Usage:
+    python3 test-cmdb.py [--output-dir /path/to/output] [--verbose]
+
+Author: Ansible Baseline, FIM, and CMDB Lab
+Version: 1.0.0
 """
 
 import os
@@ -12,7 +30,7 @@ import socket
 import psutil
 from datetime import datetime
 
-# Add the current directory to Python path
+# Add the current directory to Python path for local imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 class LocalCMDBTest:

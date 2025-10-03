@@ -1,21 +1,44 @@
 #!/bin/bash
 
-# Lab Test Runner
-# Runs all tests for the Ansible Baseline, FIM, and CMDB lab
+# =============================================================================
+# Comprehensive Lab Test Runner
+# =============================================================================
+#
+# This script provides comprehensive testing for the Ansible Baseline, FIM,
+# and CMDB lab. It runs all individual test scripts, validates lab functionality,
+# and generates detailed test reports.
+#
+# Features:
+# - Executes all individual test scripts
+# - Generates detailed test reports
+# - Validates lab functionality end-to-end
+# - Creates test summaries and logs
+# - Provides pass/fail status for each component
+#
+# Usage:
+#     ./run-lab-tests.sh [--verbose] [--fim-only] [--cmdb-only] [--clean]
+#
+# Author: Ansible Baseline, FIM, and CMDB Lab
+# Version: 1.0.0
+# =============================================================================
 
-set -e
+set -e  # Exit on any error
 
-# Colors for output
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+# =============================================================================
+# Configuration and Setup
+# =============================================================================
 
-# Test results
-TOTAL_TESTS=0
-PASSED_TESTS=0
-FAILED_TESTS=0
+# Color codes for terminal output
+RED='\033[0;31m'      # Red for errors and failures
+GREEN='\033[0;32m'    # Green for success and passes
+YELLOW='\033[1;33m'   # Yellow for warnings
+BLUE='\033[0;34m'     # Blue for information
+NC='\033[0m'          # No Color (reset)
+
+# Test result counters
+TOTAL_TESTS=0         # Total number of tests executed
+PASSED_TESTS=0        # Number of tests that passed
+FAILED_TESTS=0        # Number of tests that failed
 
 # Logging functions
 log_info() {

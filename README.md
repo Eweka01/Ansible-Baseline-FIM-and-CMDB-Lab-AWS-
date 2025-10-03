@@ -39,6 +39,8 @@ This lab is designed for **AWS EC2 deployment** and supports mixed operating sys
 │   ├── test-files/         # Test files for monitoring
 │   └── cmdb-test-data/     # CMDB collected data
 ├── tests/                  # Test scenarios and validation
+│   ├── scripts/            # Test scripts with documentation
+│   └── TESTING-GUIDE.md    # Comprehensive testing guide
 ├── docs/                   # Documentation
 ├── AWS-DEPLOYMENT-GUIDE.md # Step-by-step AWS deployment guide
 ├── TROUBLESHOOTING-GUIDE.md # Error solutions and fixes

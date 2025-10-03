@@ -1,7 +1,24 @@
 #!/usr/bin/env python3
 """
-Local FIM Test Script
-Tests FIM functionality without requiring system directories
+Advanced FIM Test Script
+========================
+
+This script provides comprehensive testing of the File Integrity Monitoring (FIM) agent
+functionality. It tests all aspects of FIM including file monitoring, change detection,
+baseline creation, and alert generation.
+
+Features:
+- Tests FIM agent initialization and configuration
+- Validates file monitoring and change detection
+- Tests baseline creation and comparison
+- Validates alert generation and reporting
+- Tests different file types and monitoring scenarios
+
+Usage:
+    python3 test-fim.py [--verbose] [--test-dir /path/to/test]
+
+Author: Ansible Baseline, FIM, and CMDB Lab
+Version: 1.0.0
 """
 
 import os
@@ -12,33 +29,72 @@ import time
 from datetime import datetime
 from pathlib import Path
 
-# Add the current directory to Python path
+# Add the current directory to Python path for local imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-# Import the FIM agent class directly
+# Import the FIM agent class directly from the lab components
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), 'fim', 'agents'))
 from fim_agent import FIMAgent
 
 class LocalFIMTest:
+    """
+    Local FIM Test Class
+    ===================
+    
+    This class provides comprehensive testing functionality for the File Integrity
+    Monitoring (FIM) agent. It creates test scenarios, validates FIM functionality,
+    and generates detailed test reports.
+    
+    Attributes:
+        test_dir (str): Directory path for test files
+        baseline_file (str): Path to FIM baseline file
+        report_file (str): Path to test report file
+    """
+    
     def __init__(self):
-        self.test_dir = "./test-files"
-        self.baseline_file = "./fim-baseline.json"
-        self.report_file = "./fim-test-reports.json"
+        """
+        Initialize the LocalFIMTest class
+        
+        Sets up default paths for test files, baseline data, and report generation.
+        These paths can be customized based on testing requirements.
+        """
+        self.test_dir = "./test-files"           # Directory for test files
+        self.baseline_file = "./fim-baseline.json"  # FIM baseline data file
+        self.report_file = "./fim-test-reports.json"  # Test report output file
         
     def create_test_files(self):
-        """Create test files for FIM testing"""
+        """
+        Create test files for FIM testing
+        
+        This method creates a variety of test files with different content types
+        to simulate real-world file monitoring scenarios. The files include:
+        - Text files with different content
+        - Configuration files
+        - Script files
+        - Files with timestamps for change detection
+        
+        Returns:
+            None
+            
+        Side Effects:
+            - Creates test directory if it doesn't exist
+            - Generates test files with sample content
+            - Prints creation status to console
+        """
+        # Ensure test directory exists
         os.makedirs(self.test_dir, exist_ok=True)
         
-        # Create some test files
+        # Define test files with different types and purposes
         test_files = [
-            "test1.txt",
-            "test2.txt", 
-            "config.conf",
-            "script.sh"
+            "test1.txt",      # Basic text file
+            "test2.txt",      # Another text file for comparison
+            "config.conf",    # Configuration file
+            "script.sh"       # Shell script file
         ]
         
+        # Create each test file with unique content
         for filename in test_files:
             filepath = os.path.join(self.test_dir, filename)
             with open(filepath, 'w') as f:
