@@ -38,10 +38,10 @@ Congratulations! Your Ansible Baseline, FIM, and CMDB lab is now fully deployed 
 python3 test-fim-simple.py
 
 # Test CMDB data collection
-python3 test-cmdb.py
+python3 tests/scripts/test-cmdb.py
 
 # Run the full test suite
-./run-lab-tests.sh
+./tests/scripts/run-lab-tests.sh
 ```
 
 ### 2. **Review Generated Data**
@@ -132,7 +132,7 @@ Edit `fim/agents/fim-config.json` to enable notifications:
 
 ```bash
 # Daily test routine
-./run-lab-tests.sh
+./tests/scripts/run-lab-tests.sh
 
 # Check for any issues
 grep -i error *.log
@@ -151,8 +151,8 @@ find cmdb-test-data -name "*.json" -mtime -1
 ## 📚 Learning Resources
 
 ### 1. **Documentation**
-- `docs/installation-guide.md` - Complete setup guide
-- `docs/user-guide.md` - Detailed usage instructions
+- `setup/docs/installation-guide.md` - Complete setup guide
+- `setup/docs/user-guide.md` - Detailed usage instructions
 - `tests/test-scenarios.md` - Test scenarios and exercises
 
 ### 2. **Configuration Files**
@@ -221,8 +221,8 @@ find cmdb-test-data -name "*.json" -mtime -1
 ## 🆘 Getting Help
 
 1. **Check Logs**: Review `*.log` files for error messages
-2. **Run Tests**: Use `./run-lab-tests.sh` to validate functionality
-3. **Review Documentation**: Check `docs/` directory for detailed guides
+2. **Run Tests**: Use `./tests/scripts/run-lab-tests.sh` to validate functionality
+3. **Review Documentation**: Check `setup/docs/` directory for detailed guides
 4. **Test Components**: Run individual component tests to isolate issues
 
 ## 🎉 Congratulations!

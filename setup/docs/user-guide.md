@@ -435,9 +435,9 @@ def collect_custom_data(self):
 ## Support and Resources
 
 ### Documentation
-- Installation Guide: `docs/installation-guide.md`
-- Test Scenarios: `tests/test-scenarios.md`
-- API Documentation: `docs/api-reference.md`
+- Installation Guide: `installation-guide.md`
+- Test Scenarios: `../../tests/test-scenarios.md`
+- API Documentation: `api-reference.md`
 
 ### Logs and Debugging
 - Ansible logs: `ansible/ansible.log`

@@ -513,8 +513,8 @@ python3 tests/scripts/test-cmdb.py --help
 
 ### **Support Resources**
 
-- **Troubleshooting Guide**: `TROUBLESHOOTING-GUIDE.md`
-- **User Guide**: `HOW-TO-USE-THIS-LAB.md`
+- **Troubleshooting Guide**: `../setup/guides/TROUBLESHOOTING-GUIDE.md`
+- **User Guide**: `../setup/guides/HOW-TO-USE-THIS-LAB.md`
 - **Test Logs**: `logs/` directory
 - **Test Results**: `data/` directory
 
@@ -529,10 +529,10 @@ python3 tests/scripts/test-cmdb.py --help
 
 ## 📚 Additional Resources
 
-- **[HOW-TO-USE-THIS-LAB.md](../HOW-TO-USE-THIS-LAB.md)** - Complete user guide
-- **[TROUBLESHOOTING-GUIDE.md](../TROUBLESHOOTING-GUIDE.md)** - Error solutions
-- **[AWS-DEPLOYMENT-GUIDE.md](../AWS-DEPLOYMENT-GUIDE.md)** - Deployment instructions
-- **[NEXT-STEPS.md](../NEXT-STEPS.md)** - Advanced usage
+- **[HOW-TO-USE-THIS-LAB.md](../setup/guides/HOW-TO-USE-THIS-LAB.md)** - Complete user guide
+- **[TROUBLESHOOTING-GUIDE.md](../setup/guides/TROUBLESHOOTING-GUIDE.md)** - Error solutions
+- **[AWS-DEPLOYMENT-GUIDE.md](../setup/guides/AWS-DEPLOYMENT-GUIDE.md)** - Deployment instructions
+- **[NEXT-STEPS.md](../setup/guides/NEXT-STEPS.md)** - Advanced usage
 
 ---
 

@@ -25,7 +25,7 @@ You have 3 AWS EC2 instances ready for deployment:
 
 ```bash
 # Run the SSH setup script
-./setup-aws-ssh.sh
+./setup/scripts/setup-aws-ssh.sh
 ```
 
 This script will:

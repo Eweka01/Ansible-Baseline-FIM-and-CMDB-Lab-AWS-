@@ -446,8 +446,8 @@ display_completion() {
     echo "   ./run-all-tests.sh"
     echo
     echo "Documentation:"
-    echo "- Installation Guide: $LAB_DIR/docs/installation-guide.md"
-    echo "- User Guide: $LAB_DIR/docs/user-guide.md"
+    echo "- Installation Guide: $LAB_DIR/setup/docs/installation-guide.md"
+    echo "- User Guide: $LAB_DIR/setup/docs/user-guide.md"
     echo "- Test Scenarios: $LAB_DIR/tests/test-scenarios.md"
     echo
     echo "For support, check the logs and documentation."

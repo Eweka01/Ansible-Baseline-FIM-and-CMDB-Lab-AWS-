@@ -33,8 +33,8 @@ cd Ansible-Baseline-FIM-and-CMDB-Lab-AWS-
 ### 1.2 Setup SSH Connectivity
 ```bash
 # Make the script executable and run it
-chmod +x setup-aws-ssh.sh
-./setup-aws-ssh.sh
+chmod +x setup/scripts/setup-aws-ssh.sh
+./setup/scripts/setup-aws-ssh.sh
 ```
 
 This will:

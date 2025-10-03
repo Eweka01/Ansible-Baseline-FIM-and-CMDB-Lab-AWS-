@@ -146,7 +146,7 @@ test_cmdb() {
     log_info "=== Testing CMDB Functionality ==="
     
     run_test "cmdb-basic-test" \
-             "python3 test-cmdb.py" \
+             "python3 tests/scripts/test-cmdb.py" \
              "Test CMDB data collection and storage"
     
     # Check if CMDB files were created
@@ -180,7 +180,7 @@ test_file_structure() {
     log_info "=== Testing File Structure ==="
     
     local required_dirs=("ansible" "fim" "cmdb" "docs" "tests")
-    local required_files=("README.md" "requirements.txt" "setup-lab.sh")
+    local required_files=("README.md" "requirements.txt" "setup/scripts/setup-lab.sh")
     
     for dir in "${required_dirs[@]}"; do
         if [[ -d "$dir" ]]; then
@@ -305,7 +305,7 @@ main() {
         echo "1. Review the test report"
         echo "2. Try the individual components:"
         echo "   - FIM: python3 test-fim-simple.py"
-        echo "   - CMDB: python3 test-cmdb.py"
+        echo "   - CMDB: python3 tests/scripts/test-cmdb.py"
         echo "3. Deploy to target systems using Ansible"
         echo "4. Run the full test suite: ./run-lab-tests.sh"
     else
