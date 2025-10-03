@@ -2993,3 +2993,73 @@ Origin: <adhoc 'shell' task>
 2025-10-03 16:00:50,881 p=24889 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
 2025-10-03 16:00:50,882 p=24889 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
 2025-10-03 16:00:50,882 p=24889 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:05:44,398 p=26045 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 16:05:44,400 p=26045 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 16:05:44,486 p=26045 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************************************************************
+2025-10-03 16:05:44,495 p=26045 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 16:05:44,496 p=26045 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************************************************************
+2025-10-03 16:05:46,211 p=26045 u=osamudiameneweka n=ansible ERROR| [ERROR]: Task failed: Module failed: non-zero return code
+Origin: <adhoc 'shell' task>
+
+{'action': 'shell', 'args': {'_raw_params': '/opt/lab-environment/fim-agent.py --scan-once'}, 'timeout': 0, [...]
+
+
+2025-10-03 16:05:46,213 p=26045 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-1]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.051411'
+  end: '2025-10-03 20:05:46.182268'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-03 20:05:46.130857'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 16:05:47,602 p=26045 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-2]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.853478'
+  end: '2025-10-03 20:05:47.583245'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-03 20:05:46.729767'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 16:05:47,780 p=26045 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-3]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.876638'
+  end: '2025-10-03 20:05:47.755279'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-03 20:05:46.878641'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 16:05:47,782 p=26045 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************************************************************
+2025-10-03 16:05:47,782 p=26045 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:05:47,782 p=26045 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 16:05:47,782 p=26045 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   

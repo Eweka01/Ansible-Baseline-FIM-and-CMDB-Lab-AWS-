@@ -67,6 +67,7 @@ This lab is designed for **AWS EC2 deployment** and supports mixed operating sys
 
 ## 📚 Documentation
 
+- **[HOW-TO-USE-THIS-LAB.md](HOW-TO-USE-THIS-LAB.md)** - **Complete user guide with step-by-step instructions**
 - **[AWS-DEPLOYMENT-GUIDE.md](AWS-DEPLOYMENT-GUIDE.md)** - Complete deployment instructions
 - **[TROUBLESHOOTING-GUIDE.md](TROUBLESHOOTING-GUIDE.md)** - Common errors and solutions
 - **[NEXT-STEPS.md](NEXT-STEPS.md)** - Advanced usage and extensions
