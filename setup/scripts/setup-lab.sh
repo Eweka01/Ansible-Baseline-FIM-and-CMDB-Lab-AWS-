@@ -30,7 +30,7 @@
 # - Internet connectivity
 # - Appropriate system permissions
 #
-# Author: Gabriel Eweka
+# Author: Ansible Baseline, FIM, and CMDB Lab
 # Version: 1.0.0
 # =============================================================================
 
