@@ -29,22 +29,14 @@
 # =============================================================================
 
 - name: "AWS Lab Environment Setup"
-  hosts: aws_instances          # Target all AWS instances defined in inventory
-  become: yes                   # Run tasks with sudo/root privileges
-  gather_facts: yes             # Collect system information (OS, IP, etc.)
+  hosts: aws_instances
+  become: yes
+  gather_facts: yes
   
   vars:
-    playbook_start_time: "{{ ansible_date_time.iso8601 }}"  # Record when playbook started
-  
-  # =============================================================================
-  # PRE-TASKS: Initial Setup and Information Display
-  # =============================================================================
-  # These tasks run before the main setup tasks to prepare the environment
-  # and display important information about what's being set up.
+    playbook_start_time: "{{ ansible_date_time.iso8601 }}"
   
   pre_tasks:
-    # Display information about the instance being configured
-    # This helps you understand what's happening during the setup process
     - name: "Display setup information"
       debug:
         msg:
@@ -55,375 +47,287 @@
           - "Instance Type: {{ instance_type | default('t2.micro') }}"
           - "Playbook started at: {{ playbook_start_time }}"
     
-    # Wait for SSH connection to be stable before proceeding
-    # This ensures the instance is ready to receive commands
     - name: "Wait for SSH to be ready"
       wait_for_connection:
-        delay: 10        # Wait 10 seconds between connection attempts
-        timeout: 300     # Give up after 5 minutes if connection fails
-  
-  # =============================================================================
-  # MAIN TASKS: System Setup and Configuration
-  # =============================================================================
-  # These tasks perform the actual setup of the lab environment on each instance.
-  # They are organized in logical groups for easy understanding.
+        delay: 10
+        timeout: 300
   
   tasks:
-    # =============================================================================
-    # STEP 1: Package Management and System Updates
-    # =============================================================================
-    # Update package caches and install essential packages for both Ubuntu and Amazon Linux
-    # This ensures we have all the tools needed for the lab components
-    
-    # Update package cache for Ubuntu/Debian systems (manage-node-2, manage-node-3)
     - name: "Update package cache (Ubuntu/Debian)"
       apt:
-        update_cache: yes        # Download latest package information
-        cache_valid_time: 3600   # Cache is valid for 1 hour
-      when: ansible_os_family == "Debian"  # Only run on Ubuntu/Debian systems
+        update_cache: yes
+        cache_valid_time: 3600
+      when: ansible_os_family == "Debian"
     
-    # Update package cache for Amazon Linux systems (manage-node-1)
     - name: "Update package cache (Amazon Linux)"
       yum:
-        update_cache: yes        # Download latest package information
-      when: ansible_distribution == "Amazon"  # Only run on Amazon Linux systems
+        update_cache: yes
+      when: ansible_distribution == "Amazon"
     
-    # Install essential packages for Ubuntu/Debian systems (manage-node-2, manage-node-3)
-    # These packages provide the foundation for our lab components
     - name: "Install essential packages (Ubuntu/Debian)"
       apt:
         name:
-          - python3              # Python 3 interpreter
-          - python3-pip          # Python package installer
-          - python3-venv         # Python virtual environment support
-          - curl                 # Command-line tool for downloading files
-          - wget                 # Another command-line download tool
-          - vim                  # Text editor
-          - htop                 # System monitor
-          - tree                 # Directory structure viewer
-          - unzip                # Archive extraction tool
-          - git                  # Version control system
-          - iotop                # I/O monitoring tool
-          - sysstat              # System statistics tools
-          - fail2ban             # Intrusion prevention system
-          - ufw                  # Uncomplicated Firewall
-          - auditd               # Linux audit daemon
-          - aide                 # Advanced Intrusion Detection Environment
-          - rkhunter             # Rootkit hunter
-          - chkrootkit           # Rootkit checker
-        state: present           # Ensure packages are installed
-        update_cache: yes        # Update package cache before installing
-      when: ansible_os_family == "Debian"  # Only run on Ubuntu/Debian systems
+          - python3
+          - python3-pip
+          - python3-venv
+          - curl
+          - wget
+          - vim
+          - htop
+          - tree
+          - unzip
+          - git
+          - iotop
+          - sysstat
+          - fail2ban
+          - ufw
+          - auditd
+          - aide
+          - rkhunter
+          - chkrootkit
+        state: present
+        update_cache: yes
+      when: ansible_os_family == "Debian"
     
-    # Install essential packages for Amazon Linux systems (manage-node-1)
-    # Note: Some packages have different names on Amazon Linux
     - name: "Install essential packages (Amazon Linux)"
       yum:
         name:
-          - python3              # Python 3 interpreter
-          - python3-pip          # Python package installer
-          - wget                 # Command-line download tool
-          - vim                  # Text editor
-          - htop                 # System monitor
-          - tree                 # Directory structure viewer
-          - unzip                # Archive extraction tool
-          - git                  # Version control system
-          - iotop                # I/O monitoring tool
-          - sysstat              # System statistics tools
-          - fail2ban             # Intrusion prevention system
-          - audit                # Linux audit daemon (different name than Ubuntu)
-          - aide                 # Advanced Intrusion Detection Environment
-          - rkhunter             # Rootkit hunter
-          - chkrootkit           # Rootkit checker
-        state: present           # Ensure packages are installed
-        update_cache: yes        # Update package cache before installing
-      when: ansible_distribution == "Amazon"  # Only run on Amazon Linux systems
+          - python3
+          - python3-pip
+          - wget
+          - vim
+          - htop
+          - tree
+          - unzip
+          - git
+          - iotop
+          - sysstat
+          - fail2ban
+          - audit
+          - aide
+          - rkhunter
+          - chkrootkit
+        state: present
+        update_cache: yes
+      when: ansible_distribution == "Amazon"
     
-    # =============================================================================
-    # STEP 2: Python Virtual Environment Setup
-    # =============================================================================
-    # Create a Python virtual environment to isolate our lab components
-    # This prevents conflicts with system Python packages
-    
-    # Create directory for the virtual environment
     - name: "Create virtual environment directory"
       file:
-        path: /opt/lab-env        # Directory where virtual environment will be created
-        state: directory          # Ensure directory exists
-        mode: '0755'             # Set permissions (read/write/execute for owner, read/execute for group/others)
-      become: yes                # Run as root to create in /opt directory
+        path: /opt/lab-env
+        state: directory
+        mode: '0755'
+      become: yes
 
-    # Create the Python virtual environment
-    # This creates an isolated Python environment with its own packages
     - name: "Create virtual environment"
-      command: python3 -m venv /opt/lab-env  # Create virtual environment using Python 3
-      become: yes                # Run as root
+      command: python3 -m venv /opt/lab-env
+      become: yes
 
-    # Install Python packages needed for our lab components
-    # These packages provide functionality for FIM, CMDB, and other lab features
     - name: "Install Python dependencies in virtual environment"
       pip:
         name:
-          - psutil               # System and process utilities
-          - watchdog             # File system event monitoring (for FIM)
-          - pyyaml               # YAML file parsing
-          - jinja2               # Template engine (used by Ansible)
-          - requests             # HTTP library for web requests
-          - paramiko             # SSH client library
-          - cryptography         # Cryptographic recipes and primitives
-        state: present           # Ensure packages are installed
-        virtualenv: /opt/lab-env # Install in our virtual environment
-      become: yes                # Run as root
-    
-    # =============================================================================
-    # STEP 3: Directory Structure Setup
-    # =============================================================================
-    # Create all necessary directories for our lab components
-    # This organizes files and ensures proper permissions
+          - psutil
+          - watchdog
+          - pyyaml
+          - jinja2
+          - requests
+          - paramiko
+          - cryptography
+        state: present
+        virtualenv: /opt/lab-env
+      become: yes
     
     - name: "Create lab directories"
       file:
-        path: "{{ item }}"        # Directory path from the loop below
-        state: directory          # Ensure directory exists
-        mode: '0755'             # Set permissions (read/write/execute for owner, read/execute for group/others)
-        owner: root              # Set owner to root
-        group: root              # Set group to root
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+        owner: root
+        group: root
       loop:
-        - /opt/lab-environment   # Main lab component directory
-        - /var/lib/fim          # FIM data storage directory
-        - /var/lib/cmdb/data    # CMDB data storage directory
-        - /var/log/fim          # FIM log files directory
-        - /var/log/cmdb         # CMDB log files directory
-        - /etc/fim              # FIM configuration directory
-        - /etc/cmdb             # CMDB configuration directory
-    
-    # =============================================================================
-    # STEP 4: Lab Component Deployment
-    # =============================================================================
-    # Copy our lab component files to the instances
-    # This deploys the FIM agent, CMDB collector, and configuration files
+        - /opt/lab-environment
+        - /var/lib/fim
+        - /var/lib/cmdb/data
+        - /var/log/fim
+        - /var/log/cmdb
+        - /etc/fim
+        - /etc/cmdb
     
     - name: "Copy lab files to instances"
       copy:
-        src: "{{ item.src }}"                    # Source file path (relative to playbook)
-        dest: "{{ item.dest }}"                  # Destination file path on the instance
-        mode: "{{ item.mode | default('0644') }}" # File permissions (default: read/write for owner, read for group/others)
-        owner: root                              # Set file owner to root
-        group: root                              # Set file group to root
+        src: "{{ item.src }}"
+        dest: "{{ item.dest }}"
+        mode: "{{ item.mode | default('0644') }}"
+        owner: root
+        group: root
       loop:
-        # Copy FIM agent script (executable)
         - { src: "../../fim/agents/fim-agent.py", dest: "/opt/lab-environment/fim-agent.py", mode: "0755" }
-        # Copy FIM configuration file
         - { src: "../../fim/agents/fim-config.json", dest: "/etc/fim/fim-config.json" }
-        # Copy CMDB collector script (executable)
         - { src: "../../cmdb/scripts/cmdb-collector.py", dest: "/opt/lab-environment/cmdb-collector.py", mode: "0755" }
-        # Copy Python requirements file
         - { src: "../../requirements.txt", dest: "/opt/lab-environment/requirements.txt" }
     
-    # =============================================================================
-    # STEP 5: Service Configuration and Management
-    # =============================================================================
-    # Configure systemd services to run our lab components automatically
-    # This ensures FIM and CMDB run continuously in the background
-    
-    # Configure FIM agent with AWS-specific settings
     - name: "Configure FIM for AWS instances"
       template:
-        src: fim-config-aws.j2              # Template file for FIM configuration
-        dest: /etc/fim/fim-config.json      # Final configuration file location
-        mode: '0644'                        # File permissions
-        owner: root                         # File owner
-        group: root                         # File group
-      notify: restart fim-agent             # Restart FIM agent if configuration changes
+        src: fim-config-aws.j2
+        dest: /etc/fim/fim-config.json
+        mode: '0644'
+        owner: root
+        group: root
+      notify: restart fim-agent
     
-    # Create systemd service for FIM agent (runs continuously)
     - name: "Create FIM systemd service"
       template:
-        src: fim-agent.service.j2           # Template for FIM service file
-        dest: /etc/systemd/system/fim-agent.service  # Systemd service file location
-        mode: '0644'                        # File permissions
-        owner: root                         # File owner
-        group: root                         # File group
+        src: fim-agent.service.j2
+        dest: /etc/systemd/system/fim-agent.service
+        mode: '0644'
+        owner: root
+        group: root
       notify: 
-        - reload systemd                    # Reload systemd configuration
-        - restart fim-agent                 # Restart FIM agent service
+        - reload systemd
+        - restart fim-agent
     
-    # Create systemd service for CMDB collector (runs on-demand)
     - name: "Create CMDB collection service"
       template:
-        src: cmdb-collector.service.j2      # Template for CMDB service file
-        dest: /etc/systemd/system/cmdb-collector.service  # Systemd service file location
-        mode: '0644'                        # File permissions
-        owner: root                         # File owner
-        group: root                         # File group
-      notify: reload systemd                # Reload systemd configuration
+        src: cmdb-collector.service.j2
+        dest: /etc/systemd/system/cmdb-collector.service
+        mode: '0644'
+        owner: root
+        group: root
+      notify: reload systemd
     
-    # Create systemd timer for CMDB collector (runs periodically)
     - name: "Create CMDB collection timer"
       template:
-        src: cmdb-collector.timer.j2        # Template for CMDB timer file
-        dest: /etc/systemd/system/cmdb-collector.timer  # Systemd timer file location
-        mode: '0644'                        # File permissions
-        owner: root                         # File owner
-        group: root                         # File group
-      notify: reload systemd                # Reload systemd configuration
+        src: cmdb-collector.timer.j2
+        dest: /etc/systemd/system/cmdb-collector.timer
+        mode: '0644'
+        owner: root
+        group: root
+      notify: reload systemd
     
-    # Enable and start our services
     - name: "Enable and start services"
       systemd:
-        name: "{{ item }}"                  # Service name from the loop below
-        enabled: yes                        # Enable service to start on boot
-        state: started                      # Start the service now
-        daemon_reload: yes                  # Reload systemd configuration
+        name: "{{ item }}"
+        enabled: yes
+        state: started
+        daemon_reload: yes
       loop:
-        - fim-agent                        # FIM agent service (runs continuously)
-        - cmdb-collector.timer             # CMDB collector timer (runs periodically)
+        - fim-agent
+        - cmdb-collector.timer
     
-    # =============================================================================
-    # STEP 6: Security Hardening - Firewall Configuration
-    # =============================================================================
-    # Configure firewalls to secure the instances
-    # Different firewall systems are used for different operating systems
-    
-    # Configure UFW (Uncomplicated Firewall) for Ubuntu/Debian systems
     - name: "Configure UFW firewall (Ubuntu/Debian)"
       ufw:
-        state: enabled           # Enable the firewall
-        policy: deny            # Default policy: deny all incoming connections
-        direction: incoming     # Apply policy to incoming connections
+        state: enabled
+        policy: deny
+        direction: incoming
       when: 
-        - (enable_firewall | default(true)) | bool  # Only if firewall is enabled
-        - ansible_os_family == "Debian"             # Only on Ubuntu/Debian systems
+        - (enable_firewall | default(true)) | bool
+        - ansible_os_family == "Debian"
     
-    # Allow SSH access through UFW firewall (essential for remote access)
     - name: "Allow SSH through UFW firewall (Ubuntu/Debian)"
       ufw:
-        rule: allow             # Allow the connection
-        port: "22"              # SSH port
-        proto: tcp              # TCP protocol
+        rule: allow
+        port: "22"
+        proto: tcp
       when: 
-        - (enable_firewall | default(true)) | bool  # Only if firewall is enabled
-        - ansible_os_family == "Debian"             # Only on Ubuntu/Debian systems
+        - (enable_firewall | default(true)) | bool
+        - ansible_os_family == "Debian"
     
-    # Allow HTTP access through UFW firewall (for web servers only)
     - name: "Allow HTTP through UFW firewall (Ubuntu/Debian)"
       ufw:
-        rule: allow             # Allow the connection
-        port: "80"              # HTTP port
-        proto: tcp              # TCP protocol
+        rule: allow
+        port: "80"
+        proto: tcp
       when: 
-        - (enable_firewall | default(true)) | bool  # Only if firewall is enabled
-        - ansible_os_family == "Debian"             # Only on Ubuntu/Debian systems
-        - service_type | default('') == 'web'       # Only for web server instances
+        - (enable_firewall | default(true)) | bool
+        - ansible_os_family == "Debian"
+        - service_type | default('') == 'web'
     
-    # Allow HTTPS access through UFW firewall (for web servers only)
     - name: "Allow HTTPS through UFW firewall (Ubuntu/Debian)"
       ufw:
-        rule: allow             # Allow the connection
-        port: "443"             # HTTPS port
-        proto: tcp              # TCP protocol
+        rule: allow
+        port: "443"
+        proto: tcp
       when: 
-        - (enable_firewall | default(true)) | bool  # Only if firewall is enabled
-        - ansible_os_family == "Debian"             # Only on Ubuntu/Debian systems
-        - service_type | default('') == 'web'       # Only for web server instances
+        - (enable_firewall | default(true)) | bool
+        - ansible_os_family == "Debian"
+        - service_type | default('') == 'web'
     
-    # Configure iptables firewall for Amazon Linux systems
     - name: "Configure iptables firewall (Amazon Linux)"
       blockinfile:
-        path: /etc/sysconfig/iptables    # iptables configuration file
+        path: /etc/sysconfig/iptables
         block: |
           *filter
-          :INPUT DROP [0:0]              # Default policy: drop all incoming packets
-          :FORWARD DROP [0:0]            # Default policy: drop all forwarded packets
-          :OUTPUT ACCEPT [0:0]           # Default policy: accept all outgoing packets
-          -A INPUT -i lo -j ACCEPT       # Allow loopback interface
-          -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT  # Allow established connections
-          -A INPUT -p tcp --dport 22 -j ACCEPT  # Allow SSH (port 22)
+          :INPUT DROP [0:0]
+          :FORWARD DROP [0:0]
+          :OUTPUT ACCEPT [0:0]
+          -A INPUT -i lo -j ACCEPT
+          -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+          -A INPUT -p tcp --dport 22 -j ACCEPT
           {% if service_type | default('') == 'web' %}
-          -A INPUT -p tcp --dport 80 -j ACCEPT   # Allow HTTP (port 80) for web servers
-          -A INPUT -p tcp --dport 443 -j ACCEPT  # Allow HTTPS (port 443) for web servers
+          -A INPUT -p tcp --dport 80 -j ACCEPT
+          -A INPUT -p tcp --dport 443 -j ACCEPT
           {% endif %}
           COMMIT
-        create: yes                      # Create file if it doesn't exist
+        create: yes
       when: 
-        - (enable_firewall | default(true)) | bool  # Only if firewall is enabled
-        - ansible_distribution == "Amazon"           # Only on Amazon Linux systems
-      notify: restart iptables           # Restart iptables if configuration changes
+        - (enable_firewall | default(true)) | bool
+        - ansible_distribution == "Amazon"
+      notify: restart iptables
     
-    # Start and enable iptables service on Amazon Linux
     - name: "Start and enable iptables (Amazon Linux)"
       systemd:
-        name: iptables                   # Service name
-        enabled: yes                     # Enable service to start on boot
-        state: started                   # Start the service now
+        name: iptables
+        enabled: yes
+        state: started
       when:
-        - (enable_firewall | default(true)) | bool  # Only if firewall is enabled
-        - ansible_distribution == "Amazon"           # Only on Amazon Linux systems
-      ignore_errors: yes                 # Ignore errors (Amazon Linux 2023 uses firewalld by default)
+        - (enable_firewall | default(true)) | bool
+        - ansible_distribution == "Amazon"
+      ignore_errors: yes
     
-    # =============================================================================
-    # STEP 7: Additional Security Configuration
-    # =============================================================================
-    # Configure fail2ban for intrusion prevention and create system information file
-    
-    # Configure fail2ban to protect against brute force attacks
     - name: "Configure fail2ban"
       template:
-        src: fail2ban-aws.j2              # Template for fail2ban configuration
-        dest: /etc/fail2ban/jail.local    # fail2ban configuration file
-        mode: '0644'                     # File permissions
-        owner: root                      # File owner
-        group: root                      # File group
-      notify: restart fail2ban           # Restart fail2ban if configuration changes
+        src: fail2ban-aws.j2
+        dest: /etc/fail2ban/jail.local
+        mode: '0644'
+        owner: root
+        group: root
+      notify: restart fail2ban
     
-    # Start and enable fail2ban service
     - name: "Start and enable fail2ban"
       systemd:
-        name: fail2ban                   # Service name
-        enabled: yes                     # Enable service to start on boot
-        state: started                   # Start the service now
+        name: fail2ban
+        enabled: yes
+        state: started
     
-    # Create system information file with instance details
     - name: "Create system information file"
       template:
-        src: system-info-aws.j2          # Template for system information
-        dest: /etc/system-info           # System information file location
-        mode: '0644'                     # File permissions
-        owner: root                      # File owner
-        group: root                      # File group
+        src: system-info-aws.j2
+        dest: /etc/system-info
+        mode: '0644'
+        owner: root
+        group: root
     
-    # =============================================================================
-    # STEP 8: Component Initialization and Testing
-    # =============================================================================
-    # Initialize and test our lab components to ensure they're working correctly
-    
-    # Initialize FIM baseline (creates initial file hash database)
     - name: "Initialize FIM baseline"
       command: /opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --init-baseline
       args:
-        creates: /var/lib/fim/baseline.json  # Only run if baseline doesn't exist
-      register: fim_init                     # Store command result
-      changed_when: fim_init.rc == 0         # Mark as changed if successful
+        creates: /var/lib/fim/baseline.json
+      register: fim_init
+      changed_when: fim_init.rc == 0
     
-    # Run initial CMDB data collection
     - name: "Run initial CMDB collection"
       command: /opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py
-      register: cmdb_init                    # Store command result
-      changed_when: cmdb_init.rc == 0        # Mark as changed if successful
+      register: cmdb_init
+      changed_when: cmdb_init.rc == 0
     
-    # Test FIM agent functionality
     - name: "Test FIM agent"
       command: /opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once
-      register: fim_test                     # Store command result
-      changed_when: false                    # Don't mark as changed (this is a test)
+      register: fim_test
+      changed_when: false
     
-    # Test CMDB collector functionality
     - name: "Test CMDB collector"
       command: /opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py --help
-      register: cmdb_test                    # Store command result
-      changed_when: false                    # Don't mark as changed (this is a test)
+      register: cmdb_test
+      changed_when: false
     
-    # Display test results for verification
     - name: "Display test results"
       debug:
         msg:
@@ -432,23 +336,15 @@
           - "FIM baseline initialized: {{ 'YES' if fim_init.rc == 0 else 'NO' }}"
           - "CMDB initial collection: {{ 'SUCCESS' if cmdb_init.rc == 0 else 'FAILED' }}"
   
-  # =============================================================================
-  # POST-TASKS: Finalization and Completion
-  # =============================================================================
-  # These tasks run after all main tasks are completed
-  # They create completion markers and display final status information
-  
   post_tasks:
-    # Create a marker file to indicate setup is complete
     - name: "Create setup completion marker"
       file:
-        path: /etc/aws-lab-setup-completed  # Marker file location
-        state: touch                        # Create empty file
-        mode: '0644'                       # File permissions
-        owner: root                        # File owner
-        group: root                        # File group
+        path: /etc/aws-lab-setup-completed
+        state: touch
+        mode: '0644'
+        owner: root
+        group: root
     
-    # Display comprehensive completion information
     - name: "Display completion information"
       debug:
         msg:
@@ -466,32 +362,22 @@
           - "3. Test FIM: /opt/lab-environment/fim-agent.py --scan-once"
           - "4. Test CMDB: /opt/lab-environment/cmdb-collector.py"
   
-  # =============================================================================
-  # HANDLERS: Service Management
-  # =============================================================================
-  # Handlers are triggered by 'notify' statements in tasks
-  # They run at the end of the playbook to restart services when needed
-  
   handlers:
-    # Restart FIM agent service (triggered when FIM configuration changes)
     - name: restart fim-agent
       systemd:
-        name: fim-agent           # Service name
-        state: restarted          # Restart the service
+        name: fim-agent
+        state: restarted
     
-    # Restart fail2ban service (triggered when fail2ban configuration changes)
     - name: restart fail2ban
       systemd:
-        name: fail2ban            # Service name
-        state: restarted          # Restart the service
+        name: fail2ban
+        state: restarted
     
-    # Restart iptables service (triggered when iptables configuration changes)
     - name: restart iptables
       systemd:
-        name: iptables            # Service name
-        state: restarted          # Restart the service
+        name: iptables
+        state: restarted
     
-    # Reload systemd configuration (triggered when service files change)
     - name: reload systemd
       systemd:
-        daemon_reload: yes        # Reload systemd daemon configuration
+        daemon_reload: yes
