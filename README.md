@@ -116,17 +116,17 @@ This lab is designed for **AWS EC2 deployment** with **live monitoring** and sup
 
 ## 📚 Documentation
 
-### **Comprehensive Technical Documentation (GAB/):**
-- **[GAB/README.md](GAB/README.md)** - Project overview and quick start guide
-- **[GAB/ARCHITECTURE.md](GAB/ARCHITECTURE.md)** - System architecture and data flows
-- **[GAB/SETUP_AND_DEPLOY.md](GAB/SETUP_AND_DEPLOY.md)** - Detailed installation and deployment
-- **[GAB/OPERATIONS_RUNBOOK.md](GAB/OPERATIONS_RUNBOOK.md)** - Day-2 operations and troubleshooting
-- **[GAB/SECURITY_AND_BASELINES.md](GAB/SECURITY_AND_BASELINES.md)** - Security controls and compliance
-- **[GAB/FIM_IMPLEMENTATION.md](GAB/FIM_IMPLEMENTATION.md)** - File integrity monitoring details
-- **[GAB/CMDB_AND_ASSET_INVENTORY.md](GAB/CMDB_AND_ASSET_INVENTORY.md)** - Asset management and tracking
-- **[GAB/ANSIBLE_PLAYBOOKS_REFERENCE.md](GAB/ANSIBLE_PLAYBOOKS_REFERENCE.md)** - Complete playbook documentation
-- **[GAB/TESTING_AND_VALIDATION.md](GAB/TESTING_AND_VALIDATION.md)** - Testing framework and validation
-- **[GAB/INTERVIEW_BRIEF_PSEG_CM.md](GAB/INTERVIEW_BRIEF_PSEG_CM.md)** - PSEG Configuration Management mapping
+### **Comprehensive Technical Documentation (My Sys/):**
+- **[My Sys/README.md](My%20Sys/README.md)** - Project overview and quick start guide
+- **[My Sys/ARCHITECTURE.md](My%20Sys/ARCHITECTURE.md)** - System architecture and data flows
+- **[My Sys/SETUP_AND_DEPLOY.md](My%20Sys/SETUP_AND_DEPLOY.md)** - Detailed installation and deployment
+- **[My Sys/OPERATIONS_RUNBOOK.md](My%20Sys/OPERATIONS_RUNBOOK.md)** - Day-2 operations and troubleshooting
+- **[My Sys/SECURITY_AND_BASELINES.md](My%20Sys/SECURITY_AND_BASELINES.md)** - Security controls and compliance
+- **[My Sys/FIM_IMPLEMENTATION.md](My%20Sys/FIM_IMPLEMENTATION.md)** - File integrity monitoring details
+- **[My Sys/CMDB_AND_ASSET_INVENTORY.md](My%20Sys/CMDB_AND_ASSET_INVENTORY.md)** - Asset management and tracking
+- **[My Sys/ANSIBLE_PLAYBOOKS_REFERENCE.md](My%20Sys/ANSIBLE_PLAYBOOKS_REFERENCE.md)** - Complete playbook documentation
+- **[My Sys/TESTING_AND_VALIDATION.md](My%20Sys/TESTING_AND_VALIDATION.md)** - Testing framework and validation
+- **[My Sys/INTERVIEW_BRIEF.md](My%20Sys/INTERVIEW_BRIEF.md)** - PSEG Configuration Management mapping
 
 ### **Essential Guides:**
 - **[setup/guides/HOW-TO-USE-THIS-LAB.md](setup/guides/HOW-TO-USE-THIS-LAB.md)** - Complete user guide with step-by-step instructions
