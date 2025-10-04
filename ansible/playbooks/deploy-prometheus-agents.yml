@@ -1,0 +1,196 @@
+---
+# =============================================================================
+# Deploy Prometheus-Instrumented FIM and CMDB Agents
+# =============================================================================
+#
+# This playbook deploys FIM and CMDB agents with Prometheus metrics
+# to enable monitoring of file integrity and configuration management
+# activities in Grafana dashboards.
+#
+# What this playbook does:
+# 1. Installs prometheus_client Python library
+# 2. Deploys Prometheus-instrumented FIM agent
+# 3. Deploys Prometheus-instrumented CMDB collector
+# 4. Creates systemd services for both agents
+# 5. Updates Prometheus configuration to scrape new metrics
+# 6. Tests the new metrics endpoints
+#
+# Usage:
+#   ansible-playbook -i inventory/aws-instances playbooks/deploy-prometheus-agents.yml
+#
+# Author: Gabriel Eweka
+# Version: 1.0.0
+# =============================================================================
+
+- name: "Deploy Prometheus-Instrumented FIM and CMDB Agents"
+  hosts: aws_instances
+  become: yes
+  gather_facts: yes
+  
+  vars:
+    playbook_start_time: "{{ ansible_date_time.iso8601 }}"
+  
+  pre_tasks:
+    - name: "Display deployment information"
+      debug:
+        msg:
+          - "Deploying Prometheus-instrumented agents on {{ inventory_hostname }}"
+          - "Instance: {{ ansible_hostname }} ({{ ansible_host }})"
+          - "OS: {{ ansible_distribution }} {{ ansible_distribution_version }}"
+          - "Playbook started at: {{ playbook_start_time }}"
+
+  tasks:
+    # Install prometheus_client library
+    - name: "Install prometheus_client library"
+      pip:
+        name: prometheus_client
+        state: present
+        virtualenv: /opt/lab-env
+        virtualenv_python: python3
+
+    # Deploy Prometheus-instrumented FIM agent
+    - name: "Copy Prometheus-instrumented FIM agent"
+      copy:
+        src: "{{ playbook_dir }}/../../fim/agents/fim-agent-prometheus.py"
+        dest: /opt/lab-environment/fim-agent-prometheus.py
+        owner: root
+        group: root
+        mode: '0755'
+
+    # Deploy Prometheus-instrumented CMDB collector
+    - name: "Copy Prometheus-instrumented CMDB collector"
+      copy:
+        src: "{{ playbook_dir }}/../../cmdb/cmdb-collector-prometheus.py"
+        dest: /opt/lab-environment/cmdb-collector-prometheus.py
+        owner: root
+        group: root
+        mode: '0755'
+
+    # Create systemd service for Prometheus FIM agent
+    - name: "Create Prometheus FIM agent systemd service"
+      copy:
+        content: |
+          [Unit]
+          Description=Prometheus FIM Agent
+          After=network.target
+
+          [Service]
+          Type=simple
+          User=root
+          Group=root
+          ExecStart=/opt/lab-env/bin/python /opt/lab-environment/fim-agent-prometheus.py --metrics-port 8080
+          Restart=always
+          RestartSec=10
+          Environment=PYTHONPATH=/opt/lab-environment
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/fim-agent-prometheus.service
+        mode: '0644'
+
+    # Create systemd service for Prometheus CMDB collector
+    - name: "Create Prometheus CMDB collector systemd service"
+      copy:
+        content: |
+          [Unit]
+          Description=Prometheus CMDB Collector
+          After=network.target
+
+          [Service]
+          Type=simple
+          User=root
+          Group=root
+          ExecStart=/opt/lab-env/bin/python /opt/lab-environment/cmdb-collector-prometheus.py --metrics-port 8081
+          Restart=always
+          RestartSec=10
+          Environment=PYTHONPATH=/opt/lab-environment
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/cmdb-collector-prometheus.service
+        mode: '0644'
+
+    # Reload systemd daemon
+    - name: "Reload systemd daemon"
+      systemd:
+        daemon_reload: yes
+
+    # Enable and start Prometheus FIM agent
+    - name: "Enable and start Prometheus FIM agent"
+      systemd:
+        name: fim-agent-prometheus
+        enabled: yes
+        state: started
+
+    # Enable and start Prometheus CMDB collector
+    - name: "Enable and start Prometheus CMDB collector"
+      systemd:
+        name: cmdb-collector-prometheus
+        enabled: yes
+        state: started
+
+    # Wait for services to start
+    - name: "Wait for Prometheus FIM agent to start"
+      wait_for:
+        port: 8080
+        host: "{{ ansible_host }}"
+        timeout: 30
+        state: started
+      delegate_to: localhost
+      become: no
+
+    - name: "Wait for Prometheus CMDB collector to start"
+      wait_for:
+        port: 8081
+        host: "{{ ansible_host }}"
+        timeout: 30
+        state: started
+      delegate_to: localhost
+      become: no
+
+    # Test metrics endpoints
+    - name: "Test FIM agent metrics endpoint"
+      uri:
+        url: "http://{{ ansible_host }}:8080/metrics"
+        method: GET
+        return_content: yes
+      register: fim_metrics_test
+      delegate_to: localhost
+      become: no
+
+    - name: "Test CMDB collector metrics endpoint"
+      uri:
+        url: "http://{{ ansible_host }}:8081/metrics"
+        method: GET
+        return_content: yes
+      register: cmdb_metrics_test
+      delegate_to: localhost
+      become: no
+
+    # Verify metrics are working
+    - name: "Verify FIM metrics are available"
+      debug:
+        msg: "FIM metrics endpoint is working: {{ 'fim_events_total' in fim_metrics_test.content }}"
+
+    - name: "Verify CMDB metrics are available"
+      debug:
+        msg: "CMDB metrics endpoint is working: {{ 'cmdb_collections_total' in cmdb_metrics_test.content }}"
+
+  post_tasks:
+    - name: "Display completion message"
+      debug:
+        msg:
+          - "Prometheus-instrumented agents deployed on {{ inventory_hostname }}"
+          - "Instance: {{ ansible_hostname }} ({{ ansible_host }})"
+          - "Deployment completed at: {{ ansible_date_time.iso8601 }}"
+          - "Services running:"
+          - "  - FIM Agent Prometheus: {{ 'RUNNING' if fim_metrics_test.status == 200 else 'FAILED' }}"
+          - "  - CMDB Collector Prometheus: {{ 'RUNNING' if cmdb_metrics_test.status == 200 else 'FAILED' }}"
+          - "Metrics endpoints:"
+          - "  - FIM Metrics: http://{{ ansible_host }}:8080/metrics"
+          - "  - CMDB Metrics: http://{{ ansible_host }}:8081/metrics"
+          - "Next steps:"
+          - "1. Update Prometheus configuration to scrape new metrics"
+          - "2. Create Grafana dashboards for FIM and CMDB metrics"
+          - "3. Test file changes to see FIM metrics in action"
+          - "4. Monitor CMDB collection metrics"

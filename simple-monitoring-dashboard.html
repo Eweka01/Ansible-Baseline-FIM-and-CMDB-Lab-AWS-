@@ -139,7 +139,7 @@
         <div class="header">
             <h1>🖥️ Lab Monitoring Dashboard</h1>
             <p>Production-Grade Monitoring for Ansible Baseline, FIM, and CMDB Lab</p>
-            <p style="color: #4CAF50; font-weight: bold;">✅ SSH Tunnels Active | ✅ Prometheus Collecting | ✅ Grafana Live</p>
+            <p style="color: #4CAF50; font-weight: bold;">✅ SSH Tunnels Active | ✅ Prometheus Collecting | ✅ Grafana Live | ✅ FIM/CMDB Metrics</p>
             <button class="refresh-btn" onclick="refreshStatus()">🔄 Refresh Status</button>
         </div>
 
@@ -169,13 +169,27 @@
                             <span class="service-url">9101, 9102, 9103</span>
                         </div>
                     </li>
-                    <li>
-                        <span class="service-name">Node Exporters</span>
-                        <div>
-                            <span class="status running" id="node-exporters-status">3/3 UP</span>
-                            <span class="service-url">AWS Instances</span>
-                        </div>
-                    </li>
+                <li>
+                    <span class="service-name">Node Exporters</span>
+                    <div>
+                        <span class="status running" id="node-exporters-status">3/3 UP</span>
+                        <span class="service-url">AWS Instances</span>
+                    </div>
+                </li>
+                <li>
+                    <span class="service-name">FIM Agents</span>
+                    <div>
+                        <span class="status running" id="fim-agents-status">3/3 UP</span>
+                        <span class="service-url">Ports 8080, 8082, 8084</span>
+                    </div>
+                </li>
+                <li>
+                    <span class="service-name">CMDB Collectors</span>
+                    <div>
+                        <span class="status running" id="cmdb-collectors-status">3/3 UP</span>
+                        <span class="service-url">Ports 8081, 8083, 8085</span>
+                    </div>
+                </li>
                 </ul>
             </div>
 
@@ -235,10 +249,10 @@
                         <div class="metric-value" id="aws-instances">3</div>
                         <div class="metric-label">AWS Instances</div>
                     </div>
-                    <div class="metric">
-                        <div class="metric-value" id="services-active">6/6</div>
-                        <div class="metric-label">Services Active</div>
-                    </div>
+                <div class="metric">
+                    <div class="metric-value" id="services-active">12/12</div>
+                    <div class="metric-label">Services Active</div>
+                </div>
                 </div>
             </div>
         </div>
@@ -270,6 +284,33 @@
                     <p><strong>Node Exporter:</strong> <span class="status running">UP</span></p>
                     <p><strong>Services:</strong> FIM Agent, CMDB Collector, Security Hardening</p>
                     <p><strong>Metrics:</strong> <a href="http://localhost:9103/metrics" target="_blank" class="service-url">View Raw Metrics</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- FIM and CMDB Metrics Card -->
+        <div class="card">
+            <h3>🔒 FIM & CMDB Metrics</h3>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 15px;">
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                    <h4>📁 FIM Events</h4>
+                    <p><code>fim_events_total</code></p>
+                    <a href="http://localhost:9090/graph?g0.expr=fim_events_total&g0.tab=1" target="_blank" class="service-url">View in Prometheus</a>
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                    <h4>📊 CMDB Collections</h4>
+                    <p><code>cmdb_collections_total</code></p>
+                    <a href="http://localhost:9090/graph?g0.expr=cmdb_collections_total&g0.tab=1" target="_blank" class="service-url">View in Prometheus</a>
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                    <h4>📦 System Packages</h4>
+                    <p><code>system_packages_total</code></p>
+                    <a href="http://localhost:9090/graph?g0.expr=system_packages_total&g0.tab=1" target="_blank" class="service-url">View in Prometheus</a>
+                </div>
+                <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px;">
+                    <h4>👁️ Files Monitored</h4>
+                    <p><code>fim_files_monitored</code></p>
+                    <a href="http://localhost:9090/graph?g0.expr=fim_files_monitored&g0.tab=1" target="_blank" class="service-url">View in Prometheus</a>
                 </div>
             </div>
         </div>
@@ -324,6 +365,12 @@
 
             // Test SSH Tunnels
             testSSHTunnels();
+            
+            // Test FIM Agents
+            testFIMAgents();
+            
+            // Test CMDB Collectors
+            testCMDBCollectors();
         }
 
         async function testSSHTunnels() {
@@ -352,6 +399,60 @@
             });
             
             updateTunnelStatus(activeTunnels);
+        }
+
+        async function testFIMAgents() {
+            const fimPorts = [8080, 8082, 8084];
+            let activeFIM = 0;
+            
+            const requests = fimPorts.map(async (port) => {
+                try {
+                    const response = await fetch(`http://localhost:${port}/metrics`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return { port, success: true };
+                } catch (error) {
+                    console.error(`FIM agent ${port} failed: ${error.message}`);
+                    return { port, success: false };
+                }
+            });
+
+            const results = await Promise.all(requests);
+            results.forEach(({ port, success }) => {
+                if (success) {
+                    activeFIM++;
+                }
+            });
+            
+            updateFIMStatus(activeFIM);
+        }
+
+        async function testCMDBCollectors() {
+            const cmdbPorts = [8081, 8083, 8085];
+            let activeCMDB = 0;
+            
+            const requests = cmdbPorts.map(async (port) => {
+                try {
+                    const response = await fetch(`http://localhost:${port}/metrics`);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    return { port, success: true };
+                } catch (error) {
+                    console.error(`CMDB collector ${port} failed: ${error.message}`);
+                    return { port, success: false };
+                }
+            });
+
+            const results = await Promise.all(requests);
+            results.forEach(({ port, success }) => {
+                if (success) {
+                    activeCMDB++;
+                }
+            });
+            
+            updateCMDBStatus(activeCMDB);
         }
 
         async function testGrafana() {
@@ -416,6 +517,30 @@
                 statusElement.className = 'status warning';
                 nodeExportersElement.textContent = `${activeCount}/3 UP`;
                 nodeExportersElement.className = 'status warning';
+            }
+        }
+
+        function updateFIMStatus(activeCount) {
+            const statusElement = document.getElementById('fim-agents-status');
+            
+            if (activeCount === 3) {
+                statusElement.textContent = '3/3 UP';
+                statusElement.className = 'status running';
+            } else {
+                statusElement.textContent = `${activeCount}/3 UP`;
+                statusElement.className = 'status warning';
+            }
+        }
+
+        function updateCMDBStatus(activeCount) {
+            const statusElement = document.getElementById('cmdb-collectors-status');
+            
+            if (activeCount === 3) {
+                statusElement.textContent = '3/3 UP';
+                statusElement.className = 'status running';
+            } else {
+                statusElement.textContent = `${activeCount}/3 UP`;
+                statusElement.className = 'status warning';
             }
         }
 
