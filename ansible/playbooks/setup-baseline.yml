@@ -38,22 +38,14 @@
 # =============================================================================
 
 - name: "Lab Environment Baseline Configuration"
-  hosts: all                    # Target all hosts in the inventory
-  become: yes                   # Run tasks with sudo/root privileges
-  gather_facts: yes             # Collect system information (OS, IP, etc.)
+  hosts: all
+  become: yes
+  gather_facts: yes
   
   vars:
-    playbook_start_time: "{{ ansible_date_time.iso8601 }}"  # Record when playbook started
-  
-  # =============================================================================
-  # PRE-TASKS: Initial Setup and Information Display
-  # =============================================================================
-  # These tasks run before the main baseline configuration to display
-  # information about what's being configured and when the process started.
+    playbook_start_time: "{{ ansible_date_time.iso8601 }}"
   
   pre_tasks:
-    # Display information about the baseline configuration process
-    # This helps you understand what's happening during the setup
     - name: "Display playbook information"
       debug:
         msg:
@@ -61,67 +53,35 @@
           - "Environment: {{ environment | default('development') }}"
           - "Playbook started at: {{ playbook_start_time }}"
   
-  # =============================================================================
-  # ROLES: Baseline Configuration Components
-  # =============================================================================
-  # This playbook uses Ansible roles to organize and modularize the baseline
-  # configuration. Each role handles a specific aspect of system configuration.
-  # Roles can be run individually using tags for targeted configuration.
-  
   roles:
-    # System Baseline Role - Core system configuration
-    # Handles: users, groups, directories, file permissions, system settings
     - role: system_baseline
-      tags: [baseline, system]           # Can be run with --tags system or --tags baseline
+      tags: [baseline, system]
     
-    # Security Hardening Role - Security configuration
-    # Handles: SSH hardening, firewall rules, audit configuration, security policies
     - role: security_hardening
-      tags: [baseline, security]         # Can be run with --tags security or --tags baseline
+      tags: [baseline, security]
     
-    # Package Management Role - Software installation and updates
-    # Handles: package installation, repository configuration, system updates
     - role: package_management
-      tags: [baseline, packages]         # Can be run with --tags packages or --tags baseline
+      tags: [baseline, packages]
     
-    # Network Configuration Role - Network settings
-    # Handles: network interfaces, routing, DNS configuration, network security
     - role: network_config
-      tags: [baseline, network]          # Can be run with --tags network or --tags baseline
+      tags: [baseline, network]
     
-    # Logging Setup Role - Centralized logging
-    # Handles: log rotation, centralized logging, log monitoring, audit trails
     - role: logging_setup
-      tags: [baseline, logging]          # Can be run with --tags logging or --tags baseline
+      tags: [baseline, logging]
     
-    # Monitoring Setup Role - System monitoring (optional)
-    # Handles: monitoring agents, alerting, performance monitoring, health checks
     - role: monitoring_setup
-      tags: [baseline, monitoring]       # Can be run with --tags monitoring or --tags baseline
-      when: monitoring.enabled | default(true)  # Only run if monitoring is enabled
+      tags: [baseline, monitoring]
+      when: monitoring.enabled | default(true)
     
-    # Backup Setup Role - Backup configuration (optional)
-    # Handles: backup schedules, backup storage, recovery procedures, data protection
     - role: backup_setup
-      tags: [baseline, backup]           # Can be run with --tags backup or --tags baseline
-      when: backup.enabled | default(false)     # Only run if backup is enabled
-  
-  # =============================================================================
-  # POST-TASKS: Finalization and Completion
-  # =============================================================================
-  # These tasks run after all roles have been executed to finalize the
-  # baseline configuration, gather final system information, and create
-  # completion markers and logs.
+      tags: [baseline, backup]
+      when: backup.enabled | default(false)
   
   post_tasks:
-    # Gather final system facts after baseline configuration
-    # This provides updated system information after all changes have been applied
     - name: "Gather final system facts"
       setup:
-        gather_subset: min              # Only gather minimal facts (faster execution)
+        gather_subset: min
     
-    # Display comprehensive completion information
-    # Shows system status and configuration summary after baseline setup
     - name: "Display completion information"
       debug:
         msg:
@@ -130,21 +90,17 @@
           - "Available memory: {{ ansible_memtotal_mb }} MB"
           - "CPU cores: {{ ansible_processor_vcpus }}"
     
-    # Create a marker file to indicate baseline configuration is complete
-    # This file can be used by other playbooks to check if baseline is already applied
     - name: "Create baseline completion marker"
       file:
-        path: /etc/ansible-baseline-completed  # Marker file location
-        state: touch                           # Create empty file
-        mode: '0644'                          # Set file permissions
-      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"  # Only on supported OS families
+        path: /etc/ansible-baseline-completed
+        state: touch
+        mode: '0644'
+      when: ansible_os_family == "RedHat" or ansible_os_family == "Debian"
     
-    # Log the baseline completion for audit and tracking purposes
-    # This creates a permanent record of when baseline was applied
     - name: "Log baseline completion"
       lineinfile:
-        path: /var/log/ansible-baseline.log    # Log file location
+        path: /var/log/ansible-baseline.log
         line: "{{ ansible_date_time.iso8601 }} - Baseline configuration completed on {{ inventory_hostname }}"
-        create: yes                            # Create log file if it doesn't exist
-        mode: '0644'                          # Set file permissions
+        create: yes
+        mode: '0644'
 
