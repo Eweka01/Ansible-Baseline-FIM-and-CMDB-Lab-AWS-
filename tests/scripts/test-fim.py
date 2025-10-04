@@ -35,8 +35,16 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # Import the FIM agent class directly from the lab components
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), 'fim', 'agents'))
-from fim_agent import FIMAgent
+# Add the FIM agents directory to Python path
+fim_agents_path = os.path.join(os.path.dirname(__file__), '..', '..', 'fim', 'agents')
+sys.path.insert(0, fim_agents_path)
+
+# Import the FIM agent class (note: file is fim-agent.py, so we import as fim_agent)
+import importlib.util
+spec = importlib.util.spec_from_file_location("fim_agent", os.path.join(fim_agents_path, "fim-agent.py"))
+fim_agent_module = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(fim_agent_module)
+FIMAgent = fim_agent_module.FIMAgent
 
 class LocalFIMTest:
     """
