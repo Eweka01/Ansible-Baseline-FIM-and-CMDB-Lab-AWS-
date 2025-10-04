@@ -183,7 +183,7 @@ ansible aws_instances -i inventory/aws-instances -m shell -a "ufw status"
 
 ```bash
 # Run FIM scan on all instances
-ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-environment/fim-agent.py --scan-once"
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once"
 
 # Check FIM baseline
 ansible aws_instances -i inventory/aws-instances -m shell -a "ls -la /var/lib/fim/"
@@ -196,7 +196,7 @@ ansible aws_instances -i inventory/aws-instances -m shell -a "tail -20 /var/log/
 
 ```bash
 # Run CMDB collection
-ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-environment/cmdb-collector.py"
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py"
 
 # Check collected data
 ansible aws_instances -i inventory/aws-instances -m shell -a "ls -la /var/lib/cmdb/data/"
