@@ -18,7 +18,7 @@ Features:
 Usage:
     python3 test-cmdb.py [--output-dir /path/to/output] [--verbose]
 
-Author: Ansible Baseline, FIM, and CMDB Lab
+Author: Gabriel Eweka
 Version: 1.0.0
 """
 

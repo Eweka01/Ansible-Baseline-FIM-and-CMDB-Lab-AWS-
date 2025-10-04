@@ -1,0 +1,22 @@
+2025-10-03 20:47:42,642 p=44065 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 20:47:42,642 p=44065 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 20:47:42,736 p=44065 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************************************************************
+2025-10-03 20:47:42,745 p=44065 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 20:47:42,747 p=44065 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************************************************************
+2025-10-03 20:47:44,269 p=44065 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 20:47:44,889 p=44065 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 20:47:45,043 p=44065 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 20:47:45,046 p=44065 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************************************************************
+2025-10-03 20:47:45,046 p=44065 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 20:47:45,046 p=44065 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 20:47:45,046 p=44065 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   

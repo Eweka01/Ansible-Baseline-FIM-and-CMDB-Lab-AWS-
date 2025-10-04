@@ -23,7 +23,7 @@
 # - AWS instances running and accessible
 # - Internet connectivity
 #
-# Author: Ansible Baseline, FIM, and CMDB Lab
+# Author: Gabriel Eweka
 # Version: 1.0.0
 # =============================================================================
 

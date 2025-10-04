@@ -18,7 +18,7 @@
 # Usage:
 #     ./run-lab-tests.sh [--verbose] [--fim-only] [--cmdb-only] [--clean]
 #
-# Author: Ansible Baseline, FIM, and CMDB Lab
+# Author: Gabriel Eweka
 # Version: 1.0.0
 # =============================================================================
 

@@ -17,7 +17,7 @@ Features:
 Usage:
     python3 test-fim.py [--verbose] [--test-dir /path/to/test]
 
-Author: Ansible Baseline, FIM, and CMDB Lab
+Author: Gabriel Eweka
 Version: 1.0.0
 """
 
