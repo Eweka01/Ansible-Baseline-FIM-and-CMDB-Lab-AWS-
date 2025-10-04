@@ -1,6 +1,6 @@
-# Testing Guide - Ansible Baseline, FIM, and CMDB Lab
+# Testing Guide - Production Monitoring Lab
 
-This guide provides comprehensive information about testing the lab components, understanding test results, and troubleshooting test issues.
+This guide provides comprehensive information about testing your **production-grade monitoring lab** with Ansible Baseline, FIM, CMDB, and live monitoring via Prometheus + Grafana.
 
 ## 📋 Table of Contents
 
@@ -23,6 +23,9 @@ The lab includes comprehensive testing for all major components:
 - **Configuration Management Database (CMDB)** - System information collection
 - **Security Hardening** - Firewall, fail2ban, and SSH configuration
 - **Service Management** - Systemd services and timers
+- **Live Monitoring Stack** - Prometheus + Grafana monitoring
+- **SSH Tunneling** - Secure AWS monitoring connectivity
+- **Node Exporter** - System metrics collection
 
 ### **Test Categories**
 - **Unit Tests** - Individual component functionality
@@ -30,12 +33,44 @@ The lab includes comprehensive testing for all major components:
 - **End-to-End Tests** - Complete workflow validation
 - **Performance Tests** - Load and stress testing
 - **Security Tests** - Security configuration validation
+- **Monitoring Tests** - Real-time metrics and alerting
+- **Production Tests** - Enterprise-grade scenarios
 
 ---
 
 ## 🧪 Test Scripts
 
-### **1. test-fim.py - Advanced FIM Testing**
+### **1. test-prometheus-grafana-fix.sh - Monitoring Stack Testing**
+
+**Purpose**: Comprehensive testing of the production monitoring stack.
+
+**What it tests**:
+- SSH tunnel connectivity and status
+- Prometheus targets and data collection
+- Grafana accessibility and functionality
+- Docker services status
+- Node Exporter metrics availability
+
+**Key Features**:
+- Tests all 3 SSH tunnels (ports 9101, 9102, 9103)
+- Verifies Prometheus targets are UP
+- Tests Prometheus queries return data
+- Checks Grafana health and accessibility
+- Validates Docker container status
+
+**Usage**:
+```bash
+./test-prometheus-grafana-fix.sh
+```
+
+**Expected Output**:
+- ✅ All 3 SSH tunnels running
+- ✅ All 3 Prometheus targets UP
+- ✅ CPU and memory queries working
+- ✅ Grafana accessible
+- ✅ All Docker services running
+
+### **2. test-fim.py - Advanced FIM Testing**
 
 **Purpose**: Comprehensive testing of File Integrity Monitoring functionality.
 

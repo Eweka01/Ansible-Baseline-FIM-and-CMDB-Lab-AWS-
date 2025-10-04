@@ -1,6 +1,6 @@
-# How to Use This Lab - Complete User Guide 🚀
+# How to Use This Lab - Production Monitoring Stack 🚀
 
-This guide shows you exactly how to use your Ansible Baseline, FIM, and CMDB lab on AWS EC2 instances.
+This guide shows you exactly how to use your **production-grade monitoring lab** with Ansible Baseline, FIM, CMDB, and live monitoring via Prometheus + Grafana on AWS EC2 instances.
 
 ## 📋 Prerequisites Checklist
 
@@ -9,6 +9,7 @@ Before starting, ensure you have:
 - ✅ **3 AWS EC2 instances running** (your instances are already set up)
 - ✅ **SSH key file** (`key-p3.pem`) in `~/Desktop/key-p3.pem`
 - ✅ **Ansible installed** on your local machine
+- ✅ **Docker and Docker Compose** installed for monitoring stack
 - ✅ **Internet connectivity**
 
 ## 🎯 Your AWS Instances
@@ -58,11 +59,41 @@ ansible-playbook -i inventory/aws-instances playbooks/setup-aws-instances.yml
 - ✅ Security hardening will be applied
 - ✅ Services will be started automatically
 
+### 1.4 Setup Live Monitoring Stack
+```bash
+# Go back to lab root directory
+cd ..
+
+# Start Prometheus + Grafana stack
+docker compose -f docker-compose.yml up -d
+
+# Setup SSH tunnels for monitoring (bypasses AWS security groups)
+./setup-ssh-tunnel-monitoring.sh
+```
+
+**Expected Output:**
+- ✅ Prometheus and Grafana containers running
+- ✅ SSH tunnels established (ports 9101, 9102, 9103)
+- ✅ Node Exporter metrics accessible via tunnels
+- ✅ Prometheus targets showing as UP
+
 ---
 
 ## 🔍 Step 2: Verify Your Deployment
 
-### 2.1 Check Service Status
+### 2.1 Check Monitoring Stack
+```bash
+# Test monitoring stack
+./test-prometheus-grafana-fix.sh
+
+# Check tunnel status
+./manage-tunnels.sh status
+
+# Verify Prometheus targets
+curl -s http://localhost:9090/api/v1/targets | python3 -c "import sys, json; data=json.load(sys.stdin); [print(f'{target[\"discoveredLabels\"][\"__address__\"]} - {target[\"health\"]}') for target in data['data']['activeTargets']]"
+```
+
+### 2.2 Check Service Status
 ```bash
 # Check if FIM agents are running
 ansible -i inventory/aws-instances all -m shell -a "systemctl status fim-agent --no-pager"
@@ -105,78 +136,121 @@ ssh -i ~/Desktop/key-p3.pem ubuntu@54.242.234.69
 ssh -i ~/Desktop/key-p3.pem ubuntu@13.217.82.23
 ```
 
-#### Check FIM Status
+#### Check FIM Status (From Local Machine)
 ```bash
-# Check FIM agent status
-sudo systemctl status fim-agent
+# View real FIM logs from all instances (NEW!)
+./show-real-fim-logs.sh
 
-# View FIM logs
-sudo tail -f /var/log/fim-agent.log
+# View FIM logs from specific instance
+./show-real-fim-logs.sh manage-node-1
+
+# Check FIM service status across all instances
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "systemctl status fim-agent"
 
 # View FIM configuration
-sudo cat /etc/fim/fim-config.json
+ansible aws_instances -i inventory/aws-instances -m shell -a "cat /etc/fim/fim-config.json"
 ```
 
-#### Test File Changes
+#### Test File Changes (From Local Machine)
 ```bash
-# Create a test file to trigger FIM
-sudo touch /etc/test-file.txt
+# Run FIM scan on all instances
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once"
 
-# Run FIM scan to detect changes
-sudo /opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once
+# View recent FIM activity after scan
+./show-real-fim-logs.sh all 20
 
-# Check for alerts
-sudo tail -f /var/log/fim-agent.log
+# Create test file on specific instance and monitor
+ansible manage-node-1 -i inventory/aws-instances -m shell -a "touch /etc/test-file.txt"
+ansible manage-node-1 -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once"
+./show-real-fim-logs.sh manage-node-1
 ```
 
-#### View FIM Reports
+#### View FIM Reports (From Local Machine)
 ```bash
-# View baseline data
-sudo cat /var/lib/fim/baseline.json | jq .
+# View baseline data from all instances
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "ls -la /var/lib/fim/"
 
 # View change reports
-sudo cat /var/lib/fim/reports.json | jq .
+ansible aws_instances -i inventory/aws-instances -m shell -a "tail -10 /var/log/fim-reports.json"
+
+# Collect all FIM logs locally for analysis
+./collect-fim-logs.sh
 ```
 
 ### 3.2 Configuration Management Database (CMDB)
 
-#### Check CMDB Status
+#### Check CMDB Status (From Local Machine)
 ```bash
-# Check CMDB collector status
-sudo systemctl status cmdb-collector.timer
+# Check CMDB collector status across all instances
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "systemctl status cmdb-collector.timer"
 
 # View CMDB logs
-sudo journalctl -u cmdb-collector.service
+ansible aws_instances -i inventory/aws-instances -m shell -a "journalctl -u cmdb-collector.service --no-pager -n 10"
 ```
 
-#### Run CMDB Collection
+#### Run CMDB Collection (From Local Machine)
 ```bash
-# Run CMDB collector manually
-sudo /opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py
+# Run CMDB collector on all instances
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py"
 
-# Check collected data
-ls -la /var/lib/cmdb/data/
+# Check collected data from all instances
+ansible aws_instances -i inventory/aws-instances -m shell -a "ls -la /var/lib/cmdb/data/"
+
+# View system information from all instances
+ansible aws_instances -i inventory/aws-instances -m shell -a "cat /etc/system-info"
 ```
 
-#### View CMDB Data
+#### View CMDB Data (From Local Machine)
 ```bash
-# View system information
-sudo cat /var/lib/cmdb/data/system_info-*.json | jq .
+# View system information from all instances
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "cat /var/lib/cmdb/data/system_info-*.json | head -20"
 
 # View hardware information
-sudo cat /var/lib/cmdb/data/hardware_info-*.json | jq .
+ansible aws_instances -i inventory/aws-instances -m shell -a "cat /var/lib/cmdb/data/hardware_info-*.json | head -20"
 
 # View software information
-sudo cat /var/lib/cmdb/data/software_info-*.json | jq .
+ansible aws_instances -i inventory/aws-instances -m shell -a "cat /var/lib/cmdb/data/software_info-*.json | head -20"
 ```
 
-### 3.3 System Information
+### 3.3 System Information (From Local Machine)
 ```bash
-# View system information file
-sudo cat /opt/lab-environment/system-info.txt
+# View system information from all instances
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "cat /etc/system-info"
 
 # View security configuration
-sudo cat /etc/fail2ban/jail.local
+ansible aws_instances -i inventory/aws-instances -m shell -a "cat /etc/fail2ban/jail.local"
+```
+
+### 3.4 🎯 Quick Testing Commands (NEW!)
+
+**Essential commands to verify your deployment from your local machine:**
+
+```bash
+# 1. Check if services are running
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "systemctl is-active fim-agent cmdb-collector.timer"
+
+# 2. View real FIM logs from all instances
+./show-real-fim-logs.sh
+
+# 3. Test manual FIM scan
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once"
+
+# 4. Check CMDB data collection
+ansible aws_instances -i inventory/aws-instances -m shell -a "ls -la /var/lib/cmdb/data/"
+
+# 5. View FIM summary
+./show-real-fim-logs.sh summary
+
+# 6. Collect all logs locally
+./collect-fim-logs.sh
 ```
 
 ---
@@ -185,55 +259,62 @@ sudo cat /etc/fail2ban/jail.local
 
 ### 4.1 Test File Integrity Monitoring
 
-#### Exercise 1: Monitor System Files
+#### Exercise 1: Monitor System Files (From Local Machine)
 ```bash
-# 1. Check current baseline
-sudo /opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once
+# 1. Check current baseline on all instances
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once"
 
-# 2. Make a change to a monitored file
-sudo echo "test change" >> /etc/hostname
+# 2. Make a change to a monitored file on specific instance
+ansible manage-node-1 -i inventory/aws-instances -m shell -a "echo 'test change' >> /etc/hostname"
 
 # 3. Run scan again to detect change
-sudo /opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once
+ansible manage-node-1 -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once"
 
-# 4. Check the logs for alerts
-sudo tail -f /var/log/fim-agent.log
+# 4. Check the logs for alerts from local machine
+./show-real-fim-logs.sh manage-node-1
 ```
 
-#### Exercise 2: Test Different File Types
+#### Exercise 2: Test Different File Types (From Local Machine)
 ```bash
 # Create files in different monitored directories
-sudo touch /etc/test-config.conf
-sudo touch /usr/bin/test-script.sh
-sudo chmod +x /usr/bin/test-script.sh
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "touch /etc/test-config.conf"
+ansible aws_instances -i inventory/aws-instances -m shell -a "touch /usr/bin/test-script.sh"
+ansible aws_instances -i inventory/aws-instances -m shell -a "chmod +x /usr/bin/test-script.sh"
 
-# Run FIM scan
-sudo /opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once
+# Run FIM scan on all instances
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once"
+
+# View results from local machine
+./show-real-fim-logs.sh all
 ```
 
 ### 4.2 Test CMDB Data Collection
 
-#### Exercise 1: Collect System Information
+#### Exercise 1: Collect System Information (From Local Machine)
 ```bash
-# Run CMDB collector
-sudo /opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py
+# Run CMDB collector on all instances
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py"
 
-# Check what data was collected
-ls -la /var/lib/cmdb/data/
+# Check what data was collected from all instances
+ansible aws_instances -i inventory/aws-instances -m shell -a "ls -la /var/lib/cmdb/data/"
 
 # View the collected data
-sudo cat /var/lib/cmdb/data/system_info-*.json | jq '.system_info'
+ansible aws_instances -i inventory/aws-instances -m shell -a "cat /var/lib/cmdb/data/system_info-*.json | head -20"
 ```
 
-#### Exercise 2: Monitor Changes Over Time
+#### Exercise 2: Monitor Changes Over Time (From Local Machine)
 ```bash
-# Run collection multiple times
-sudo /opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py
+# Run collection multiple times on all instances
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py"
 sleep 60
-sudo /opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/cmdb-collector.py"
 
 # Compare timestamps in the data files
-ls -la /var/lib/cmdb/data/
+ansible aws_instances -i inventory/aws-instances -m shell -a "ls -la /var/lib/cmdb/data/"
 ```
 
 ### 4.3 Test Ansible Automation

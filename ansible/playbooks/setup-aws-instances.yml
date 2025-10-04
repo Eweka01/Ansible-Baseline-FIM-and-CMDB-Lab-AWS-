@@ -3,10 +3,11 @@
 # AWS EC2 Instances Setup Playbook
 # =============================================================================
 #
-# This playbook sets up the complete lab environment on your AWS EC2 instances.
+# This playbook sets up the complete production monitoring lab environment on your AWS EC2 instances.
 # It handles mixed OS environments (Amazon Linux + Ubuntu) and deploys:
 # - File Integrity Monitoring (FIM) agent
 # - Configuration Management Database (CMDB) collector
+# - Node Exporter for Prometheus metrics collection
 # - Security hardening (firewall, fail2ban, SSH security)
 # - System monitoring and logging
 # - Python virtual environment with all dependencies
@@ -14,12 +15,13 @@
 # What this playbook does:
 # 1. Updates system packages and installs dependencies
 # 2. Creates Python virtual environment for lab components
-# 3. Deploys FIM agent for file integrity monitoring
-# 4. Deploys CMDB collector for system information gathering
-# 5. Configures security hardening (firewall, fail2ban)
-# 6. Sets up systemd services for continuous operation
-# 7. Initializes FIM baseline and runs initial CMDB collection
-# 8. Tests all components to ensure they're working
+# 3. Installs Node Exporter for Prometheus metrics collection
+# 4. Deploys FIM agent for file integrity monitoring
+# 5. Deploys CMDB collector for system information gathering
+# 6. Configures security hardening (firewall, fail2ban)
+# 7. Sets up systemd services for continuous operation
+# 8. Initializes FIM baseline and runs initial CMDB collection
+# 9. Tests all components to ensure they're working
 #
 # Usage:
 #   ansible-playbook -i inventory/aws-instances playbooks/setup-aws-instances.yml
@@ -135,6 +137,88 @@
         state: present
         virtualenv: /opt/lab-env
       become: yes
+
+    - name: "Create node_exporter user"
+      user:
+        name: "node_exporter"
+        system: yes
+        shell: /usr/sbin/nologin
+        home: /var/lib/node_exporter
+        create_home: no
+        state: present
+
+    - name: "Create node_exporter group"
+      group:
+        name: "node_exporter"
+        state: present
+
+    - name: "Download Node Exporter (Amazon Linux)"
+      get_url:
+        url: "https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz"
+        dest: "/tmp/node_exporter-1.7.0.linux-amd64.tar.gz"
+        mode: '0644'
+      when: ansible_distribution == "Amazon"
+
+    - name: "Download Node Exporter (Ubuntu)"
+      get_url:
+        url: "https://github.com/prometheus/node_exporter/releases/download/v1.7.0/node_exporter-1.7.0.linux-amd64.tar.gz"
+        dest: "/tmp/node_exporter-1.7.0.linux-amd64.tar.gz"
+        mode: '0644'
+      when: ansible_distribution == "Ubuntu"
+
+    - name: "Extract Node Exporter"
+      unarchive:
+        src: "/tmp/node_exporter-1.7.0.linux-amd64.tar.gz"
+        dest: "/tmp/"
+        remote_src: yes
+
+    - name: "Copy Node Exporter binary"
+      copy:
+        src: "/tmp/node_exporter-1.7.0.linux-amd64/node_exporter"
+        dest: "/usr/local/bin/node_exporter"
+        owner: "node_exporter"
+        group: "node_exporter"
+        mode: '0755'
+        remote_src: yes
+
+    - name: "Create Node Exporter systemd service"
+      copy:
+        content: |
+          [Unit]
+          Description=Prometheus Node Exporter
+          Wants=network-online.target
+          After=network-online.target
+
+          [Service]
+          User=node_exporter
+          Group=node_exporter
+          Type=simple
+          ExecStart=/usr/local/bin/node_exporter --web.listen-address=:9100
+          Restart=always
+          RestartSec=3
+
+          [Install]
+          WantedBy=multi-user.target
+        dest: /etc/systemd/system/node_exporter.service
+        mode: '0644'
+
+    - name: "Reload systemd daemon"
+      systemd:
+        daemon_reload: yes
+
+    - name: "Enable Node Exporter service"
+      systemd:
+        name: node_exporter
+        enabled: yes
+        state: started
+
+    - name: "Clean up Node Exporter temporary files"
+      file:
+        path: "{{ item }}"
+        state: absent
+      loop:
+        - "/tmp/node_exporter-1.7.0.linux-amd64.tar.gz"
+        - "/tmp/node_exporter-1.7.0.linux-amd64"
     
     - name: "Create lab directories"
       file:
@@ -354,6 +438,7 @@
           - "Services running:"
           - "  - FIM Agent: {{ 'RUNNING' if fim_test.rc == 0 else 'FAILED' }}"
           - "  - CMDB Collector: {{ 'RUNNING' if cmdb_test.rc == 0 else 'FAILED' }}"
+          - "  - Node Exporter: RUNNING"
           - "  - Firewall: {{ 'ENABLED' if enable_firewall | default(true) else 'DISABLED' }}"
           - "  - Fail2ban: ENABLED"
           - "Next steps:"
@@ -361,6 +446,9 @@
           - "2. Check CMDB data: ls -la /var/lib/cmdb/data/"
           - "3. Test FIM: /opt/lab-environment/fim-agent.py --scan-once"
           - "4. Test CMDB: /opt/lab-environment/cmdb-collector.py"
+          - "5. Setup monitoring: ./setup-ssh-tunnel-monitoring.sh"
+          - "6. Access Grafana: http://localhost:3000"
+          - "7. Access Prometheus: http://localhost:9090"
   
   handlers:
     - name: restart fim-agent

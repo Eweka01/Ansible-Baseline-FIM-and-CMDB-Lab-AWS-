@@ -1,6 +1,6 @@
-# AWS Deployment Guide
+# AWS Deployment Guide - Production Monitoring Stack
 
-This guide will help you deploy your Ansible Baseline, FIM, and CMDB lab to your AWS EC2 instances.
+This guide will help you deploy your Ansible Baseline, FIM, and CMDB lab to your AWS EC2 instances with **live monitoring** via Prometheus + Grafana.
 
 ## 🎯 Your AWS Instances
 
@@ -42,12 +42,57 @@ cd ansible
 ansible-playbook -i inventory/aws-instances playbooks/setup-aws-instances.yml
 ```
 
-### Step 3: Verify Deployment
+### Step 3: Setup Live Monitoring
+
+```bash
+# Start Prometheus + Grafana stack
+docker compose -f docker-compose.yml up -d
+
+# Setup SSH tunnels for monitoring (bypasses AWS security groups)
+./setup-ssh-tunnel-monitoring.sh
+```
+
+### Step 4: Verify Deployment
 
 ```bash
 # Check deployment status
 ansible aws_instances -i inventory/aws-instances -m shell -a "systemctl status fim-agent cmdb-collector.timer"
 
+# Test monitoring stack
+./test-prometheus-grafana-fix.sh
+
+# Check tunnel status
+./manage-tunnels.sh status
+```
+
+## 📊 Access Your Live Monitoring
+
+Once deployed, you can access your monitoring stack:
+
+### 🌐 Web Interfaces
+- **Grafana**: http://localhost:3000 (admin/admin)
+- **Prometheus**: http://localhost:9090
+- **Lab Dashboard**: http://localhost:8080/simple-monitoring-dashboard.html
+
+### 🔍 Prometheus Queries
+Try these live queries in Prometheus:
+```promql
+# Check if all targets are up
+up{job="aws-nodes"}
+
+# CPU usage by instance
+node_cpu_seconds_total
+
+# Available memory
+node_memory_MemAvailable_bytes
+
+# Disk space
+node_filesystem_size_bytes
+```
+
+### 🧪 Testing Commands
+
+```bash
 # Check FIM logs
 ansible aws_instances -i inventory/aws-instances -m shell -a "tail -f /var/log/fim-agent.log"
 
@@ -179,7 +224,46 @@ ansible aws_instances -i inventory/aws-instances -m shell -a "ufw status"
 
 ## 🔍 Monitoring and Verification
 
-### Check FIM Functionality
+### 🎯 Quick Testing Commands
+
+**Start with these essential commands to verify your deployment:**
+
+```bash
+# 1. Check if services are running
+cd ansible
+ansible aws_instances -i inventory/aws-instances -m shell -a "systemctl is-active fim-agent cmdb-collector.timer"
+
+# 2. View real FIM logs from all instances (NEW!)
+./show-real-fim-logs.sh
+
+# 3. Test manual FIM scan
+ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/python /opt/lab-environment/fim-agent.py --scan-once"
+
+# 4. Check CMDB data collection
+ansible aws_instances -i inventory/aws-instances -m shell -a "ls -la /var/lib/cmdb/data/"
+```
+
+### 📊 Centralized Log Viewing (NEW!)
+
+**View FIM logs from your local machine without SSH'ing to each server:**
+
+```bash
+# View real FIM logs from all instances
+./show-real-fim-logs.sh
+
+# View FIM logs from specific instance
+./show-real-fim-logs.sh manage-node-1
+./show-real-fim-logs.sh manage-node-2
+./show-real-fim-logs.sh manage-node-3
+
+# View FIM summary only
+./show-real-fim-logs.sh summary
+
+# Collect and organize all FIM logs locally
+./collect-fim-logs.sh
+```
+
+### 🔍 Detailed FIM Testing
 
 ```bash
 # Run FIM scan on all instances
@@ -188,11 +272,14 @@ ansible aws_instances -i inventory/aws-instances -m shell -a "/opt/lab-env/bin/p
 # Check FIM baseline
 ansible aws_instances -i inventory/aws-instances -m shell -a "ls -la /var/lib/fim/"
 
-# View FIM reports
-ansible aws_instances -i inventory/aws-instances -m shell -a "tail -20 /var/log/fim-reports.json"
+# View FIM service status
+ansible aws_instances -i inventory/aws-instances -m shell -a "systemctl status fim-agent"
+
+# View recent FIM activity (shows actual log content)
+./show-real-fim-logs.sh all 20
 ```
 
-### Check CMDB Functionality
+### 🗄️ CMDB Testing
 
 ```bash
 # Run CMDB collection
@@ -203,19 +290,38 @@ ansible aws_instances -i inventory/aws-instances -m shell -a "ls -la /var/lib/cm
 
 # View system information
 ansible aws_instances -i inventory/aws-instances -m shell -a "cat /etc/system-info"
+
+# Check CMDB service status
+ansible aws_instances -i inventory/aws-instances -m shell -a "systemctl status cmdb-collector.timer"
 ```
 
-### Check Security Configuration
+### 🛡️ Security Configuration Testing
 
 ```bash
-# Check firewall status
+# Check firewall status (Ubuntu)
 ansible aws_instances -i inventory/aws-instances -m shell -a "ufw status verbose"
 
+# Check firewall status (Amazon Linux)
+ansible manage-node-1 -i inventory/aws-instances -m shell -a "systemctl status firewalld"
+
 # Check fail2ban status
-ansible aws_instances -i inventory/aws-instances -m shell -a "fail2ban-client status"
+ansible aws_instances -i inventory/aws-instances -m shell -a "systemctl status fail2ban"
 
 # Check SSH configuration
 ansible aws_instances -i inventory/aws-instances -m shell -a "sshd -T | grep -E '(PermitRootLogin|PasswordAuthentication)'"
+```
+
+### 🧪 Comprehensive Testing
+
+```bash
+# Run all lab tests
+./tests/scripts/run-lab-tests.sh
+
+# Test FIM functionality locally
+./tests/scripts/test-fim.py
+
+# Test CMDB functionality locally
+./tests/scripts/test-cmdb.py
 ```
 
 ## 🚨 Troubleshooting

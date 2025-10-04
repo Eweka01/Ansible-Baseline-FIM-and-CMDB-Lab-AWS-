@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'aws-nodes'
+    scrape_interval: 15s
+    static_configs:
+      - targets:
+          - 'host.docker.internal:9101'  # manage-node-1 via SSH tunnel
+          - 'host.docker.internal:9102'  # manage-node-2 via SSH tunnel
+          - 'host.docker.internal:9103'  # manage-node-3 via SSH tunnel
+    metrics_path: /metrics
