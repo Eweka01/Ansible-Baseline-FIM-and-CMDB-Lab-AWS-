@@ -90,9 +90,9 @@
       },
       "targets": [
         {
-          "expr": "rate(fim_events_total[5m]) * 60",
+          "expr": "rate(fim_events_total{instance=~\"$node\"}[5m]) * 60",
           "interval": "",
-          "legendFormat": "{{event_type}} events/min",
+          "legendFormat": "{{node_name}} - {{event_type}} events/min",
           "refId": "A"
         }
       ],
@@ -148,9 +148,9 @@
       "pluginVersion": "8.0.0",
       "targets": [
         {
-          "expr": "fim_files_monitored",
+          "expr": "fim_files_monitored{instance=~\"$node\"}",
           "interval": "",
-          "legendFormat": "Files Monitored",
+          "legendFormat": "{{node_name}} - Files Monitored",
           "refId": "A"
         }
       ],
@@ -201,9 +201,9 @@
       },
       "targets": [
         {
-          "expr": "fim_events_total",
+          "expr": "fim_events_total{instance=~\"$node\"}",
           "interval": "",
-          "legendFormat": "{{event_type}}",
+          "legendFormat": "{{node_name}} - {{event_type}}",
           "refId": "A"
         }
       ],
@@ -233,7 +233,44 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8081"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-1 (Amazon Linux)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8083"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-2 (Ubuntu)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8085"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-3 (Ubuntu)"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -259,9 +296,9 @@
       "pluginVersion": "8.0.0",
       "targets": [
         {
-          "expr": "cmdb_collections_total",
+          "expr": "sum by (instance) (cmdb_collections_total{instance=~\"$node\"})",
           "interval": "",
-          "legendFormat": "CMDB Collections",
+          "legendFormat": "{{instance}} - CMDB Collections",
           "refId": "A"
         }
       ],
@@ -317,9 +354,9 @@
       "pluginVersion": "8.0.0",
       "targets": [
         {
-          "expr": "system_packages_total",
+          "expr": "sum by (instance) (system_packages_total{instance=~\"$node\"})",
           "interval": "",
-          "legendFormat": "System Packages",
+          "legendFormat": "{{instance}} - System Packages",
           "refId": "A"
         }
       ],
@@ -349,7 +386,44 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8081"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-1 (Amazon Linux)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8083"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-2 (Ubuntu)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8085"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-3 (Ubuntu)"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -375,9 +449,9 @@
       "pluginVersion": "8.0.0",
       "targets": [
         {
-          "expr": "system_cpu_cores",
+          "expr": "sum by (instance) (system_cpu_cores{instance=~\"$node\"})",
           "interval": "",
-          "legendFormat": "CPU Cores",
+          "legendFormat": "{{instance}} - CPU Cores",
           "refId": "A"
         }
       ],
@@ -407,7 +481,44 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8081"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-1 (Amazon Linux)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8083"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-2 (Ubuntu)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8085"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-3 (Ubuntu)"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -433,9 +544,9 @@
       "pluginVersion": "8.0.0",
       "targets": [
         {
-          "expr": "system_processes_total",
+          "expr": "sum by (instance) (system_processes_total{instance=~\"$node\"})",
           "interval": "",
-          "legendFormat": "Processes",
+          "legendFormat": "{{instance}} - Processes",
           "refId": "A"
         }
       ],
@@ -465,7 +576,44 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8081"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-1 (Amazon Linux)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8083"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-2 (Ubuntu)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8085"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-3 (Ubuntu)"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -491,9 +639,9 @@
       "pluginVersion": "8.0.0",
       "targets": [
         {
-          "expr": "system_users_total",
+          "expr": "sum by (instance) (system_users_total{instance=~\"$node\"})",
           "interval": "",
-          "legendFormat": "Users",
+          "legendFormat": "{{instance}} - Users",
           "refId": "A"
         }
       ],
@@ -551,7 +699,44 @@
           },
           "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8081"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-1 (Amazon Linux)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8083"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-2 (Ubuntu)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:8085"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-3 (Ubuntu)"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -572,15 +757,15 @@
       },
       "targets": [
         {
-          "expr": "fim_agent_uptime_seconds",
+          "expr": "fim_agent_uptime_seconds{instance=~\"$node\"}",
           "interval": "",
-          "legendFormat": "FIM Agent Uptime",
+          "legendFormat": "{{instance}} - FIM Agent Uptime",
           "refId": "A"
         },
         {
-          "expr": "cmdb_agent_uptime_seconds",
+          "expr": "cmdb_agent_uptime_seconds{instance=~\"$node\"}",
           "interval": "",
-          "legendFormat": "CMDB Agent Uptime",
+          "legendFormat": "{{instance}} - CMDB Agent Uptime",
           "refId": "B"
         }
       ],
@@ -659,15 +844,15 @@
       },
       "targets": [
         {
-          "expr": "fim_scan_duration_seconds",
+          "expr": "fim_scan_duration_seconds{instance=~\"$node\"}",
           "interval": "",
-          "legendFormat": "FIM Scan Duration",
+          "legendFormat": "{{instance}} - FIM Scan Duration",
           "refId": "A"
         },
         {
-          "expr": "cmdb_collection_duration_seconds",
+          "expr": "cmdb_collection_duration_seconds{instance=~\"$node\"}",
           "interval": "",
-          "legendFormat": "CMDB Collection Duration",
+          "legendFormat": "{{instance}} - CMDB Collection Duration",
           "refId": "B"
         }
       ],
@@ -685,7 +870,34 @@
     "monitoring"
   ],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(up{job=~\"fim-agents|cmdb-collectors\"}, instance)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Node",
+        "multi": true,
+        "name": "node",
+        "options": [],
+        "query": "label_values(up{job=~\"fim-agents|cmdb-collectors\"}, instance)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-1h",
@@ -693,7 +905,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "FIM & CMDB Monitoring Dashboard",
+  "title": "FIM & CMDB Monitoring Dashboard - AWS Instances",
   "uid": "fim-cmdb-dashboard",
   "version": 1
 }

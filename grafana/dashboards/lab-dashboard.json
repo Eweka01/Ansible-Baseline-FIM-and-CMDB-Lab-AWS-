@@ -73,7 +73,44 @@
           },
           "unit": "percent"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:9101"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-1 (Amazon Linux)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:9102"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-2 (Ubuntu)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:9103"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-3 (Ubuntu)"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -94,7 +131,7 @@
       },
       "targets": [
         {
-          "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100)",
+          "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{mode=\"idle\", instance=~\"$instance\"}[5m])) * 100)",
           "interval": "",
           "legendFormat": "{{instance}} CPU %",
           "refId": "A"
@@ -158,7 +195,44 @@
           },
           "unit": "percent"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:9101"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-1 (Amazon Linux)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:9102"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-2 (Ubuntu)"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "host.docker.internal:9103"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "manage-node-3 (Ubuntu)"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
         "h": 8,
@@ -179,7 +253,7 @@
       },
       "targets": [
         {
-          "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100",
+          "expr": "(1 - (node_memory_MemAvailable_bytes{instance=~\"$instance\"} / node_memory_MemTotal_bytes{instance=~\"$instance\"})) * 100",
           "interval": "",
           "legendFormat": "{{instance}} Memory %",
           "refId": "A"
@@ -193,7 +267,34 @@
   "style": "dark",
   "tags": ["aws", "lab", "monitoring"],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(up{job=\"aws-nodes\"}, instance)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "AWS Instance",
+        "multi": true,
+        "name": "instance",
+        "options": [],
+        "query": "label_values(up{job=\"aws-nodes\"}, instance)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-5m",
