@@ -1,22 +1,20 @@
-# Setup Directory
+# 🚀 Setup Directory - Production Monitoring Lab
 
-This directory contains all setup scripts, documentation, and guides for the Ansible Baseline, FIM, and CMDB lab.
+This directory contains all setup scripts, documentation, and guides for the **production-grade Ansible Baseline, FIM, and CMDB lab** with live monitoring capabilities.
 
 ## 📁 Directory Structure
 
 ```
 setup/
 ├── scripts/              # Setup and deployment scripts
-│   ├── setup-aws-ssh.sh  # SSH connectivity setup for AWS instances
-│   └── setup-lab.sh      # Complete lab setup script
+│   └── setup-aws-ssh.sh  # SSH connectivity setup for AWS instances
 ├── guides/               # Comprehensive guides and documentation
 │   ├── AWS-DEPLOYMENT-GUIDE.md    # Step-by-step AWS deployment guide
 │   ├── HOW-TO-USE-THIS-LAB.md     # Complete user guide
 │   ├── TROUBLESHOOTING-GUIDE.md   # Error solutions and fixes
 │   └── NEXT-STEPS.md              # Advanced usage and extensions
-└── docs/                 # Additional documentation
-    ├── installation-guide.md      # Installation instructions
-    └── user-guide.md              # User manual
+└── docs/                 # Additional documentation (cleaned up)
+    └── (removed outdated localhost-focused docs)
 ```
 
 ## 🚀 Quick Start
@@ -31,10 +29,16 @@ cd ansible
 ansible-playbook -i inventory/aws-instances playbooks/setup-aws-instances.yml
 ```
 
-### 2. Local Lab Setup
+### 2. Production Monitoring Setup
 ```bash
-# Run complete lab setup
-./setup/scripts/setup-lab.sh
+# Start Prometheus + Grafana stack
+docker compose -f docker-compose.yml up -d
+
+# Setup SSH tunnels for monitoring
+./setup-ssh-tunnel-monitoring.sh
+
+# Setup FIM/CMDB monitoring
+./setup-fim-cmdb-tunnels.sh
 ```
 
 ## 📚 Documentation Overview
@@ -49,13 +53,13 @@ ansible-playbook -i inventory/aws-instances playbooks/setup-aws-instances.yml
   - Verifies SSH key permissions
   - Handles mixed OS environments (Amazon Linux + Ubuntu)
 
-#### `setup-lab.sh`
-- **Purpose**: Complete lab setup and configuration
+#### `setup-ssh-tunnel-monitoring.sh`
+- **Purpose**: Setup SSH tunnels for secure monitoring
 - **Features**:
-  - Sets up Python virtual environment
-  - Installs all dependencies
-  - Configures lab components
-  - Runs initial tests
+  - Creates SSH tunnels for Node Exporter metrics
+  - Updates Prometheus configuration
+  - Tests tunnel connectivity
+  - Manages tunnel lifecycle
 
 ### **Comprehensive Guides**
 
@@ -91,23 +95,16 @@ ansible-playbook -i inventory/aws-instances playbooks/setup-aws-instances.yml
   - Integration possibilities
   - Learning objectives
 
-### **Additional Documentation**
+### **Production Monitoring Features**
 
-#### `docs/installation-guide.md`
-- **Purpose**: Detailed installation instructions
-- **Contents**:
-  - System requirements
-  - Dependency installation
-  - Configuration steps
-  - Validation procedures
-
-#### `docs/user-guide.md`
-- **Purpose**: User manual for lab components
-- **Contents**:
-  - Component overview
-  - Usage instructions
-  - Configuration options
-  - Best practices
+#### FIM/CMDB with Prometheus Metrics
+- **Purpose**: Real-time monitoring with Prometheus instrumentation
+- **Features**:
+  - FIM agents with metrics endpoints (ports 8080, 8082, 8084)
+  - CMDB collectors with metrics endpoints (ports 8081, 8083, 8085)
+  - SSH tunnels for secure metrics collection
+  - Grafana dashboards for visualization
+  - Automated alerting and compliance reporting
 
 ## 🔧 Setup Scripts Usage
 
@@ -124,17 +121,20 @@ ansible-playbook -i inventory/aws-instances playbooks/setup-aws-instances.yml
 # 5. Verify connectivity
 ```
 
-### Lab Setup Script
+### Monitoring Setup Scripts
 ```bash
-# Basic usage
-./setup/scripts/setup-lab.sh
+# Setup SSH tunnels for monitoring
+./setup-ssh-tunnel-monitoring.sh
 
-# The script will:
-# 1. Create Python virtual environment
-# 2. Install all dependencies
-# 3. Configure lab components
-# 4. Run initial tests
-# 5. Generate setup report
+# Setup FIM/CMDB monitoring
+./setup-fim-cmdb-tunnels.sh
+
+# The scripts will:
+# 1. Create SSH tunnels for secure monitoring
+# 2. Update Prometheus configuration
+# 3. Test connectivity and metrics collection
+# 4. Start monitoring services
+# 5. Verify monitoring stack functionality
 ```
 
 ## 📖 Guide Usage
@@ -291,10 +291,13 @@ tar -xzf lab-backup-YYYYMMDD.tar.gz
 ## 🎉 Success!
 
 Once setup is complete, you'll have:
-- ✅ **Fully functional lab** on AWS instances
-- ✅ **Comprehensive documentation** for all components
-- ✅ **Working FIM and CMDB** systems
-- ✅ **Security hardening** applied
-- ✅ **Ready for learning** and experimentation
+- ✅ **Production-grade monitoring lab** on AWS instances
+- ✅ **Real-time FIM/CMDB monitoring** with Prometheus metrics
+- ✅ **Comprehensive Grafana dashboards** for visualization
+- ✅ **Automated security alerting** and compliance reporting
+- ✅ **SSH tunnel security** without opening AWS security groups
+- ✅ **Enterprise-ready capabilities** for Configuration Management Engineer roles
+- ✅ **Complete documentation** and testing guides
+- ✅ **Ready for PSEG interview** demonstration
 
-**Happy Learning! 🚀✨**
+**Your production monitoring lab is ready! 🚀✨**

@@ -1,11 +1,14 @@
-# Ansible Baseline, FIM, and CMDB Lab - Production Monitoring Stack
+# 🚀 Ansible Baseline, FIM, and CMDB Lab - Production Monitoring Stack
 
 This lab provides a **production-grade monitoring environment** with live metrics collection from AWS EC2 instances:
+
+## 🎯 **Core Components:**
 - **Ansible Baseline**: Automated system configuration and compliance across mixed OS environments
-- **File Integrity Monitoring (FIM)**: Real-time file change detection and alerting
-- **Configuration Management Database (CMDB)**: Asset and configuration tracking
-- **Prometheus + Grafana**: Live metrics collection and visualization
+- **File Integrity Monitoring (FIM)**: Real-time file change detection with Prometheus metrics
+- **Configuration Management Database (CMDB)**: Asset and configuration tracking with live metrics
+- **Prometheus + Grafana**: Live metrics collection, visualization, and alerting
 - **SSH Tunneling**: Secure monitoring without opening AWS security groups
+- **Production Alerting**: Automated security incident detection and compliance reporting
 
 ## 🎯 Lab Overview
 
@@ -100,23 +103,30 @@ This lab is designed for **AWS EC2 deployment** with **live monitoring** and sup
 - Handle OS-specific differences in package management and services
 - Troubleshoot deployment issues in cloud environments
 
-## 📊 Live Monitoring Features
+## 📊 Production-Grade Monitoring Features
 
 - **Real-time Metrics**: CPU, memory, disk usage from all AWS instances
+- **FIM/CMDB Metrics**: File integrity and asset discovery with Prometheus instrumentation
+- **Security Alerting**: Automated incident detection and compliance reporting
 - **SSH Tunneling**: Secure monitoring without opening AWS security groups
-- **Prometheus Queries**: Live system metrics and service status
-- **Grafana Dashboards**: Visual monitoring with live data
+- **Prometheus Queries**: Live system metrics, FIM events, and CMDB data
+- **Grafana Dashboards**: Visual monitoring with live data and security insights
+- **Audit Tools**: Comprehensive investigation and compliance reporting
 - **Automated Testing**: Comprehensive monitoring stack validation
 
 ## 📚 Documentation
 
-- **[setup/README.md](setup/README.md)** - **Setup scripts and documentation overview**
+### **Essential Guides:**
 - **[setup/guides/HOW-TO-USE-THIS-LAB.md](setup/guides/HOW-TO-USE-THIS-LAB.md)** - Complete user guide with step-by-step instructions
 - **[setup/guides/AWS-DEPLOYMENT-GUIDE.md](setup/guides/AWS-DEPLOYMENT-GUIDE.md)** - Complete deployment instructions
+- **[FIM-CMDB-PROMETHEUS-METRICS-GUIDE.md](FIM-CMDB-PROMETHEUS-METRICS-GUIDE.md)** - Production monitoring setup guide
+- **[tests/TESTING-GUIDE.md](tests/TESTING-GUIDE.md)** - Comprehensive testing guide
+
+### **Reference Documentation:**
 - **[setup/guides/TROUBLESHOOTING-GUIDE.md](setup/guides/TROUBLESHOOTING-GUIDE.md)** - Common errors and solutions
 - **[setup/guides/NEXT-STEPS.md](setup/guides/NEXT-STEPS.md)** - Advanced usage and extensions
-- **[tests/TESTING-GUIDE.md](tests/TESTING-GUIDE.md)** - Comprehensive testing guide
-- **[PROMETHEUS-GRAFANA-FIX-SUMMARY.md](PROMETHEUS-GRAFANA-FIX-SUMMARY.md)** - Complete monitoring setup guide
+- **[PROMETHEUS-GRAFANA-FIX-SUMMARY.md](PROMETHEUS-GRAFANA-FIX-SUMMARY.md)** - Monitoring stack setup guide
+- **[CHATGPT-DIAGNOSTIC-REPORT.md](CHATGPT-DIAGNOSTIC-REPORT.md)** - Complete lab capabilities report
 
 ## 🎯 Production Ready
 
