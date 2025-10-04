@@ -1,0 +1,18 @@
+{
+  "hostname": "ip-172-31-42-134",
+  "fqdn": "ip-172-31-42-134.ec2.internal",
+  "platform": "Linux-6.14.0-1011-aws-x86_64-with-glibc2.39",
+  "system": "Linux",
+  "release": "6.14.0-1011-aws",
+  "version": "#11~24.04.1-Ubuntu SMP Fri Aug  1 02:07:25 UTC 2025",
+  "machine": "x86_64",
+  "processor": "x86_64",
+  "architecture": [
+    "64bit",
+    "ELF"
+  ],
+  "python_version": "3.12.3",
+  "boot_time": "2025-10-03T18:35:57",
+  "collection_timestamp": "2025-10-04T02:29:31.245274",
+  "uptime_seconds": null
+}

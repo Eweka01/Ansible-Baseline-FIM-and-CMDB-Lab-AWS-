@@ -1,0 +1,18 @@
+{
+  "hostname": "ip-172-31-40-127.ec2.internal",
+  "fqdn": "ip-172-31-40-127.ec2.internal",
+  "platform": "Linux-6.1.153-175.280.amzn2023.x86_64-x86_64-with-glibc2.34",
+  "system": "Linux",
+  "release": "6.1.153-175.280.amzn2023.x86_64",
+  "version": "#1 SMP PREEMPT_DYNAMIC Tue Sep 23 21:29:22 UTC 2025",
+  "machine": "x86_64",
+  "processor": "x86_64",
+  "architecture": [
+    "64bit",
+    "ELF"
+  ],
+  "python_version": "3.9.23",
+  "boot_time": "2025-10-03T18:35:33",
+  "collection_timestamp": "2025-10-04T02:29:31.181493",
+  "uptime_seconds": null
+}

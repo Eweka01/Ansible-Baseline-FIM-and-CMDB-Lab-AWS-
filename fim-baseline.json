@@ -1,0 +1,26 @@
+{
+  "./test-files/test1.txt": {
+    "hash": "1c1df726a5ed679fd54e22909996b07e3df895e674a0938673e30be8bc2f5d39",
+    "size": 66,
+    "mtime": 1759542921.3348336,
+    "scanned_at": "2025-10-03T21:55:21.335308"
+  },
+  "./test-files/test2.txt": {
+    "hash": "16e1ecdf392c19aa98201b35c22776a6ab3813fc8e9a94f0957dbf21417c1256",
+    "size": 66,
+    "mtime": 1759542921.3349931,
+    "scanned_at": "2025-10-03T21:55:21.335334"
+  },
+  "./test-files/config.conf": {
+    "hash": "145b283c78730c762dcb0be6ab2e3af6f564c4bee1615fd0cca3b33fb830cac7",
+    "size": 68,
+    "mtime": 1759542921.335084,
+    "scanned_at": "2025-10-03T21:55:21.335359"
+  },
+  "./test-files/script.sh": {
+    "hash": "2d6076be80ac6de694281dc749f1d65d280d0716ef3b08ab103d4db2e0f96b08",
+    "size": 66,
+    "mtime": 1759542921.3351777,
+    "scanned_at": "2025-10-03T21:55:21.335385"
+  }
+}

@@ -20,3 +20,1452 @@ Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansi
 2025-10-03 20:47:45,046 p=44065 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 2025-10-03 20:47:45,046 p=44065 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 2025-10-03 20:47:45,046 p=44065 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:28:27,129 p=60401 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:28:27,130 p=60401 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:28:27,144 p=60401 u=osamudiameneweka n=ansible INFO| PLAY [AWS Lab Environment Setup] ***********************************************
+2025-10-03 22:28:27,149 p=60401 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:28:27,150 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Gathering Facts] *********************************************************
+2025-10-03 22:28:28,982 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:28:29,287 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:28:29,442 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:28:29,447 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Display setup information] ***********************************************
+2025-10-03 22:28:29,481 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => 
+  msg:
+  - Setting up lab environment on manage-node-1
+  - 'Instance: ip-172-31-40-127 (18.234.152.228)'
+  - 'Environment: []'
+  - 'OS: Amazon 2023'
+  - 'Instance Type: t2.micro'
+  - 'Playbook started at: 2025-10-04T02:28:28Z'
+2025-10-03 22:28:29,481 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => 
+  msg:
+  - Setting up lab environment on manage-node-2
+  - 'Instance: ip-172-31-42-134 (54.242.234.69)'
+  - 'Environment: []'
+  - 'OS: Ubuntu 24.04'
+  - 'Instance Type: t2.micro'
+  - 'Playbook started at: 2025-10-04T02:28:28Z'
+2025-10-03 22:28:29,482 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => 
+  msg:
+  - Setting up lab environment on manage-node-3
+  - 'Instance: ip-172-31-34-202 (13.217.82.23)'
+  - 'Environment: []'
+  - 'OS: Ubuntu 24.04'
+  - 'Instance Type: t2.micro'
+  - 'Playbook started at: 2025-10-04T02:28:28Z'
+2025-10-03 22:28:29,486 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Wait for SSH to be ready] ************************************************
+2025-10-03 22:28:40,782 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:28:40,793 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:28:40,797 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:28:40,805 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Update package cache (Ubuntu/Debian)] ************************************
+2025-10-03 22:28:40,821 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-1]
+2025-10-03 22:28:49,557 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:28:51,997 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:28:52,008 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Update package cache (Amazon Linux)] *************************************
+2025-10-03 22:28:52,030 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-2]
+2025-10-03 22:28:52,035 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-3]
+2025-10-03 22:28:53,336 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:28:53,341 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Install essential packages (Ubuntu/Debian)] ******************************
+2025-10-03 22:28:53,358 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-1]
+2025-10-03 22:28:56,289 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:28:56,335 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:28:56,340 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Install essential packages (Amazon Linux)] *******************************
+2025-10-03 22:28:56,363 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-2]
+2025-10-03 22:28:56,368 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-3]
+2025-10-03 22:28:57,720 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:28:57,727 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Create virtual environment directory] ************************************
+2025-10-03 22:28:58,315 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:28:58,339 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:28:58,377 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:28:58,387 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Create virtual environment] **********************************************
+2025-10-03 22:29:00,420 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:29:01,400 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:29:01,727 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:29:01,733 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Install Python dependencies in virtual environment] **********************
+2025-10-03 22:29:02,844 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:29:03,353 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:29:03,440 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:29:03,447 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Create lab directories] **************************************************
+2025-10-03 22:29:03,932 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item=/opt/lab-environment)
+2025-10-03 22:29:03,960 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item=/opt/lab-environment)
+2025-10-03 22:29:03,968 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item=/opt/lab-environment)
+2025-10-03 22:29:04,450 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item=/var/lib/fim)
+2025-10-03 22:29:04,476 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item=/var/lib/fim)
+2025-10-03 22:29:04,482 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item=/var/lib/fim)
+2025-10-03 22:29:04,898 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item=/var/lib/cmdb/data)
+2025-10-03 22:29:05,027 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item=/var/lib/cmdb/data)
+2025-10-03 22:29:05,028 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item=/var/lib/cmdb/data)
+2025-10-03 22:29:05,364 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item=/var/log/fim)
+2025-10-03 22:29:05,527 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item=/var/log/fim)
+2025-10-03 22:29:05,545 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item=/var/log/fim)
+2025-10-03 22:29:05,843 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item=/var/log/cmdb)
+2025-10-03 22:29:05,997 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item=/var/log/cmdb)
+2025-10-03 22:29:06,059 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item=/var/log/cmdb)
+2025-10-03 22:29:06,330 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item=/etc/fim)
+2025-10-03 22:29:06,508 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item=/etc/fim)
+2025-10-03 22:29:06,574 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item=/etc/fim)
+2025-10-03 22:29:06,804 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item=/etc/cmdb)
+2025-10-03 22:29:07,018 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item=/etc/cmdb)
+2025-10-03 22:29:07,075 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item=/etc/cmdb)
+2025-10-03 22:29:07,079 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Copy lab files to instances] *********************************************
+2025-10-03 22:29:08,475 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item={'src': '../../fim/agents/fim-agent.py', 'dest': '/opt/lab-environment/fim-agent.py', 'mode': '0755'})
+2025-10-03 22:29:08,522 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item={'src': '../../fim/agents/fim-agent.py', 'dest': '/opt/lab-environment/fim-agent.py', 'mode': '0755'})
+2025-10-03 22:29:08,547 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item={'src': '../../fim/agents/fim-agent.py', 'dest': '/opt/lab-environment/fim-agent.py', 'mode': '0755'})
+2025-10-03 22:29:10,403 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1] => (item={'src': '../../fim/agents/fim-config.json', 'dest': '/etc/fim/fim-config.json'})
+2025-10-03 22:29:10,426 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2] => (item={'src': '../../fim/agents/fim-config.json', 'dest': '/etc/fim/fim-config.json'})
+2025-10-03 22:29:10,431 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3] => (item={'src': '../../fim/agents/fim-config.json', 'dest': '/etc/fim/fim-config.json'})
+2025-10-03 22:29:11,695 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item={'src': '../../cmdb/scripts/cmdb-collector.py', 'dest': '/opt/lab-environment/cmdb-collector.py', 'mode': '0755'})
+2025-10-03 22:29:11,715 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item={'src': '../../cmdb/scripts/cmdb-collector.py', 'dest': '/opt/lab-environment/cmdb-collector.py', 'mode': '0755'})
+2025-10-03 22:29:11,755 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item={'src': '../../cmdb/scripts/cmdb-collector.py', 'dest': '/opt/lab-environment/cmdb-collector.py', 'mode': '0755'})
+2025-10-03 22:29:13,012 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item={'src': '../../requirements.txt', 'dest': '/opt/lab-environment/requirements.txt'})
+2025-10-03 22:29:13,016 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item={'src': '../../requirements.txt', 'dest': '/opt/lab-environment/requirements.txt'})
+2025-10-03 22:29:13,117 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item={'src': '../../requirements.txt', 'dest': '/opt/lab-environment/requirements.txt'})
+2025-10-03 22:29:13,126 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Configure FIM for AWS instances] *****************************************
+2025-10-03 22:29:15,005 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:29:15,160 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:29:15,175 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:29:15,182 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Create FIM systemd service] **********************************************
+2025-10-03 22:29:16,520 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:29:16,521 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:29:16,526 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:29:16,530 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Create CMDB collection service] ******************************************
+2025-10-03 22:29:17,799 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:29:17,840 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:29:17,879 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:29:17,882 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Create CMDB collection timer] ********************************************
+2025-10-03 22:29:19,177 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:29:19,194 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:29:19,239 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:29:19,245 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Enable and start services] ***********************************************
+2025-10-03 22:29:20,452 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item=fim-agent)
+2025-10-03 22:29:20,757 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item=fim-agent)
+2025-10-03 22:29:20,771 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item=fim-agent)
+2025-10-03 22:29:21,445 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => (item=cmdb-collector.timer)
+2025-10-03 22:29:21,751 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => (item=cmdb-collector.timer)
+2025-10-03 22:29:22,041 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => (item=cmdb-collector.timer)
+2025-10-03 22:29:22,051 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Configure UFW firewall (Ubuntu/Debian)] **********************************
+2025-10-03 22:29:22,076 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-1]
+2025-10-03 22:29:23,805 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:29:23,925 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:29:23,929 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Allow SSH through UFW firewall (Ubuntu/Debian)] **************************
+2025-10-03 22:29:23,949 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-1]
+2025-10-03 22:29:24,750 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:29:24,812 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:29:24,816 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Allow HTTP through UFW firewall (Ubuntu/Debian)] *************************
+2025-10-03 22:29:24,835 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-1]
+2025-10-03 22:29:24,839 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-2]
+2025-10-03 22:29:24,846 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-3]
+2025-10-03 22:29:24,849 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Allow HTTPS through UFW firewall (Ubuntu/Debian)] ************************
+2025-10-03 22:29:24,867 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-1]
+2025-10-03 22:29:24,871 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-2]
+2025-10-03 22:29:24,876 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-3]
+2025-10-03 22:29:24,879 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Configure iptables firewall (Amazon Linux)] ******************************
+2025-10-03 22:29:24,901 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-2]
+2025-10-03 22:29:24,907 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-3]
+2025-10-03 22:29:25,434 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:29:25,438 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Start and enable iptables (Amazon Linux)] ********************************
+2025-10-03 22:29:25,465 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-2]
+2025-10-03 22:29:25,469 p=60401 u=osamudiameneweka n=ansible INFO| skipping: [manage-node-3]
+2025-10-03 22:29:26,079 p=60401 u=osamudiameneweka n=ansible ERROR| [ERROR]: Task failed: Module failed: Could not find the requested service iptables: host
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/playbooks/setup-aws-instances.yml:276:7
+
+274       notify: restart iptables
+275     
+276     - name: "Start and enable iptables (Amazon Linux)"
+          ^ column 7
+
+
+2025-10-03 22:29:26,080 p=60401 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-1]: FAILED! => changed=false 
+  msg: 'Could not find the requested service iptables: host'
+2025-10-03 22:29:26,080 p=60401 u=osamudiameneweka n=ansible INFO| ...ignoring
+2025-10-03 22:29:26,082 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Configure fail2ban] ******************************************************
+2025-10-03 22:29:27,372 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:29:27,401 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:29:27,423 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:29:27,426 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Start and enable fail2ban] ***********************************************
+2025-10-03 22:29:28,170 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:29:28,175 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:29:28,185 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:29:28,188 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Create system information file] ******************************************
+2025-10-03 22:29:30,000 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:29:30,093 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:29:30,125 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:29:30,128 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Initialize FIM baseline] *************************************************
+2025-10-03 22:29:30,597 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:29:30,600 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:29:30,611 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:29:30,614 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Run initial CMDB collection] *********************************************
+2025-10-03 22:29:32,434 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:29:32,438 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:29:32,468 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:29:32,471 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Test FIM agent] **********************************************************
+2025-10-03 22:29:35,006 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:29:43,848 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:29:45,451 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:29:45,455 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Test CMDB collector] *****************************************************
+2025-10-03 22:29:45,963 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1]
+2025-10-03 22:29:46,028 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2]
+2025-10-03 22:29:46,142 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3]
+2025-10-03 22:29:46,145 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Display test results] ****************************************************
+2025-10-03 22:29:46,162 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => 
+  msg:
+  - 'FIM agent test: PASSED'
+  - 'CMDB collector test: PASSED'
+  - 'FIM baseline initialized: YES'
+  - 'CMDB initial collection: SUCCESS'
+2025-10-03 22:29:46,166 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => 
+  msg:
+  - 'FIM agent test: PASSED'
+  - 'CMDB collector test: PASSED'
+  - 'FIM baseline initialized: YES'
+  - 'CMDB initial collection: SUCCESS'
+2025-10-03 22:29:46,172 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => 
+  msg:
+  - 'FIM agent test: PASSED'
+  - 'CMDB collector test: PASSED'
+  - 'FIM baseline initialized: YES'
+  - 'CMDB initial collection: SUCCESS'
+2025-10-03 22:29:46,180 p=60401 u=osamudiameneweka n=ansible INFO| RUNNING HANDLER [restart fim-agent] ********************************************
+2025-10-03 22:30:20,566 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:31:17,028 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:31:17,368 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:31:17,379 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Create setup completion marker] ******************************************
+2025-10-03 22:31:17,955 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:31:18,039 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:31:18,143 p=60401 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:31:18,149 p=60401 u=osamudiameneweka n=ansible INFO| TASK [Display completion information] ******************************************
+2025-10-03 22:31:18,189 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-1] => 
+  msg:
+  - AWS lab setup completed for manage-node-1
+  - 'Instance: ip-172-31-40-127 (18.234.152.228)'
+  - 'Setup completed at: 2025-10-04T02:28:28Z'
+  - 'Services running:'
+  - '  - FIM Agent: RUNNING'
+  - '  - CMDB Collector: RUNNING'
+  - '  - Firewall: ENABLED'
+  - '  - Fail2ban: ENABLED'
+  - 'Next steps:'
+  - '1. Check logs: tail -f /var/log/fim-agent.log'
+  - '2. Check CMDB data: ls -la /var/lib/cmdb/data/'
+  - '3. Test FIM: /opt/lab-environment/fim-agent.py --scan-once'
+  - '4. Test CMDB: /opt/lab-environment/cmdb-collector.py'
+2025-10-03 22:31:18,189 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-2] => 
+  msg:
+  - AWS lab setup completed for manage-node-2
+  - 'Instance: ip-172-31-42-134 (54.242.234.69)'
+  - 'Setup completed at: 2025-10-04T02:28:28Z'
+  - 'Services running:'
+  - '  - FIM Agent: RUNNING'
+  - '  - CMDB Collector: RUNNING'
+  - '  - Firewall: ENABLED'
+  - '  - Fail2ban: ENABLED'
+  - 'Next steps:'
+  - '1. Check logs: tail -f /var/log/fim-agent.log'
+  - '2. Check CMDB data: ls -la /var/lib/cmdb/data/'
+  - '3. Test FIM: /opt/lab-environment/fim-agent.py --scan-once'
+  - '4. Test CMDB: /opt/lab-environment/cmdb-collector.py'
+2025-10-03 22:31:18,189 p=60401 u=osamudiameneweka n=ansible INFO| ok: [manage-node-3] => 
+  msg:
+  - AWS lab setup completed for manage-node-3
+  - 'Instance: ip-172-31-34-202 (13.217.82.23)'
+  - 'Setup completed at: 2025-10-04T02:28:28Z'
+  - 'Services running:'
+  - '  - FIM Agent: RUNNING'
+  - '  - CMDB Collector: RUNNING'
+  - '  - Firewall: ENABLED'
+  - '  - Fail2ban: ENABLED'
+  - 'Next steps:'
+  - '1. Check logs: tail -f /var/log/fim-agent.log'
+  - '2. Check CMDB data: ls -la /var/lib/cmdb/data/'
+  - '3. Test FIM: /opt/lab-environment/fim-agent.py --scan-once'
+  - '4. Test CMDB: /opt/lab-environment/cmdb-collector.py'
+2025-10-03 22:31:18,190 p=60401 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:31:18,190 p=60401 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=28   changed=9    unreachable=0    failed=0    skipped=6    rescued=0    ignored=1   
+2025-10-03 22:31:18,190 p=60401 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=28   changed=9    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+2025-10-03 22:31:18,190 p=60401 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=28   changed=9    unreachable=0    failed=0    skipped=6    rescued=0    ignored=0   
+2025-10-03 22:31:24,673 p=60953 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:31:24,674 p=60953 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:31:24,758 p=60953 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:31:24,767 p=60953 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:31:24,768 p=60953 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:31:25,378 p=60953 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:31:25,677 p=60953 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:31:25,700 p=60953 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:31:25,705 p=60953 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:31:25,705 p=60953 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:25,705 p=60953 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:25,705 p=60953 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:28,093 p=60985 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:31:28,093 p=60985 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:31:28,145 p=60985 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:31:28,151 p=60985 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:31:28,152 p=60985 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:31:28,698 p=60985 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:31:28,921 p=60985 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:31:28,945 p=60985 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:31:28,947 p=60985 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:31:28,947 p=60985 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:28,947 p=60985 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:28,947 p=60985 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:31,277 p=61015 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:31:31,278 p=61015 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:31:31,326 p=61015 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:31:31,332 p=61015 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:31:31,333 p=61015 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:31:31,914 p=61015 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:31:31,915 p=61015 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:31:31,995 p=61015 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:31:31,997 p=61015 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:31:31,997 p=61015 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:31,997 p=61015 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:31,997 p=61015 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:34,527 p=61054 u=osamudiameneweka n=ansible INFO| Using /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/ansible.cfg as config file
+2025-10-03 22:31:34,589 p=61054 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:31:34,589 p=61054 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:31:34,641 p=61054 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:31:34,648 p=61054 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:31:34,649 p=61054 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:31:35,212 p=61054 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1] => changed=true 
+  cmd: ls -la /var/lib/cmdb/data/
+  delta: '0:00:00.006248'
+  end: '2025-10-04 02:31:35.241711'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:31:35.235463'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    total 2552
+    drwxr-xr-x. 2 root root 16384 Oct  4 02:29 .
+    drwxr-xr-x. 3 root root    18 Oct  3 19:18 ..
+    -rw-r--r--. 1 root root 96629 Oct  3 19:19 cmdb-data-20251003-191909.json
+    -rw-r--r--. 1 root root 97397 Oct  3 19:23 cmdb-data-20251003-192342.json
+    -rw-r--r--. 1 root root 96665 Oct  3 19:36 cmdb-data-20251003-193607.json
+    -rw-r--r--. 1 root root 97354 Oct  3 20:00 cmdb-data-20251003-200008.json
+    -rw-r--r--. 1 root root 95546 Oct  3 20:02 cmdb-data-20251003-200200.json
+    -rw-r--r--. 1 root root 97695 Oct  3 20:19 cmdb-data-20251003-201948.json
+    -rw-r--r--. 1 root root 95401 Oct  3 21:01 cmdb-data-20251003-210113.json
+    -rw-r--r--. 1 root root 95230 Oct  3 22:03 cmdb-data-20251003-220313.json
+    -rw-r--r--. 1 root root 95238 Oct  3 23:05 cmdb-data-20251003-230513.json
+    -rw-r--r--. 1 root root 95453 Oct  4 00:01 cmdb-data-20251004-000147.json
+    -rw-r--r--. 1 root root 95232 Oct  4 01:01 cmdb-data-20251004-010147.json
+    -rw-r--r--. 1 root root 95395 Oct  4 02:01 cmdb-data-20251004-020147.json
+    -rw-r--r--. 1 root root 96610 Oct  4 02:29 cmdb-data-20251004-022932.json
+    -rw-r--r--. 1 root root  2281 Oct  3 19:19 environment_info-20251003-191909.json
+    -rw-r--r--. 1 root root  2532 Oct  3 19:23 environment_info-20251003-192342.json
+    -rw-r--r--. 1 root root  2505 Oct  3 19:36 environment_info-20251003-193607.json
+    -rw-r--r--. 1 root root  2530 Oct  3 20:00 environment_info-20251003-200008.json
+    -rw-r--r--. 1 root root  2457 Oct  3 20:02 environment_info-20251003-200200.json
+    -rw-r--r--. 1 root root  2539 Oct  3 20:19 environment_info-20251003-201948.json
+    -rw-r--r--. 1 root root  2458 Oct  3 21:01 environment_info-20251003-210113.json
+    -rw-r--r--. 1 root root  2458 Oct  3 22:03 environment_info-20251003-220313.json
+    -rw-r--r--. 1 root root  2458 Oct  3 23:05 environment_info-20251003-230513.json
+    -rw-r--r--. 1 root root  2449 Oct  4 00:01 environment_info-20251004-000147.json
+    -rw-r--r--. 1 root root  2467 Oct  4 01:01 environment_info-20251004-010147.json
+    -rw-r--r--. 1 root root  2467 Oct  4 02:01 environment_info-20251004-020147.json
+    -rw-r--r--. 1 root root  2541 Oct  4 02:29 environment_info-20251004-022932.json
+    -rw-r--r--. 1 root root  2804 Oct  3 19:19 hardware_info-20251003-191909.json
+    -rw-r--r--. 1 root root  2163 Oct  3 19:23 hardware_info-20251003-192342.json
+    -rw-r--r--. 1 root root  2163 Oct  3 19:36 hardware_info-20251003-193607.json
+    -rw-r--r--. 1 root root  2163 Oct  3 20:00 hardware_info-20251003-200008.json
+    -rw-r--r--. 1 root root  2803 Oct  3 20:02 hardware_info-20251003-200200.json
+    -rw-r--r--. 1 root root  2163 Oct  3 20:19 hardware_info-20251003-201948.json
+    -rw-r--r--. 1 root root  2808 Oct  3 21:01 hardware_info-20251003-210113.json
+    -rw-r--r--. 1 root root  2807 Oct  3 22:03 hardware_info-20251003-220313.json
+    -rw-r--r--. 1 root root  2808 Oct  3 23:05 hardware_info-20251003-230513.json
+    -rw-r--r--. 1 root root  2803 Oct  4 00:01 hardware_info-20251004-000147.json
+    -rw-r--r--. 1 root root  2804 Oct  4 01:01 hardware_info-20251004-010147.json
+    -rw-r--r--. 1 root root  2803 Oct  4 02:01 hardware_info-20251004-020147.json
+    -rw-r--r--. 1 root root  2163 Oct  4 02:29 hardware_info-20251004-022932.json
+    -rw-r--r--. 1 root root  3081 Oct  3 19:19 network_info-20251003-191909.json
+    -rw-r--r--. 1 root root  3546 Oct  3 19:23 network_info-20251003-192342.json
+    -rw-r--r--. 1 root root  3313 Oct  3 19:36 network_info-20251003-193607.json
+    -rw-r--r--. 1 root root  3770 Oct  3 20:00 network_info-20251003-200008.json
+    -rw-r--r--. 1 root root  2849 Oct  3 20:02 network_info-20251003-200200.json
+    -rw-r--r--. 1 root root  4242 Oct  3 20:19 network_info-20251003-201948.json
+    -rw-r--r--. 1 root root  2849 Oct  3 21:01 network_info-20251003-210113.json
+    -rw-r--r--. 1 root root  2849 Oct  3 22:03 network_info-20251003-220313.json
+    -rw-r--r--. 1 root root  2849 Oct  3 23:05 network_info-20251003-230513.json
+    -rw-r--r--. 1 root root  3081 Oct  4 00:01 network_info-20251004-000147.json
+    -rw-r--r--. 1 root root  2849 Oct  4 01:01 network_info-20251004-010147.json
+    -rw-r--r--. 1 root root  2849 Oct  4 02:01 network_info-20251004-020147.json
+    -rw-r--r--. 1 root root  3082 Oct  4 02:29 network_info-20251004-022932.json
+    -rw-r--r--. 1 root root  8741 Oct  3 19:19 security_info-20251003-191909.json
+    -rw-r--r--. 1 root root  8741 Oct  3 19:23 security_info-20251003-192342.json
+    -rw-r--r--. 1 root root  8741 Oct  3 19:36 security_info-20251003-193607.json
+    -rw-r--r--. 1 root root  8741 Oct  3 20:00 security_info-20251003-200008.json
+    -rw-r--r--. 1 root root  8741 Oct  3 20:02 security_info-20251003-200200.json
+    -rw-r--r--. 1 root root  8741 Oct  3 20:19 security_info-20251003-201948.json
+    -rw-r--r--. 1 root root  8741 Oct  3 21:01 security_info-20251003-210113.json
+    -rw-r--r--. 1 root root  8741 Oct  3 22:03 security_info-20251003-220313.json
+    -rw-r--r--. 1 root root  8741 Oct  3 23:05 security_info-20251003-230513.json
+    -rw-r--r--. 1 root root  8741 Oct  4 00:01 security_info-20251004-000147.json
+    -rw-r--r--. 1 root root  8741 Oct  4 01:01 security_info-20251004-010147.json
+    -rw-r--r--. 1 root root  8741 Oct  4 02:01 security_info-20251004-020147.json
+    -rw-r--r--. 1 root root  8741 Oct  4 02:29 security_info-20251004-022932.json
+    -rw-r--r--. 1 root root 70711 Oct  3 19:19 software_info-20251003-191909.json
+    -rw-r--r--. 1 root root 71368 Oct  3 19:23 software_info-20251003-192342.json
+    -rw-r--r--. 1 root root 70956 Oct  3 19:36 software_info-20251003-193607.json
+    -rw-r--r--. 1 root root 71113 Oct  3 20:00 software_info-20251003-200008.json
+    -rw-r--r--. 1 root root 69781 Oct  3 20:02 software_info-20251003-200200.json
+    -rw-r--r--. 1 root root 70951 Oct  3 20:19 software_info-20251003-201948.json
+    -rw-r--r--. 1 root root 69644 Oct  3 21:01 software_info-20251003-210113.json
+    -rw-r--r--. 1 root root 69488 Oct  3 22:03 software_info-20251003-220313.json
+    -rw-r--r--. 1 root root 69495 Oct  3 23:05 software_info-20251003-230513.json
+    -rw-r--r--. 1 root root 69474 Oct  4 00:01 software_info-20251004-000147.json
+    -rw-r--r--. 1 root root 69484 Oct  4 01:01 software_info-20251004-010147.json
+    -rw-r--r--. 1 root root 69634 Oct  4 02:01 software_info-20251004-020147.json
+    -rw-r--r--. 1 root root 71100 Oct  4 02:29 software_info-20251004-022932.json
+    -rw-r--r--. 1 root root   552 Oct  3 19:19 system_info-20251003-191909.json
+    -rw-r--r--. 1 root root   552 Oct  3 19:23 system_info-20251003-192342.json
+    -rw-r--r--. 1 root root   552 Oct  3 19:36 system_info-20251003-193607.json
+    -rw-r--r--. 1 root root   552 Oct  3 20:00 system_info-20251003-200008.json
+    -rw-r--r--. 1 root root   552 Oct  3 20:02 system_info-20251003-200200.json
+    -rw-r--r--. 1 root root   552 Oct  3 20:19 system_info-20251003-201948.json
+    -rw-r--r--. 1 root root   552 Oct  3 21:01 system_info-20251003-210113.json
+    -rw-r--r--. 1 root root   552 Oct  3 22:03 system_info-20251003-220313.json
+    -rw-r--r--. 1 root root   552 Oct  3 23:05 system_info-20251003-230513.json
+    -rw-r--r--. 1 root root   552 Oct  4 00:01 system_info-20251004-000147.json
+    -rw-r--r--. 1 root root   552 Oct  4 01:01 system_info-20251004-010147.json
+    -rw-r--r--. 1 root root   552 Oct  4 02:01 system_info-20251004-020147.json
+    -rw-r--r--. 1 root root   552 Oct  4 02:29 system_info-20251004-022932.json
+  stdout_lines: <omitted>
+2025-10-03 22:31:35,234 p=61054 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2] => changed=true 
+  cmd: ls -la /var/lib/cmdb/data/
+  delta: '0:00:00.006169'
+  end: '2025-10-04 02:31:35.258528'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:31:35.252359'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    total 3540
+    drwxr-xr-x 2 root root   4096 Oct  4 02:29 .
+    drwxr-xr-x 3 root root   4096 Oct  3 19:18 ..
+    -rw-r--r-- 1 root root 137347 Oct  3 19:19 cmdb-data-20251003-191912.json
+    -rw-r--r-- 1 root root 138565 Oct  3 19:23 cmdb-data-20251003-192342.json
+    -rw-r--r-- 1 root root 138160 Oct  3 19:36 cmdb-data-20251003-193607.json
+    -rw-r--r-- 1 root root 137183 Oct  3 20:00 cmdb-data-20251003-200008.json
+    -rw-r--r-- 1 root root 136071 Oct  3 20:03 cmdb-data-20251003-200315.json
+    -rw-r--r-- 1 root root 137314 Oct  3 20:19 cmdb-data-20251003-201948.json
+    -rw-r--r-- 1 root root 136985 Oct  3 21:02 cmdb-data-20251003-210215.json
+    -rw-r--r-- 1 root root 138025 Oct  3 22:03 cmdb-data-20251003-220350.json
+    -rw-r--r-- 1 root root 137180 Oct  3 23:00 cmdb-data-20251003-230015.json
+    -rw-r--r-- 1 root root 138202 Oct  4 00:05 cmdb-data-20251004-000505.json
+    -rw-r--r-- 1 root root 137558 Oct  4 01:04 cmdb-data-20251004-010415.json
+    -rw-r--r-- 1 root root 137911 Oct  4 02:02 cmdb-data-20251004-020215.json
+    -rw-r--r-- 1 root root 140631 Oct  4 02:29 cmdb-data-20251004-022932.json
+    -rw-r--r-- 1 root root   3835 Oct  3 19:19 environment_info-20251003-191912.json
+    -rw-r--r-- 1 root root   3972 Oct  3 19:23 environment_info-20251003-192342.json
+    -rw-r--r-- 1 root root   3909 Oct  3 19:36 environment_info-20251003-193607.json
+    -rw-r--r-- 1 root root   3990 Oct  3 20:00 environment_info-20251003-200008.json
+    -rw-r--r-- 1 root root   4128 Oct  3 20:03 environment_info-20251003-200315.json
+    -rw-r--r-- 1 root root   3972 Oct  3 20:19 environment_info-20251003-201948.json
+    -rw-r--r-- 1 root root   4110 Oct  3 21:02 environment_info-20251003-210215.json
+    -rw-r--r-- 1 root root   4110 Oct  3 22:03 environment_info-20251003-220350.json
+    -rw-r--r-- 1 root root   4110 Oct  3 23:00 environment_info-20251003-230015.json
+    -rw-r--r-- 1 root root   4110 Oct  4 00:05 environment_info-20251004-000505.json
+    -rw-r--r-- 1 root root   4128 Oct  4 01:04 environment_info-20251004-010415.json
+    -rw-r--r-- 1 root root   4128 Oct  4 02:02 environment_info-20251004-020215.json
+    -rw-r--r-- 1 root root   4020 Oct  4 02:29 environment_info-20251004-022932.json
+    -rw-r--r-- 1 root root   4608 Oct  3 19:19 hardware_info-20251003-191912.json
+    -rw-r--r-- 1 root root   3760 Oct  3 19:23 hardware_info-20251003-192342.json
+    -rw-r--r-- 1 root root   3759 Oct  3 19:36 hardware_info-20251003-193607.json
+    -rw-r--r-- 1 root root   3759 Oct  3 20:00 hardware_info-20251003-200008.json
+    -rw-r--r-- 1 root root   4612 Oct  3 20:03 hardware_info-20251003-200315.json
+    -rw-r--r-- 1 root root   3759 Oct  3 20:19 hardware_info-20251003-201948.json
+    -rw-r--r-- 1 root root   4612 Oct  3 21:02 hardware_info-20251003-210215.json
+    -rw-r--r-- 1 root root   4612 Oct  3 22:03 hardware_info-20251003-220350.json
+    -rw-r--r-- 1 root root   4617 Oct  3 23:00 hardware_info-20251003-230015.json
+    -rw-r--r-- 1 root root   4613 Oct  4 00:05 hardware_info-20251004-000505.json
+    -rw-r--r-- 1 root root   4618 Oct  4 01:04 hardware_info-20251004-010415.json
+    -rw-r--r-- 1 root root   4612 Oct  4 02:02 hardware_info-20251004-020215.json
+    -rw-r--r-- 1 root root   3760 Oct  4 02:29 hardware_info-20251004-022932.json
+    -rw-r--r-- 1 root root   4140 Oct  3 19:19 network_info-20251003-191912.json
+    -rw-r--r-- 1 root root   4518 Oct  3 19:23 network_info-20251003-192342.json
+    -rw-r--r-- 1 root root   4518 Oct  3 19:36 network_info-20251003-193607.json
+    -rw-r--r-- 1 root root   3951 Oct  3 20:00 network_info-20251003-200008.json
+    -rw-r--r-- 1 root root   3759 Oct  3 20:03 network_info-20251003-200315.json
+    -rw-r--r-- 1 root root   3951 Oct  3 20:19 network_info-20251003-201948.json
+    -rw-r--r-- 1 root root   3950 Oct  3 21:02 network_info-20251003-210215.json
+    -rw-r--r-- 1 root root   4332 Oct  3 22:03 network_info-20251003-220350.json
+    -rw-r--r-- 1 root root   4137 Oct  3 23:00 network_info-20251003-230015.json
+    -rw-r--r-- 1 root root   4141 Oct  4 00:05 network_info-20251004-000505.json
+    -rw-r--r-- 1 root root   3950 Oct  4 01:04 network_info-20251004-010415.json
+    -rw-r--r-- 1 root root   3950 Oct  4 02:02 network_info-20251004-020215.json
+    -rw-r--r-- 1 root root   5279 Oct  4 02:29 network_info-20251004-022932.json
+    -rw-r--r-- 1 root root  10937 Oct  3 19:19 security_info-20251003-191912.json
+    -rw-r--r-- 1 root root  11181 Oct  3 19:23 security_info-20251003-192342.json
+    -rw-r--r-- 1 root root  11181 Oct  3 19:36 security_info-20251003-193607.json
+    -rw-r--r-- 1 root root  11181 Oct  3 20:00 security_info-20251003-200008.json
+    -rw-r--r-- 1 root root  10937 Oct  3 20:03 security_info-20251003-200315.json
+    -rw-r--r-- 1 root root  11181 Oct  3 20:19 security_info-20251003-201948.json
+    -rw-r--r-- 1 root root  10937 Oct  3 21:02 security_info-20251003-210215.json
+    -rw-r--r-- 1 root root  10937 Oct  3 22:03 security_info-20251003-220350.json
+    -rw-r--r-- 1 root root  10937 Oct  3 23:00 security_info-20251003-230015.json
+    -rw-r--r-- 1 root root  10937 Oct  4 00:05 security_info-20251004-000505.json
+    -rw-r--r-- 1 root root  10937 Oct  4 01:04 security_info-20251004-010415.json
+    -rw-r--r-- 1 root root  10937 Oct  4 02:02 security_info-20251004-020215.json
+    -rw-r--r-- 1 root root  11181 Oct  4 02:29 security_info-20251004-022932.json
+    -rw-r--r-- 1 root root 101362 Oct  3 19:19 software_info-20251003-191912.json
+    -rw-r--r-- 1 root root 102607 Oct  3 19:23 software_info-20251003-192342.json
+    -rw-r--r-- 1 root root 102296 Oct  3 19:36 software_info-20251003-193607.json
+    -rw-r--r-- 1 root root 101899 Oct  3 20:00 software_info-20251003-200008.json
+    -rw-r--r-- 1 root root 100266 Oct  3 20:03 software_info-20251003-200315.json
+    -rw-r--r-- 1 root root 102034 Oct  3 20:19 software_info-20251003-201948.json
+    -rw-r--r-- 1 root root 100961 Oct  3 21:02 software_info-20251003-210215.json
+    -rw-r--r-- 1 root root 101555 Oct  3 22:03 software_info-20251003-220350.json
+    -rw-r--r-- 1 root root 100946 Oct  3 23:00 software_info-20251003-230015.json
+    -rw-r--r-- 1 root root 101884 Oct  4 00:05 software_info-20251004-000505.json
+    -rw-r--r-- 1 root root 101468 Oct  4 01:04 software_info-20251004-010415.json
+    -rw-r--r-- 1 root root 101799 Oct  4 02:02 software_info-20251004-020215.json
+    -rw-r--r-- 1 root root 103720 Oct  4 02:29 software_info-20251004-022932.json
+    -rw-r--r-- 1 root root    507 Oct  3 19:19 system_info-20251003-191912.json
+    -rw-r--r-- 1 root root    507 Oct  3 19:23 system_info-20251003-192342.json
+    -rw-r--r-- 1 root root    507 Oct  3 19:36 system_info-20251003-193607.json
+    -rw-r--r-- 1 root root    507 Oct  3 20:00 system_info-20251003-200008.json
+    -rw-r--r-- 1 root root    507 Oct  3 20:03 system_info-20251003-200315.json
+    -rw-r--r-- 1 root root    507 Oct  3 20:19 system_info-20251003-201948.json
+    -rw-r--r-- 1 root root    507 Oct  3 21:02 system_info-20251003-210215.json
+    -rw-r--r-- 1 root root    507 Oct  3 22:03 system_info-20251003-220350.json
+    -rw-r--r-- 1 root root    507 Oct  3 23:00 system_info-20251003-230015.json
+    -rw-r--r-- 1 root root    507 Oct  4 00:05 system_info-20251004-000505.json
+    -rw-r--r-- 1 root root    507 Oct  4 01:04 system_info-20251004-010415.json
+    -rw-r--r-- 1 root root    507 Oct  4 02:02 system_info-20251004-020215.json
+    -rw-r--r-- 1 root root    507 Oct  4 02:29 system_info-20251004-022932.json
+  stdout_lines: <omitted>
+2025-10-03 22:31:35,294 p=61054 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3] => changed=true 
+  cmd: ls -la /var/lib/cmdb/data/
+  delta: '0:00:00.005652'
+  end: '2025-10-04 02:31:35.325965'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:31:35.320313'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    total 3540
+    drwxr-xr-x 2 root root   4096 Oct  4 02:29 .
+    drwxr-xr-x 3 root root   4096 Oct  3 19:18 ..
+    -rw-r--r-- 1 root root 138283 Oct  3 19:19 cmdb-data-20251003-191911.json
+    -rw-r--r-- 1 root root 138706 Oct  3 19:23 cmdb-data-20251003-192342.json
+    -rw-r--r-- 1 root root 138887 Oct  3 19:36 cmdb-data-20251003-193607.json
+    -rw-r--r-- 1 root root 138227 Oct  3 20:00 cmdb-data-20251003-200008.json
+    -rw-r--r-- 1 root root 136326 Oct  3 20:04 cmdb-data-20251003-200426.json
+    -rw-r--r-- 1 root root 138378 Oct  3 20:19 cmdb-data-20251003-201948.json
+    -rw-r--r-- 1 root root 136522 Oct  3 21:02 cmdb-data-20251003-210258.json
+    -rw-r--r-- 1 root root 136687 Oct  3 22:01 cmdb-data-20251003-220158.json
+    -rw-r--r-- 1 root root 136691 Oct  3 23:02 cmdb-data-20251003-230225.json
+    -rw-r--r-- 1 root root 137969 Oct  4 00:04 cmdb-data-20251004-000458.json
+    -rw-r--r-- 1 root root 136511 Oct  4 01:02 cmdb-data-20251004-010258.json
+    -rw-r--r-- 1 root root 136711 Oct  4 02:04 cmdb-data-20251004-020425.json
+    -rw-r--r-- 1 root root 139643 Oct  4 02:29 cmdb-data-20251004-022932.json
+    -rw-r--r-- 1 root root   3960 Oct  3 19:19 environment_info-20251003-191911.json
+    -rw-r--r-- 1 root root   3972 Oct  3 19:23 environment_info-20251003-192342.json
+    -rw-r--r-- 1 root root   3981 Oct  3 19:36 environment_info-20251003-193607.json
+    -rw-r--r-- 1 root root   4062 Oct  3 20:00 environment_info-20251003-200008.json
+    -rw-r--r-- 1 root root   4200 Oct  3 20:04 environment_info-20251003-200426.json
+    -rw-r--r-- 1 root root   4062 Oct  3 20:19 environment_info-20251003-201948.json
+    -rw-r--r-- 1 root root   4200 Oct  3 21:02 environment_info-20251003-210258.json
+    -rw-r--r-- 1 root root   4200 Oct  3 22:01 environment_info-20251003-220158.json
+    -rw-r--r-- 1 root root   4200 Oct  3 23:02 environment_info-20251003-230225.json
+    -rw-r--r-- 1 root root   4200 Oct  4 00:04 environment_info-20251004-000458.json
+    -rw-r--r-- 1 root root   4200 Oct  4 01:02 environment_info-20251004-010258.json
+    -rw-r--r-- 1 root root   4200 Oct  4 02:04 environment_info-20251004-020425.json
+    -rw-r--r-- 1 root root   3990 Oct  4 02:29 environment_info-20251004-022932.json
+    -rw-r--r-- 1 root root   4617 Oct  3 19:19 hardware_info-20251003-191911.json
+    -rw-r--r-- 1 root root   3764 Oct  3 19:23 hardware_info-20251003-192342.json
+    -rw-r--r-- 1 root root   3763 Oct  3 19:36 hardware_info-20251003-193607.json
+    -rw-r--r-- 1 root root   3763 Oct  3 20:00 hardware_info-20251003-200008.json
+    -rw-r--r-- 1 root root   4617 Oct  3 20:04 hardware_info-20251003-200426.json
+    -rw-r--r-- 1 root root   3763 Oct  3 20:19 hardware_info-20251003-201948.json
+    -rw-r--r-- 1 root root   4621 Oct  3 21:02 hardware_info-20251003-210258.json
+    -rw-r--r-- 1 root root   4615 Oct  3 22:01 hardware_info-20251003-220158.json
+    -rw-r--r-- 1 root root   4621 Oct  3 23:02 hardware_info-20251003-230225.json
+    -rw-r--r-- 1 root root   4621 Oct  4 00:04 hardware_info-20251004-000458.json
+    -rw-r--r-- 1 root root   4620 Oct  4 01:02 hardware_info-20251004-010258.json
+    -rw-r--r-- 1 root root   4616 Oct  4 02:04 hardware_info-20251004-020425.json
+    -rw-r--r-- 1 root root   3765 Oct  4 02:29 hardware_info-20251004-022932.json
+    -rw-r--r-- 1 root root   3943 Oct  3 19:19 network_info-20251003-191911.json
+    -rw-r--r-- 1 root root   4512 Oct  3 19:23 network_info-20251003-192342.json
+    -rw-r--r-- 1 root root   4512 Oct  3 19:36 network_info-20251003-193607.json
+    -rw-r--r-- 1 root root   3944 Oct  3 20:00 network_info-20251003-200008.json
+    -rw-r--r-- 1 root root   3752 Oct  3 20:04 network_info-20251003-200426.json
+    -rw-r--r-- 1 root root   3944 Oct  3 20:19 network_info-20251003-201948.json
+    -rw-r--r-- 1 root root   3752 Oct  3 21:02 network_info-20251003-210258.json
+    -rw-r--r-- 1 root root   3752 Oct  3 22:01 network_info-20251003-220158.json
+    -rw-r--r-- 1 root root   3752 Oct  3 23:02 network_info-20251003-230225.json
+    -rw-r--r-- 1 root root   4317 Oct  4 00:04 network_info-20251004-000458.json
+    -rw-r--r-- 1 root root   3752 Oct  4 01:02 network_info-20251004-010258.json
+    -rw-r--r-- 1 root root   3752 Oct  4 02:04 network_info-20251004-020425.json
+    -rw-r--r-- 1 root root   5078 Oct  4 02:29 network_info-20251004-022932.json
+    -rw-r--r-- 1 root root  10937 Oct  3 19:19 security_info-20251003-191911.json
+    -rw-r--r-- 1 root root  11181 Oct  3 19:23 security_info-20251003-192342.json
+    -rw-r--r-- 1 root root  11181 Oct  3 19:36 security_info-20251003-193607.json
+    -rw-r--r-- 1 root root  11181 Oct  3 20:00 security_info-20251003-200008.json
+    -rw-r--r-- 1 root root  10937 Oct  3 20:04 security_info-20251003-200426.json
+    -rw-r--r-- 1 root root  11181 Oct  3 20:19 security_info-20251003-201948.json
+    -rw-r--r-- 1 root root  10937 Oct  3 21:02 security_info-20251003-210258.json
+    -rw-r--r-- 1 root root  10937 Oct  3 22:01 security_info-20251003-220158.json
+    -rw-r--r-- 1 root root  10937 Oct  3 23:02 security_info-20251003-230225.json
+    -rw-r--r-- 1 root root  10937 Oct  4 00:04 security_info-20251004-000458.json
+    -rw-r--r-- 1 root root  10937 Oct  4 01:02 security_info-20251004-010258.json
+    -rw-r--r-- 1 root root  10937 Oct  4 02:04 security_info-20251004-020425.json
+    -rw-r--r-- 1 root root  11181 Oct  4 02:29 security_info-20251004-022932.json
+    -rw-r--r-- 1 root root 102301 Oct  3 19:19 software_info-20251003-191911.json
+    -rw-r--r-- 1 root root 102746 Oct  3 19:23 software_info-20251003-192342.json
+    -rw-r--r-- 1 root root 102907 Oct  3 19:36 software_info-20251003-193607.json
+    -rw-r--r-- 1 root root 102800 Oct  3 20:00 software_info-20251003-200008.json
+    -rw-r--r-- 1 root root 100447 Oct  3 20:04 software_info-20251003-200426.json
+    -rw-r--r-- 1 root root 102937 Oct  3 20:19 software_info-20251003-201948.json
+    -rw-r--r-- 1 root root 100625 Oct  3 21:02 software_info-20251003-210258.json
+    -rw-r--r-- 1 root root 100782 Oct  3 22:01 software_info-20251003-220158.json
+    -rw-r--r-- 1 root root 100780 Oct  3 23:02 software_info-20251003-230225.json
+    -rw-r--r-- 1 root root 101383 Oct  4 00:04 software_info-20251004-000458.json
+    -rw-r--r-- 1 root root 100615 Oct  4 01:02 software_info-20251004-010258.json
+    -rw-r--r-- 1 root root 100805 Oct  4 02:04 software_info-20251004-020425.json
+    -rw-r--r-- 1 root root 103016 Oct  4 02:29 software_info-20251004-022932.json
+    -rw-r--r-- 1 root root    507 Oct  3 19:19 system_info-20251003-191911.json
+    -rw-r--r-- 1 root root    507 Oct  3 19:23 system_info-20251003-192342.json
+    -rw-r--r-- 1 root root    507 Oct  3 19:36 system_info-20251003-193607.json
+    -rw-r--r-- 1 root root    507 Oct  3 20:00 system_info-20251003-200008.json
+    -rw-r--r-- 1 root root    507 Oct  3 20:04 system_info-20251003-200426.json
+    -rw-r--r-- 1 root root    507 Oct  3 20:19 system_info-20251003-201948.json
+    -rw-r--r-- 1 root root    507 Oct  3 21:02 system_info-20251003-210258.json
+    -rw-r--r-- 1 root root    507 Oct  3 22:01 system_info-20251003-220158.json
+    -rw-r--r-- 1 root root    507 Oct  3 23:02 system_info-20251003-230225.json
+    -rw-r--r-- 1 root root    507 Oct  4 00:04 system_info-20251004-000458.json
+    -rw-r--r-- 1 root root    507 Oct  4 01:02 system_info-20251004-010258.json
+    -rw-r--r-- 1 root root    507 Oct  4 02:04 system_info-20251004-020425.json
+    -rw-r--r-- 1 root root    507 Oct  4 02:29 system_info-20251004-022932.json
+  stdout_lines: <omitted>
+2025-10-03 22:31:35,295 p=61054 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:31:35,295 p=61054 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:35,295 p=61054 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:31:35,295 p=61054 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:44:46,582 p=62559 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:44:46,583 p=62559 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:44:46,678 p=62559 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************************************************************
+2025-10-03 22:44:46,688 p=62559 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:44:46,689 p=62559 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************************************************************
+2025-10-03 22:44:48,343 p=62559 u=osamudiameneweka n=ansible ERROR| [ERROR]: Task failed: Module failed: non-zero return code
+Origin: <adhoc 'shell' task>
+
+{'action': 'shell', 'args': {'_raw_params': '/opt/lab-environment/fim-agent.py --scan-once'}, 'timeout': 0, [...]
+
+
+2025-10-03 22:44:48,344 p=62559 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-1]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.048170'
+  end: '2025-10-04 02:44:48.370420'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-04 02:44:48.322250'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:44:49,664 p=62559 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-2]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.828428'
+  end: '2025-10-04 02:44:49.644596'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-04 02:44:48.816168'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:44:49,996 p=62559 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-3]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.899288'
+  end: '2025-10-04 02:44:50.024168'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-04 02:44:49.124880'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:44:49,997 p=62559 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************************************************************
+2025-10-03 22:44:49,997 p=62559 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:44:49,997 p=62559 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:44:49,997 p=62559 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:22,683 p=62830 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:45:22,684 p=62830 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:45:22,773 p=62830 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:45:22,782 p=62830 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:45:22,783 p=62830 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:45:23,478 p=62830 u=osamudiameneweka n=ansible ERROR| [ERROR]: Task failed: Module failed: non-zero return code
+Origin: <adhoc 'shell' task>
+
+{'action': 'shell', 'args': {'_raw_params': '/opt/lab-environment/fim-agent.py --scan-once'}, 'timeout': 0, [...]
+
+
+2025-10-03 22:45:23,479 p=62830 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-1]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.049955'
+  end: '2025-10-04 02:45:23.509981'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-04 02:45:23.460026'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:45:23,562 p=62830 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-3]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.183415'
+  end: '2025-10-04 02:45:23.592167'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-04 02:45:23.408752'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:45:23,654 p=62830 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-2]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.213050'
+  end: '2025-10-04 02:45:23.682277'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-04 02:45:23.469227'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:45:23,655 p=62830 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:45:23,656 p=62830 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:23,656 p=62830 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:23,656 p=62830 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:26,413 p=62854 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:45:26,413 p=62854 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:45:26,464 p=62854 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:45:26,470 p=62854 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:45:26,471 p=62854 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:45:30,157 p=62854 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:45:36,614 p=62854 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:45:37,279 p=62854 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:45:37,283 p=62854 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:45:37,283 p=62854 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:37,283 p=62854 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:37,283 p=62854 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:39,738 p=62894 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:45:39,738 p=62894 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:45:39,788 p=62894 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:45:39,795 p=62894 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:45:39,796 p=62894 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:45:40,405 p=62894 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:45:40,426 p=62894 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:45:40,471 p=62894 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:45:40,472 p=62894 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:45:40,472 p=62894 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:40,473 p=62894 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:40,473 p=62894 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:43,054 p=62924 u=osamudiameneweka n=ansible INFO| Using /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/ansible.cfg as config file
+2025-10-03 22:45:43,117 p=62924 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:45:43,117 p=62924 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:45:43,169 p=62924 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:45:43,176 p=62924 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:45:43,176 p=62924 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:45:43,720 p=62924 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1] => changed=true 
+  cmd: ls -la /var/lib/fim/
+  delta: '0:00:00.005338'
+  end: '2025-10-04 02:45:43.750353'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:45:43.745015'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    total 1100
+    drwxr-xr-x.  2 root root      27 Oct  3 19:19 .
+    drwxr-xr-x. 31 root root   16384 Oct  3 19:18 ..
+    -rw-r--r--.  1 root root 1107812 Oct  4 02:45 baseline.json
+  stdout_lines: <omitted>
+2025-10-03 22:45:43,749 p=62924 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3] => changed=true 
+  cmd: ls -la /var/lib/fim/
+  delta: '0:00:00.005376'
+  end: '2025-10-04 02:45:43.779944'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:45:43.774568'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    total 1400
+    drwxr-xr-x  2 root root    4096 Oct  3 19:19 .
+    drwxr-xr-x 55 root root    4096 Oct  3 19:18 ..
+    -rw-r--r--  1 root root 1421964 Oct  4 02:45 baseline.json
+  stdout_lines: <omitted>
+2025-10-03 22:45:43,788 p=62924 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2] => changed=true 
+  cmd: ls -la /var/lib/fim/
+  delta: '0:00:00.005489'
+  end: '2025-10-04 02:45:43.820007'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:45:43.814518'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    total 1400
+    drwxr-xr-x  2 root root    4096 Oct  3 19:19 .
+    drwxr-xr-x 55 root root    4096 Oct  3 19:18 ..
+    -rw-r--r--  1 root root 1422570 Oct  4 02:45 baseline.json
+  stdout_lines: <omitted>
+2025-10-03 22:45:43,789 p=62924 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:45:43,789 p=62924 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:43,789 p=62924 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:43,789 p=62924 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:47,826 p=62960 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:45:47,826 p=62960 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:45:47,880 p=62960 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:45:47,886 p=62960 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:45:47,887 p=62960 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:45:49,745 p=62960 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:45:49,856 p=62960 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:45:49,885 p=62960 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:45:49,887 p=62960 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:45:49,888 p=62960 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:49,888 p=62960 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:49,888 p=62960 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:52,142 p=62990 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:45:52,143 p=62990 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:45:52,193 p=62990 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:45:52,200 p=62990 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:45:52,200 p=62990 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:45:52,729 p=62990 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:45:52,742 p=62990 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:45:52,797 p=62990 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:45:52,799 p=62990 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:45:52,799 p=62990 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:52,799 p=62990 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:52,799 p=62990 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:54,984 p=63016 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:45:54,984 p=63016 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:45:55,036 p=63016 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:45:55,042 p=63016 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:45:55,043 p=63016 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:45:55,567 p=63016 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:45:55,611 p=63016 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:45:55,643 p=63016 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:45:55,644 p=63016 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:45:55,644 p=63016 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:55,644 p=63016 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:55,644 p=63016 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:57,850 p=63052 u=osamudiameneweka n=ansible INFO| Using /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/ansible.cfg as config file
+2025-10-03 22:45:57,912 p=63052 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:45:57,912 p=63052 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:45:57,963 p=63052 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:45:57,969 p=63052 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:45:57,970 p=63052 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:45:58,515 p=63052 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1] => changed=true 
+  cmd: cat /etc/system-info
+  delta: '0:00:00.003906'
+  end: '2025-10-04 02:45:58.542469'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:45:58.538563'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    # AWS Instance Information
+    # Generated by Ansible on 2025-10-04T02:28:28Z
+  
+    Hostname: ip-172-31-40-127
+    FQDN: ip-172-31-40-127.ec2.internal
+    Instance ID: unknown
+    Public IP: 18.234.152.228
+    Private IP: unknown
+    OS: Amazon 2023
+    Architecture: x86_64
+    Kernel: 6.1.153-175.280.amzn2023.x86_64
+    Uptime: 7 hours
+  
+    # AWS Information
+    Instance Type: t2.micro
+    Availability Zone: us-east-1a
+    Region: us-east-1
+    Security Group: default
+    Key Name: key-p3
+    Launch Time: 2025-10-03T14:35:00Z
+  
+    # Network Information
+    Interface enX0:
+      IP: 172.31.40.127
+      MAC: 0e:0b:d6:1d:9e:77
+    Interface lo:
+      IP: 127.0.0.1
+      MAC: N/A
+  
+    # System Resources
+    CPU Cores: 1
+    Total Memory: 949 MB
+    Available Memory: 949 MB
+    Disk Space: 7 GB
+  
+    # Lab Configuration
+    Environment: []
+    Service Type: web
+    Baseline Version: 1.0.0
+    Configured On: 2025-10-04T02:28:28Z
+  
+    # Security Settings
+    Firewall: enabled
+    Fail2ban: enabled
+    SSH Root Login: disabled
+    SSH Key Authentication: enabled
+  
+    # Monitoring
+    FIM Enabled: enabled
+    CMDB Enabled: enabled
+    Monitoring: enabled
+    Alerting: enabled
+  
+    # AWS Services
+    CloudWatch: enabled
+    SSM: enabled
+    Backup: enabled
+  stdout_lines: <omitted>
+2025-10-03 22:45:58,544 p=63052 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3] => changed=true 
+  cmd: cat /etc/system-info
+  delta: '0:00:00.004957'
+  end: '2025-10-04 02:45:58.575507'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:45:58.570550'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    # AWS Instance Information
+    # Generated by Ansible on 2025-10-04T02:28:28Z
+  
+    Hostname: ip-172-31-34-202
+    FQDN: ip-172-31-34-202.ec2.internal
+    Instance ID: unknown
+    Public IP: 13.217.82.23
+    Private IP: unknown
+    OS: Ubuntu 24.04
+    Architecture: x86_64
+    Kernel: 6.14.0-1011-aws
+    Uptime: 7 hours
+  
+    # AWS Information
+    Instance Type: t2.micro
+    Availability Zone: us-east-1a
+    Region: us-east-1
+    Security Group: default
+    Key Name: key-p3
+    Launch Time: 2025-10-03T14:35:00Z
+  
+    # Network Information
+    Interface lo:
+      IP: 127.0.0.1
+      MAC: N/A
+    Interface docker0:
+      IP: 172.17.0.1
+      MAC: c2:61:2a:b3:f3:66
+    Interface enX0:
+      IP: 172.31.34.202
+      MAC: 0e:49:a7:67:7f:cf
+  
+    # System Resources
+    CPU Cores: 1
+    Total Memory: 957 MB
+    Available Memory: 957 MB
+    Disk Space: 6 GB
+  
+    # Lab Configuration
+    Environment: []
+    Service Type: monitoring
+    Baseline Version: 1.0.0
+    Configured On: 2025-10-04T02:28:28Z
+  
+    # Security Settings
+    Firewall: enabled
+    Fail2ban: enabled
+    SSH Root Login: disabled
+    SSH Key Authentication: enabled
+  
+    # Monitoring
+    FIM Enabled: enabled
+    CMDB Enabled: enabled
+    Monitoring: enabled
+    Alerting: enabled
+  
+    # AWS Services
+    CloudWatch: enabled
+    SSM: enabled
+    Backup: enabled
+  stdout_lines: <omitted>
+2025-10-03 22:45:58,582 p=63052 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2] => changed=true 
+  cmd: cat /etc/system-info
+  delta: '0:00:00.004685'
+  end: '2025-10-04 02:45:58.613533'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:45:58.608848'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    # AWS Instance Information
+    # Generated by Ansible on 2025-10-04T02:28:28Z
+  
+    Hostname: ip-172-31-42-134
+    FQDN: ip-172-31-42-134.ec2.internal
+    Instance ID: unknown
+    Public IP: 54.242.234.69
+    Private IP: unknown
+    OS: Ubuntu 24.04
+    Architecture: x86_64
+    Kernel: 6.14.0-1011-aws
+    Uptime: 7 hours
+  
+    # AWS Information
+    Instance Type: t2.micro
+    Availability Zone: us-east-1a
+    Region: us-east-1
+    Security Group: default
+    Key Name: key-p3
+    Launch Time: 2025-10-03T14:35:00Z
+  
+    # Network Information
+    Interface docker0:
+      IP: 172.17.0.1
+      MAC: fa:59:27:5e:07:df
+    Interface lo:
+      IP: 127.0.0.1
+      MAC: N/A
+    Interface enX0:
+      IP: 172.31.42.134
+      MAC: 0e:6e:ad:fb:4b:c7
+  
+    # System Resources
+    CPU Cores: 1
+    Total Memory: 957 MB
+    Available Memory: 957 MB
+    Disk Space: 6 GB
+  
+    # Lab Configuration
+    Environment: []
+    Service Type: database
+    Baseline Version: 1.0.0
+    Configured On: 2025-10-04T02:28:28Z
+  
+    # Security Settings
+    Firewall: enabled
+    Fail2ban: enabled
+    SSH Root Login: disabled
+    SSH Key Authentication: enabled
+  
+    # Monitoring
+    FIM Enabled: enabled
+    CMDB Enabled: enabled
+    Monitoring: enabled
+    Alerting: enabled
+  
+    # AWS Services
+    CloudWatch: enabled
+    SSM: enabled
+    Backup: enabled
+  stdout_lines: <omitted>
+2025-10-03 22:45:58,583 p=63052 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:45:58,583 p=63052 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:58,583 p=63052 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:45:58,583 p=63052 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:02,922 p=63084 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:46:02,922 p=63084 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:46:02,975 p=63084 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:46:02,981 p=63084 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:46:02,982 p=63084 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:46:03,528 p=63084 u=osamudiameneweka n=ansible ERROR| [ERROR]: Task failed: Module failed: non-zero return code
+Origin: <adhoc 'shell' task>
+
+{'action': 'shell', 'args': {'_raw_params': 'ufw status verbose'}, 'timeout': 0, 'async_val': 0, 'poll': 15}
+
+
+2025-10-03 22:46:03,529 p=63084 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-1]: FAILED! => changed=true 
+  cmd: ufw status verbose
+  delta: '0:00:00.004141'
+  end: '2025-10-04 02:46:03.559448'
+  msg: non-zero return code
+  rc: 127
+  start: '2025-10-04 02:46:03.555307'
+  stderr: '/bin/sh: line 1: ufw: command not found'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:46:03,598 p=63084 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:46:03,657 p=63084 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:46:03,658 p=63084 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:46:03,658 p=63084 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:03,658 p=63084 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:03,658 p=63084 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:06,026 p=63104 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:46:06,026 p=63104 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:46:06,080 p=63104 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:46:06,086 p=63104 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:46:06,087 p=63104 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:46:06,706 p=63104 u=osamudiameneweka n=ansible ERROR| [ERROR]: Task failed: Module failed: non-zero return code
+Origin: <adhoc 'shell' task>
+
+{'action': 'shell', 'args': {'_raw_params': 'fail2ban-client status'}, 'timeout': 0, 'async_val': 0, 'poll': 15}
+
+
+2025-10-03 22:46:06,707 p=63104 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-1]: FAILED! => changed=true 
+  cmd: fail2ban-client status
+  delta: '0:00:00.074853'
+  end: '2025-10-04 02:46:06.726841'
+  msg: non-zero return code
+  rc: 255
+  start: '2025-10-04 02:46:06.651988'
+  stderr: '2025-10-04 02:46:06,718 fail2ban                [54785]: ERROR   Failed to access socket path: /var/run/fail2ban/fail2ban.sock. Is fail2ban running?'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:46:06,766 p=63104 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:46:06,807 p=63104 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:46:06,809 p=63104 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:46:06,809 p=63104 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:06,809 p=63104 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:06,809 p=63104 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:09,387 p=63124 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:46:09,387 p=63124 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:46:09,440 p=63124 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:46:09,446 p=63124 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:46:09,447 p=63124 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:46:10,035 p=63124 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1]
+2025-10-03 22:46:10,072 p=63124 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3]
+2025-10-03 22:46:10,099 p=63124 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2]
+2025-10-03 22:46:10,100 p=63124 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:46:10,100 p=63124 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:10,100 p=63124 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:10,101 p=63124 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:12,485 p=63154 u=osamudiameneweka n=ansible INFO| Using /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/ansible.cfg as config file
+2025-10-03 22:46:12,548 p=63154 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:46:12,548 p=63154 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:46:12,598 p=63154 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************
+2025-10-03 22:46:12,604 p=63154 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:46:12,604 p=63154 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************
+2025-10-03 22:46:13,139 p=63154 u=osamudiameneweka n=ansible INFO| changed: [manage-node-1] => changed=true 
+  cmd: systemctl is-active fim-agent cmdb-collector.timer fail2ban
+  delta: '0:00:00.010211'
+  end: '2025-10-04 02:46:13.170491'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:46:13.160280'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    active
+    active
+    failed
+  stdout_lines: <omitted>
+2025-10-03 22:46:13,141 p=63154 u=osamudiameneweka n=ansible INFO| changed: [manage-node-3] => changed=true 
+  cmd: systemctl is-active fim-agent cmdb-collector.timer fail2ban
+  delta: '0:00:00.010253'
+  end: '2025-10-04 02:46:13.173082'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:46:13.162829'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    active
+    active
+    active
+  stdout_lines: <omitted>
+2025-10-03 22:46:13,207 p=63154 u=osamudiameneweka n=ansible INFO| changed: [manage-node-2] => changed=true 
+  cmd: systemctl is-active fim-agent cmdb-collector.timer fail2ban
+  delta: '0:00:00.010254'
+  end: '2025-10-04 02:46:13.236322'
+  msg: ''
+  rc: 0
+  start: '2025-10-04 02:46:13.226068'
+  stderr: ''
+  stderr_lines: <omitted>
+  stdout: |-
+    active
+    active
+    active
+  stdout_lines: <omitted>
+2025-10-03 22:46:13,208 p=63154 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************
+2025-10-03 22:46:13,209 p=63154 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:13,209 p=63154 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:46:13,209 p=63154 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=1    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:47:04,884 p=63397 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-03 22:47:04,885 p=63397 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-03 22:47:04,974 p=63397 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] **********************************************************************************************************
+2025-10-03 22:47:04,984 p=63397 u=osamudiameneweka n=ansible WARNING| [WARNING]: Found variable using reserved name 'environment'.
+Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansible/inventory/aws-instances:70
+
+68 [aws_instances:vars]
+69 # Common variables for all AWS instances
+70 environment=production
+   ^^^^^^^^^^^^^^^^^^^^^^
+
+
+2025-10-03 22:47:04,986 p=63397 u=osamudiameneweka n=ansible INFO| TASK [shell] *******************************************************************************************************************
+2025-10-03 22:47:05,696 p=63397 u=osamudiameneweka n=ansible ERROR| [ERROR]: Task failed: Module failed: non-zero return code
+Origin: <adhoc 'shell' task>
+
+{'action': 'shell', 'args': {'_raw_params': '/opt/lab-environment/fim-agent.py --scan-once'}, 'timeout': 0, [...]
+
+
+2025-10-03 22:47:05,698 p=63397 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-1]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.048304'
+  end: '2025-10-04 02:47:05.724086'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-04 02:47:05.675782'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:47:05,761 p=63397 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-3]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.188888'
+  end: '2025-10-04 02:47:05.788382'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-04 02:47:05.599494'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:47:06,429 p=63397 u=osamudiameneweka n=ansible INFO| fatal: [manage-node-2]: FAILED! => changed=true 
+  cmd: /opt/lab-environment/fim-agent.py --scan-once
+  delta: '0:00:00.791791'
+  end: '2025-10-04 02:47:06.451745'
+  msg: non-zero return code
+  rc: 1
+  start: '2025-10-04 02:47:05.659954'
+  stderr: |-
+    Traceback (most recent call last):
+      File "/opt/lab-environment/fim-agent.py", line 18, in <module>
+        from watchdog.observers import Observer
+    ModuleNotFoundError: No module named 'watchdog'
+  stderr_lines: <omitted>
+  stdout: ''
+  stdout_lines: <omitted>
+2025-10-03 22:47:06,432 p=63397 u=osamudiameneweka n=ansible INFO| PLAY RECAP *********************************************************************************************************************
+2025-10-03 22:47:06,433 p=63397 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:47:06,433 p=63397 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-03 22:47:06,433 p=63397 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
