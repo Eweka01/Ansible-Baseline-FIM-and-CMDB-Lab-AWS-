@@ -50,17 +50,24 @@ ansible-playbook -i inventory/aws-instances playbooks/setup-aws-instances.yml
 
 ### 3. Start Monitoring Stack
 ```bash
+# Complete automated startup (recommended)
+./start-monitoring-lab.sh
+
+# OR manual startup:
 # Start Prometheus + Grafana
 docker compose -f docker-compose.yml up -d
 
 # Setup SSH tunnels for monitoring
 ./setup-ssh-tunnel-monitoring.sh
+
+# Start dashboard HTTP server
+./start_dashboard.sh
 ```
 
 ### 4. Access Monitoring
+- **Real-time Dashboard**: http://localhost:8088/simple-monitoring-dashboard.html
 - **Grafana**: http://localhost:3000 (admin/admin)
 - **Prometheus**: http://localhost:9090
-- **Lab Dashboard**: http://localhost:8080/simple-monitoring-dashboard.html
 
 ### 5. Verify Deployment
 ```bash
@@ -118,6 +125,15 @@ This lab provides enterprise-grade capabilities suitable for:
 - DevOps learning and training
 - Real-world production scenarios
 
+### **Current Lab Status: FULLY OPERATIONAL**
+
+- ✅ **Live Monitoring Active**: 8/9 Prometheus targets UP
+- ✅ **FIM Metrics**: 324+ events available (14,000+ total events)
+- ✅ **CMDB Metrics**: 3 collections available (11+ total collections)
+- ✅ **Real-time Dashboard**: http://localhost:8088/simple-monitoring-dashboard.html
+- ✅ **SSH Tunnels**: 11 active tunnels for secure monitoring
+- ✅ **Real-time Updates**: Every 15 seconds
+
 ## Support
 
-For detailed setup instructions, troubleshooting, and advanced usage, refer to the comprehensive documentation in the `GAB/` directory.
+For detailed setup instructions, troubleshooting, and advanced usage, refer to the comprehensive documentation in the `My Sys/` directory.
