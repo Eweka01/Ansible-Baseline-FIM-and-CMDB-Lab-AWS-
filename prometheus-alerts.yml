@@ -37,14 +37,14 @@ groups:
 - name: cmdb-alerts
   rules:
   - alert: CMDBCollectionFailure
-    expr: increase(cmdb_collections_total[15m]) == 0
-    for: 5m
+    expr: increase(cmdb_collections_total[1h]) == 0
+    for: 10m
     labels:
       severity: warning
       service: cmdb
     annotations:
       summary: "CMDB collection failure"
-      description: "CMDB collector on {{ $labels.instance }} has not collected data in the last 15 minutes"
+      description: "CMDB collector on {{ $labels.instance }} has not collected data in the last hour"
       runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: CMDBCollectorDown
