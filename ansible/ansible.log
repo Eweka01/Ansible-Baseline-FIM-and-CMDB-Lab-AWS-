@@ -9638,3 +9638,23 @@ Origin: /Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab/ansi
 2025-10-04 12:37:05,838 p=30094 u=osamudiameneweka n=ansible INFO| manage-node-1              : ok=10   changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
 2025-10-04 12:37:05,838 p=30094 u=osamudiameneweka n=ansible INFO| manage-node-2              : ok=10   changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
 2025-10-04 12:37:05,838 p=30094 u=osamudiameneweka n=ansible INFO| manage-node-3              : ok=10   changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+2025-10-05 20:20:58,350 p=49528 u=osamudiameneweka n=ansible WARNING| [WARNING]: Could not match supplied host pattern, ignoring: aws_instances
+
+2025-10-05 20:20:58,351 p=49528 u=osamudiameneweka n=ansible WARNING| [WARNING]: No hosts matched, nothing to do
+
+2025-10-05 20:20:58,360 p=49528 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-05 20:20:58,360 p=49528 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-05 20:20:58,457 p=49528 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] *************************************************************************************************
+2025-10-05 20:20:58,461 p=49528 u=osamudiameneweka n=ansible INFO| PLAY RECAP ************************************************************************************************************
+2025-10-05 20:21:18,663 p=49857 u=osamudiameneweka n=ansible WARNING| [WARNING]: Could not match supplied host pattern, ignoring: aws_instances
+
+2025-10-05 20:21:18,671 p=49857 u=osamudiameneweka n=ansible WARNING| [WARNING]: No hosts matched, nothing to do
+
+2025-10-05 20:21:18,680 p=49857 u=osamudiameneweka n=ansible WARNING| [WARNING]: Deprecation warnings can be disabled by setting `deprecation_warnings=False` in ansible.cfg.
+
+2025-10-05 20:21:18,680 p=49857 u=osamudiameneweka n=ansible INFO| [DEPRECATION WARNING]: community.general.yaml has been deprecated. The plugin has been superseded by the the option `result_format=yaml` in callback plugin ansible.builtin.default from ansible-core 2.13 onwards. This feature will be removed from collection 'community.general' version 12.0.0.
+
+2025-10-05 20:21:18,757 p=49857 u=osamudiameneweka n=ansible INFO| PLAY [Ansible Ad-Hoc] *************************************************************************************************
+2025-10-05 20:21:18,761 p=49857 u=osamudiameneweka n=ansible INFO| PLAY RECAP ************************************************************************************************************

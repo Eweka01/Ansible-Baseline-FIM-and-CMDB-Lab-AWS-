@@ -10,7 +10,7 @@ groups:
     annotations:
       summary: "File integrity monitoring detected changes"
       description: "FIM agent detected {{ $value }} file changes in the last 5 minutes on {{ $labels.instance }}"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: FIMHighActivity
     expr: increase(fim_events_total[10m]) > 50
@@ -21,7 +21,7 @@ groups:
     annotations:
       summary: "High FIM activity detected"
       description: "FIM agent detected {{ $value }} file changes in the last 10 minutes on {{ $labels.instance }} - possible security incident"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: FIMAgentDown
     expr: up{job="fim-agents"} == 0
@@ -32,7 +32,7 @@ groups:
     annotations:
       summary: "FIM agent is down"
       description: "FIM agent on {{ $labels.instance }} has been down for more than 1 minute"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
 - name: cmdb-alerts
   rules:
@@ -45,7 +45,7 @@ groups:
     annotations:
       summary: "CMDB collection failure"
       description: "CMDB collector on {{ $labels.instance }} has not collected data in the last 15 minutes"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: CMDBCollectorDown
     expr: up{job="cmdb-collectors"} == 0
@@ -56,7 +56,7 @@ groups:
     annotations:
       summary: "CMDB collector is down"
       description: "CMDB collector on {{ $labels.instance }} has been down for more than 1 minute"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
 - name: system-alerts
   rules:
@@ -69,7 +69,7 @@ groups:
     annotations:
       summary: "Node Exporter is down"
       description: "Node Exporter on {{ $labels.instance }} has been down for more than 1 minute"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: HighCPUUsage
     expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
@@ -80,7 +80,7 @@ groups:
     annotations:
       summary: "High CPU usage detected"
       description: "CPU usage is above 80% for more than 5 minutes on {{ $labels.instance }}"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: HighMemoryUsage
     expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
@@ -91,7 +91,7 @@ groups:
     annotations:
       summary: "High memory usage detected"
       description: "Memory usage is above 85% for more than 5 minutes on {{ $labels.instance }}"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: DiskSpaceLow
     expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100 > 90
@@ -102,7 +102,7 @@ groups:
     annotations:
       summary: "Disk space low"
       description: "Disk usage is above 90% for more than 5 minutes on {{ $labels.instance }}"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
 - name: prometheus-alerts
   rules:
@@ -115,7 +115,7 @@ groups:
     annotations:
       summary: "Prometheus is down"
       description: "Prometheus monitoring system is down"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: PrometheusConfigReloadFailed
     expr: prometheus_config_last_reload_successful == 0
@@ -126,4 +126,4 @@ groups:
     annotations:
       summary: "Prometheus configuration reload failed"
       description: "Prometheus configuration reload failed"
-      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"

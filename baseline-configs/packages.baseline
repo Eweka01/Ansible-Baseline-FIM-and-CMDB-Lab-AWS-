@@ -1,0 +1,33 @@
+# Baseline package list
+# This is the known good list of installed packages
+
+# Core system packages
+bash
+coreutils
+systemd
+openssh-server
+sudo
+vim
+curl
+wget
+git
+python3
+python3-pip
+
+# Monitoring packages
+prometheus-client
+node-exporter
+
+# Security packages
+fail2ban
+ufw
+
+# Lab-specific packages
+ansible
+docker.io
+docker-compose
+
+# Development tools
+build-essential
+gcc
+make

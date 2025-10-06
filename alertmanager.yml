@@ -7,9 +7,66 @@ route:
   group_wait: 10s
   group_interval: 10s
   repeat_interval: 1h
-  receiver: 'web.hook'
+  receiver: 'webhook-receiver'
+  routes:
+  - match:
+      severity: critical
+    receiver: 'critical-alerts'
+  - match:
+      severity: warning
+    receiver: 'warning-alerts'
 
 receivers:
-- name: 'web.hook'
+- name: 'webhook-receiver'
   webhook_configs:
   - url: 'http://localhost:5001/'
+    send_resolved: true
+    http_config:
+      basic_auth:
+        username: 'webhook'
+        password: 'webhook123'
+
+- name: 'critical-alerts'
+  webhook_configs:
+  - url: 'http://localhost:5001/'
+    send_resolved: true
+    http_config:
+      basic_auth:
+        username: 'webhook'
+        password: 'webhook123'
+  email_configs:
+  - to: 'admin@lab.local'
+    subject: 'CRITICAL ALERT: {{ .GroupLabels.alertname }}'
+    body: |
+      {{ range .Alerts }}
+      Alert: {{ .Annotations.summary }}
+      Description: {{ .Annotations.description }}
+      Instance: {{ .Labels.instance }}
+      Severity: {{ .Labels.severity }}
+      {{ end }}
+
+- name: 'warning-alerts'
+  webhook_configs:
+  - url: 'http://localhost:5001/'
+    send_resolved: true
+    http_config:
+      basic_auth:
+        username: 'webhook'
+        password: 'webhook123'
+  email_configs:
+  - to: 'admin@lab.local'
+    subject: 'WARNING ALERT: {{ .GroupLabels.alertname }}'
+    body: |
+      {{ range .Alerts }}
+      Alert: {{ .Annotations.summary }}
+      Description: {{ .Annotations.description }}
+      Instance: {{ .Labels.instance }}
+      Severity: {{ .Labels.severity }}
+      {{ end }}
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']

@@ -1,0 +1,9 @@
+# Baseline hosts file
+# This is the known good configuration for /etc/hosts
+127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
+::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
+
+# AWS instances
+18.234.152.228  manage-node-1
+54.242.234.69   manage-node-2
+13.217.82.23    manage-node-3

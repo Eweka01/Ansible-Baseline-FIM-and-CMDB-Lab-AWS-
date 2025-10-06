@@ -1,0 +1,19 @@
+# Baseline services list
+# This is the known good list of enabled services
+
+# Core services
+ssh
+systemd-resolved
+systemd-networkd
+
+# Monitoring services
+fim-agent-prometheus
+cmdb-collector-prometheus
+node-exporter
+
+# Security services
+fail2ban
+ufw
+
+# Lab services
+docker

@@ -1,0 +1,60 @@
+# Baseline SSH configuration
+# This is the known good configuration for /etc/ssh/sshd_config
+
+# Port configuration
+Port 22
+
+# Protocol version
+Protocol 2
+
+# Host keys
+HostKey /etc/ssh/ssh_host_rsa_key
+HostKey /etc/ssh/ssh_host_ecdsa_key
+HostKey /etc/ssh/ssh_host_ed25519_key
+
+# Logging
+SyslogFacility AUTH
+LogLevel INFO
+
+# Authentication
+LoginGraceTime 2m
+PermitRootLogin no
+StrictModes yes
+MaxAuthTries 6
+MaxSessions 10
+
+# Pubkey authentication
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+
+# Password authentication
+PasswordAuthentication no
+PermitEmptyPasswords no
+ChallengeResponseAuthentication no
+
+# Kerberos options
+KerberosAuthentication no
+KerberosOrLocalPasswd yes
+KerberosTicketCleanup yes
+
+# GSSAPI options
+GSSAPIAuthentication no
+GSSAPICleanupCredentials yes
+
+# Set this to 'yes' to enable PAM authentication
+UsePAM yes
+
+# Accept locale-related environment variables
+AcceptEnv LANG LC_CTYPE LC_NUMERIC LC_TIME LC_COLLATE LC_MONETARY LC_MESSAGES
+AcceptEnv LC_PAPER LC_NAME LC_ADDRESS LC_TELEPHONE LC_MEASUREMENT
+AcceptEnv LC_IDENTIFICATION LC_ALL LANGUAGE
+AcceptEnv XMODIFIERS
+
+# Override default of no subsystems
+Subsystem sftp /usr/libexec/openssh/sftp-server
+
+# Example of overriding settings on a per-user basis
+#Match User anoncvs
+#    X11Forwarding no
+#    AllowTcpForwarding no
+#    ForceCommand cvs server

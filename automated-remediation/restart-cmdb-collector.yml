@@ -1,0 +1,213 @@
+---
+# Restart CMDB Collector Playbook
+# Restarts CMDB collector when it goes down
+# Author: Gabriel Eweka
+# Date: October 6, 2025
+
+- name: "Restart CMDB Collector - {{ target_node | default('all') }}"
+  hosts: "{{ target_node | default('all') }}"
+  gather_facts: yes
+  vars:
+    remediation_timestamp: "{{ ansible_date_time.iso8601 }}"
+    alert_type: "{{ alert_type | default('CMDBCollectorDown') }}"
+    remediation_log: "/var/log/automated-remediation.log"
+    
+  tasks:
+    - name: "Log CMDB collector restart start"
+      lineinfile:
+        path: "{{ remediation_log }}"
+        line: "{{ remediation_timestamp }} - START - {{ alert_type }} - {{ inventory_hostname }}"
+        create: yes
+        mode: '0644'
+      become: yes
+
+    - name: "Check CMDB collector status"
+      systemd:
+        name: cmdb-collector-prometheus
+      register: cmdb_collector_status
+      become: yes
+
+    - name: "Display CMDB collector status"
+      debug:
+        msg: "CMDB collector status: {{ cmdb_collector_status.status.ActiveState }}"
+
+    - name: "Check CMDB collector logs for errors"
+      shell: |
+        journalctl -u cmdb-collector-prometheus --no-pager -n 50 | grep -i error
+      register: cmdb_collector_errors
+      changed_when: false
+      become: yes
+
+    - name: "Display CMDB collector errors"
+      debug:
+        msg: "{{ cmdb_collector_errors.stdout_lines }}"
+
+    - name: "Stop CMDB collector"
+      systemd:
+        name: cmdb-collector-prometheus
+        state: stopped
+      become: yes
+      when: cmdb_collector_status.status.ActiveState != "inactive"
+
+    - name: "Wait for CMDB collector to stop"
+      wait_for:
+        timeout: 10
+      when: cmdb_collector_status.status.ActiveState != "inactive"
+
+    - name: "Check CMDB collector configuration"
+      stat:
+        path: /opt/lab-environment/cmdb-config.json
+      register: cmdb_config_status
+      become: yes
+
+    - name: "Display CMDB config status"
+      debug:
+        msg: "CMDB config exists: {{ cmdb_config_status.stat.exists }}"
+
+    - name: "Validate CMDB collector configuration"
+      shell: |
+        if [ -f /opt/lab-environment/cmdb-config.json ]; then
+          python3 -m json.tool /opt/lab-environment/cmdb-config.json > /dev/null
+          echo "Config valid"
+        else
+          echo "Config missing"
+        fi
+      register: cmdb_config_validation
+      changed_when: false
+      become: yes
+
+    - name: "Display CMDB config validation"
+      debug:
+        msg: "{{ cmdb_config_validation.stdout }}"
+
+    - name: "Check CMDB collector Python environment"
+      shell: |
+        /opt/lab-env/bin/python --version
+      register: cmdb_python_version
+      changed_when: false
+      become: yes
+
+    - name: "Display CMDB Python version"
+      debug:
+        msg: "{{ cmdb_python_version.stdout }}"
+
+    - name: "Check CMDB collector dependencies"
+      shell: |
+        /opt/lab-env/bin/python -c "import json, os, time, prometheus_client, subprocess; print('All dependencies available')"
+      register: cmdb_dependencies
+      changed_when: false
+      become: yes
+
+    - name: "Display CMDB dependencies status"
+      debug:
+        msg: "{{ cmdb_dependencies.stdout }}"
+
+    - name: "Check CMDB collector data directory"
+      stat:
+        path: /opt/lab-environment/cmdb-data
+      register: cmdb_data_status
+      become: yes
+
+    - name: "Display CMDB data directory status"
+      debug:
+        msg: "CMDB data directory exists: {{ cmdb_data_status.stat.exists }}"
+
+    - name: "Create CMDB data directory if missing"
+      file:
+        path: /opt/lab-environment/cmdb-data
+        state: directory
+        mode: '0755'
+        owner: root
+        group: root
+      become: yes
+      when: not cmdb_data_status.stat.exists
+
+    - name: "Start CMDB collector"
+      systemd:
+        name: cmdb-collector-prometheus
+        state: started
+        enabled: yes
+      become: yes
+
+    - name: "Wait for CMDB collector to start"
+      wait_for:
+        timeout: 30
+
+    - name: "Check CMDB collector status after restart"
+      systemd:
+        name: cmdb-collector-prometheus
+      register: cmdb_collector_status_after
+      become: yes
+
+    - name: "Display CMDB collector status after restart"
+      debug:
+        msg: "CMDB collector status after restart: {{ cmdb_collector_status_after.status.ActiveState }}"
+
+    - name: "Test CMDB collector metrics endpoint"
+      uri:
+        url: "http://localhost:8081/metrics"
+        method: GET
+        status_code: 200
+      delegate_to: localhost
+      when: inventory_hostname == "manage-node-1"
+      register: cmdb_metrics_test
+
+    - name: "Display CMDB metrics test result"
+      debug:
+        msg: "CMDB metrics endpoint test: {{ 'PASSED' if cmdb_metrics_test.status == 200 else 'FAILED' }}"
+
+    - name: "Check CMDB collector logs after restart"
+      shell: |
+        journalctl -u cmdb-collector-prometheus --no-pager -n 20
+      register: cmdb_collector_logs_after
+      changed_when: false
+      become: yes
+
+    - name: "Display CMDB collector logs after restart"
+      debug:
+        msg: "{{ cmdb_collector_logs_after.stdout_lines }}"
+
+    - name: "Trigger immediate CMDB collection"
+      shell: |
+        /opt/lab-env/bin/python /opt/lab-environment/cmdb-collector-prometheus.py --collect-once
+      become: yes
+      when: trigger_immediate_collection | default(true)
+
+    - name: "Check CMDB collection results"
+      shell: |
+        ls -la /opt/lab-environment/cmdb-data/ | tail -5
+      register: cmdb_collection_results
+      changed_when: false
+      become: yes
+
+    - name: "Display CMDB collection results"
+      debug:
+        msg: "{{ cmdb_collection_results.stdout_lines }}"
+
+    - name: "Log CMDB collector restart completion"
+      lineinfile:
+        path: "{{ remediation_log }}"
+        line: "{{ remediation_timestamp }} - COMPLETED - {{ alert_type }} - {{ inventory_hostname }} - Status: {{ cmdb_collector_status_after.status.ActiveState }}"
+        create: yes
+        mode: '0644'
+      become: yes
+
+    - name: "Send restart notification"
+      uri:
+        url: "http://localhost:9090/api/v1/admin/tsdb/snapshot"
+        method: POST
+        status_code: 200
+      delegate_to: localhost
+      when: send_notification | default(true)
+
+  handlers:
+    - name: "restart cmdb collector"
+      systemd:
+        name: cmdb-collector-prometheus
+        state: restarted
+      become: yes
+
+    - name: "reload systemd"
+      systemd:
+        daemon_reload: yes
+      become: yes

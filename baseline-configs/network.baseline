@@ -1,0 +1,17 @@
+# Baseline network configuration
+# This is the known good network configuration
+
+# Network interfaces
+# eth0 - Primary network interface
+# lo - Loopback interface
+
+# IP addresses
+# eth0: Dynamic (AWS assigned)
+# lo: 127.0.0.1
+
+# DNS configuration
+# nameserver 127.0.0.53
+# search ec2.internal
+
+# Routing
+# default via 10.0.0.1 dev eth0

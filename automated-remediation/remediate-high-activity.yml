@@ -1,0 +1,282 @@
+---
+# Automated High Activity Remediation Playbook
+# Responds to FIM high activity alerts (potential security incident)
+# Author: Gabriel Eweka
+# Date: October 6, 2025
+
+- name: "Automated High Activity Remediation - {{ target_node | default('all') }}"
+  hosts: "{{ target_node | default('all') }}"
+  gather_facts: yes
+  vars:
+    remediation_timestamp: "{{ ansible_date_time.iso8601 }}"
+    alert_type: "{{ alert_type | default('FIMHighActivity') }}"
+    remediation_log: "/var/log/automated-remediation.log"
+    security_incident_log: "/var/log/security-incidents.log"
+    
+  tasks:
+    - name: "Log security incident start"
+      lineinfile:
+        path: "{{ security_incident_log }}"
+        line: "{{ remediation_timestamp }} - SECURITY INCIDENT - {{ alert_type }} - {{ inventory_hostname }} - HIGH ACTIVITY DETECTED"
+        create: yes
+        mode: '0644'
+      become: yes
+
+    - name: "Create incident response directory"
+      file:
+        path: "/tmp/incident-response-{{ remediation_timestamp }}"
+        state: directory
+        mode: '0755'
+      become: yes
+
+    - name: "Capture system state snapshot"
+      shell: |
+        incident_dir="/tmp/incident-response-{{ remediation_timestamp }}"
+        
+        # Capture process list
+        ps aux > "$incident_dir/processes.txt"
+        
+        # Capture network connections
+        netstat -tulpn > "$incident_dir/network-connections.txt"
+        
+        # Capture recent logins
+        last -n 20 > "$incident_dir/recent-logins.txt"
+        
+        # Capture system information
+        uname -a > "$incident_dir/system-info.txt"
+        df -h > "$incident_dir/disk-usage.txt"
+        free -h > "$incident_dir/memory-usage.txt"
+        
+        # Capture recent file changes
+        find /etc/ -type f -mtime -1 -ls > "$incident_dir/recent-etc-changes.txt"
+        find /bin/ -type f -mtime -1 -ls > "$incident_dir/recent-bin-changes.txt"
+        find /usr/bin/ -type f -mtime -1 -ls > "$incident_dir/recent-usr-bin-changes.txt"
+        
+        echo "System state captured in $incident_dir"
+      register: system_snapshot
+      become: yes
+
+    - name: "Display system snapshot location"
+      debug:
+        msg: "{{ system_snapshot.stdout }}"
+
+    - name: "Check for suspicious processes"
+      shell: |
+        # Look for processes with suspicious names or high resource usage
+        ps aux --sort=-%cpu | head -20 | awk 'NR>1 && ($3 > 50 || $4 > 50) {print $0}'
+      register: suspicious_processes
+      changed_when: false
+      become: yes
+
+    - name: "Display suspicious processes"
+      debug:
+        msg: "{{ suspicious_processes.stdout_lines }}"
+
+    - name: "Check for unauthorized network connections"
+      shell: |
+        # Check for unusual outbound connections
+        netstat -tulpn | grep ESTABLISHED | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr
+      register: network_connections
+      changed_when: false
+      become: yes
+
+    - name: "Display network connections"
+      debug:
+        msg: "{{ network_connections.stdout_lines }}"
+
+    - name: "Check for recent file modifications in critical directories"
+      find:
+        paths: 
+          - /etc/
+          - /bin/
+          - /usr/bin/
+          - /usr/sbin/
+          - /sbin/
+        age: "1d"
+        recurse: yes
+      register: recent_critical_files
+      become: yes
+
+    - name: "Display recent critical file changes"
+      debug:
+        msg: "{{ recent_critical_files.files | map(attribute='path') | list }}"
+
+    - name: "Check for unauthorized users and groups"
+      shell: |
+        # Check for users created in the last 24 hours
+        awk -F: '$3 >= 1000 && $3 < 65534 {print $1}' /etc/passwd | while read user; do
+          if [ -f /var/log/auth.log ]; then
+            if grep -q "useradd.*$user" /var/log/auth.log | tail -1 | grep -q "$(date +%Y-%m-%d)"; then
+              echo "RECENT_USER:$user"
+            fi
+          fi
+        done
+        
+        # Check for groups created in the last 24 hours
+        awk -F: '$3 >= 1000 && $3 < 65534 {print $1}' /etc/group | while read group; do
+          if [ -f /var/log/auth.log ]; then
+            if grep -q "groupadd.*$group" /var/log/auth.log | tail -1 | grep -q "$(date +%Y-%m-%d)"; then
+              echo "RECENT_GROUP:$group"
+            fi
+          fi
+        done
+      register: recent_accounts
+      changed_when: false
+      become: yes
+
+    - name: "Display recent accounts"
+      debug:
+        msg: "{{ recent_accounts.stdout_lines }}"
+
+    - name: "Check for unauthorized services"
+      shell: |
+        # List all systemd services
+        systemctl list-units --type=service --state=running | grep -v "systemd\|kernel" | awk '{print $1}'
+      register: running_services
+      changed_when: false
+      become: yes
+
+    - name: "Display running services"
+      debug:
+        msg: "{{ running_services.stdout_lines }}"
+
+    - name: "Check for suspicious cron jobs"
+      cron:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ suspicious_cron_jobs | default([]) }}"
+      become: yes
+      when: suspicious_cron_jobs is defined
+
+    - name: "Check for unauthorized SSH keys"
+      shell: |
+        # Check for new SSH keys in authorized_keys
+        find /home -name "authorized_keys" -mtime -1 -exec ls -la {} \;
+        find /root -name "authorized_keys" -mtime -1 -exec ls -la {} \;
+      register: recent_ssh_keys
+      changed_when: false
+      become: yes
+
+    - name: "Display recent SSH keys"
+      debug:
+        msg: "{{ recent_ssh_keys.stdout_lines }}"
+
+    - name: "Check for unauthorized sudoers entries"
+      shell: |
+        # Check for recent changes to sudoers
+        if [ -f /var/log/auth.log ]; then
+          grep "sudoers" /var/log/auth.log | tail -10
+        fi
+      register: sudoers_changes
+      changed_when: false
+      become: yes
+
+    - name: "Display sudoers changes"
+      debug:
+        msg: "{{ sudoers_changes.stdout_lines }}"
+
+    - name: "Isolate suspicious processes (if any)"
+      block:
+        - name: "Kill suspicious processes"
+          shell: |
+            # Kill processes with suspicious names or high resource usage
+            ps aux --sort=-%cpu | head -20 | awk 'NR>1 && ($3 > 80 || $4 > 80) {print $2}' | while read pid; do
+              if [ ! -z "$pid" ]; then
+                echo "Killing suspicious process: $pid"
+                kill -9 $pid 2>/dev/null || true
+              fi
+            done
+          become: yes
+          when: kill_suspicious_processes | default(false)
+
+    - name: "Block suspicious network connections"
+      block:
+        - name: "Add iptables rules to block suspicious IPs"
+          iptables:
+            chain: INPUT
+            source: "{{ item }}"
+            jump: DROP
+            comment: "Blocked due to high activity alert"
+          loop: "{{ suspicious_ips | default([]) }}"
+          become: yes
+          when: suspicious_ips is defined and suspicious_ips | length > 0
+
+    - name: "Restore critical files from backups"
+      block:
+        - name: "Restore critical system files"
+          copy:
+            src: "{{ item }}.backup"
+            dest: "{{ item }}"
+            backup: yes
+            mode: preserve
+          loop:
+            - /etc/hosts
+            - /etc/passwd
+            - /etc/shadow
+            - /etc/ssh/sshd_config
+            - /etc/sudoers
+          become: yes
+          when: item + '.backup' is file
+          register: restored_files
+
+        - name: "Log restored files"
+          lineinfile:
+            path: "{{ security_incident_log }}"
+            line: "{{ remediation_timestamp }} - RESTORED - {{ item }}"
+            create: yes
+            mode: '0644'
+          loop: "{{ restored_files.results | default([]) }}"
+          become: yes
+          when: restored_files is defined
+
+    - name: "Restart critical services"
+      systemd:
+        name: "{{ item }}"
+        state: restarted
+      loop:
+        - sshd
+        - fim-agent-prometheus
+        - cmdb-collector-prometheus
+      become: yes
+      when: restart_services | default(true)
+
+    - name: "Generate security incident report"
+      template:
+        src: security-incident-report.j2
+        dest: "/tmp/security-incident-{{ inventory_hostname }}-{{ remediation_timestamp }}.txt"
+        mode: '0644'
+      become: yes
+
+    - name: "Log security incident completion"
+      lineinfile:
+        path: "{{ security_incident_log }}"
+        line: "{{ remediation_timestamp }} - INCIDENT RESPONSE COMPLETED - {{ alert_type }} - {{ inventory_hostname }}"
+        create: yes
+        mode: '0644'
+      become: yes
+
+    - name: "Send high-priority notification"
+      uri:
+        url: "http://localhost:9090/api/v1/admin/tsdb/snapshot"
+        method: POST
+        status_code: 200
+      delegate_to: localhost
+      when: send_notification | default(true)
+
+  handlers:
+    - name: "restart fim agent"
+      systemd:
+        name: fim-agent-prometheus
+        state: restarted
+      become: yes
+
+    - name: "restart cmdb collector"
+      systemd:
+        name: cmdb-collector-prometheus
+        state: restarted
+      become: yes
+
+    - name: "reload systemd"
+      systemd:
+        daemon_reload: yes
+      become: yes

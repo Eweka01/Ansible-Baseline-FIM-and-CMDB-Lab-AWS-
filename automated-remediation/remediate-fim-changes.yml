@@ -1,0 +1,213 @@
+---
+# Automated FIM Change Remediation Playbook
+# Reverts unauthorized file changes detected by FIM
+# Author: Gabriel Eweka
+# Date: October 6, 2025
+
+- name: "Automated FIM Change Remediation - {{ target_node | default('all') }}"
+  hosts: "{{ target_node | default('all') }}"
+  gather_facts: yes
+  vars:
+    remediation_timestamp: "{{ ansible_date_time.iso8601 }}"
+    alert_type: "{{ alert_type | default('FIMFileChange') }}"
+    remediation_log: "/var/log/automated-remediation.log"
+    
+  tasks:
+    - name: "Log remediation start"
+      lineinfile:
+        path: "{{ remediation_log }}"
+        line: "{{ remediation_timestamp }} - START - {{ alert_type }} - {{ inventory_hostname }}"
+        create: yes
+        mode: '0644'
+      become: yes
+
+    - name: "Get current FIM events"
+      shell: |
+        if [ -f /var/log/fim-events.log ]; then
+          tail -50 /var/log/fim-events.log | grep "$(date +%Y-%m-%d)"
+        else
+          echo "No FIM events log found"
+        fi
+      register: fim_events
+      changed_when: false
+
+    - name: "Display FIM events for review"
+      debug:
+        msg: "{{ fim_events.stdout_lines }}"
+
+    - name: "Check for unauthorized files in /etc/"
+      find:
+        paths: /etc/
+        patterns: "*.tmp,*.bak,*.orig,test-*,suspicious-*,unauthorized-*"
+        age: "1d"
+      register: suspicious_files
+      become: yes
+
+    - name: "Remove suspicious files"
+      file:
+        path: "{{ item.path }}"
+        state: absent
+      loop: "{{ suspicious_files.files }}"
+      when: suspicious_files.files | length > 0
+      become: yes
+      register: removed_files
+
+    - name: "Log removed files"
+      lineinfile:
+        path: "{{ remediation_log }}"
+        line: "{{ remediation_timestamp }} - REMOVED - {{ item.path }}"
+        create: yes
+        mode: '0644'
+      loop: "{{ suspicious_files.files | default([]) }}"
+      become: yes
+      when: suspicious_files.files | length > 0
+
+    - name: "Check for modified critical files"
+      stat:
+        path: "{{ item }}"
+      loop:
+        - /etc/hosts
+        - /etc/passwd
+        - /etc/shadow
+        - /etc/ssh/sshd_config
+        - /etc/sudoers
+      register: critical_files_status
+
+    - name: "Restore critical files from backups if modified"
+      block:
+        - name: "Check if backup exists for critical files"
+          stat:
+            path: "{{ item.item }}.backup"
+          loop: "{{ critical_files_status.results }}"
+          register: backup_files
+          when: item.stat.exists and item.stat.mtime > (ansible_date_time.epoch | int - 3600)
+
+        - name: "Restore from backup"
+          copy:
+            src: "{{ item.item }}.backup"
+            dest: "{{ item.item }}"
+            backup: yes
+            mode: preserve
+          loop: "{{ backup_files.results }}"
+          when: item.stat.exists
+          become: yes
+          register: restored_files
+
+        - name: "Log restored files"
+          lineinfile:
+            path: "{{ remediation_log }}"
+            line: "{{ remediation_timestamp }} - RESTORED - {{ item.item }}"
+            create: yes
+            mode: '0644'
+          loop: "{{ restored_files.results | default([]) }}"
+          become: yes
+          when: restored_files is defined
+
+    - name: "Check for unauthorized users"
+      shell: |
+        # Check for users created in the last 24 hours
+        awk -F: '$3 >= 1000 && $3 < 65534 {print $1}' /etc/passwd | while read user; do
+          if [ -f /var/log/auth.log ]; then
+            if grep -q "useradd.*$user" /var/log/auth.log | tail -1 | grep -q "$(date +%Y-%m-%d)"; then
+              echo "$user"
+            fi
+          fi
+        done
+      register: recent_users
+      changed_when: false
+      become: yes
+
+    - name: "Display recent users for review"
+      debug:
+        msg: "Recent users found: {{ recent_users.stdout_lines }}"
+
+    - name: "Check for unauthorized groups"
+      shell: |
+        # Check for groups created in the last 24 hours
+        awk -F: '$3 >= 1000 && $3 < 65534 {print $1}' /etc/group | while read group; do
+          if [ -f /var/log/auth.log ]; then
+            if grep -q "groupadd.*$group" /var/log/auth.log | tail -1 | grep -q "$(date +%Y-%m-%d)"; then
+              echo "$group"
+            fi
+          fi
+        done
+      register: recent_groups
+      changed_when: false
+      become: yes
+
+    - name: "Display recent groups for review"
+      debug:
+        msg: "Recent groups found: {{ recent_groups.stdout_lines }}"
+
+    - name: "Check for unauthorized services"
+      systemd:
+        daemon_reload: yes
+      become: yes
+
+    - name: "List recently modified systemd services"
+      shell: |
+        find /etc/systemd/system/ -name "*.service" -mtime -1 -exec basename {} \;
+      register: recent_services
+      changed_when: false
+      become: yes
+
+    - name: "Display recent services for review"
+      debug:
+        msg: "Recent services found: {{ recent_services.stdout_lines }}"
+
+    - name: "Check for unauthorized cron jobs"
+      cron:
+        name: "{{ item }}"
+        state: absent
+      loop: "{{ suspicious_cron_jobs | default([]) }}"
+      become: yes
+      when: suspicious_cron_jobs is defined
+
+    - name: "Verify FIM agent is running"
+      systemd:
+        name: fim-agent-prometheus
+        state: started
+        enabled: yes
+      become: yes
+
+    - name: "Restart FIM agent to clear any issues"
+      systemd:
+        name: fim-agent-prometheus
+        state: restarted
+      become: yes
+      when: fim_agent_restart | default(false)
+
+    - name: "Generate remediation report"
+      template:
+        src: remediation-report.j2
+        dest: "/tmp/remediation-report-{{ inventory_hostname }}-{{ remediation_timestamp }}.txt"
+        mode: '0644'
+      become: yes
+
+    - name: "Log remediation completion"
+      lineinfile:
+        path: "{{ remediation_log }}"
+        line: "{{ remediation_timestamp }} - COMPLETED - {{ alert_type }} - {{ inventory_hostname }}"
+        create: yes
+        mode: '0644'
+      become: yes
+
+    - name: "Send notification to monitoring system"
+      uri:
+        url: "http://localhost:9090/api/v1/admin/tsdb/snapshot"
+        method: POST
+        status_code: 200
+      delegate_to: localhost
+      when: send_notification | default(true)
+
+  handlers:
+    - name: "restart fim agent"
+      systemd:
+        name: fim-agent-prometheus
+        state: restarted
+      become: yes
+
+    - name: "reload systemd"
+      systemd:
+        daemon_reload: yes
+      become: yes

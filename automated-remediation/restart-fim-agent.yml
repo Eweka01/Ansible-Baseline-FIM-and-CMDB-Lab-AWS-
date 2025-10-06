@@ -1,0 +1,176 @@
+---
+# Restart FIM Agent Playbook
+# Restarts FIM agent when it goes down
+# Author: Gabriel Eweka
+# Date: October 6, 2025
+
+- name: "Restart FIM Agent - {{ target_node | default('all') }}"
+  hosts: "{{ target_node | default('all') }}"
+  gather_facts: yes
+  vars:
+    remediation_timestamp: "{{ ansible_date_time.iso8601 }}"
+    alert_type: "{{ alert_type | default('FIMAgentDown') }}"
+    remediation_log: "/var/log/automated-remediation.log"
+    
+  tasks:
+    - name: "Log FIM agent restart start"
+      lineinfile:
+        path: "{{ remediation_log }}"
+        line: "{{ remediation_timestamp }} - START - {{ alert_type }} - {{ inventory_hostname }}"
+        create: yes
+        mode: '0644'
+      become: yes
+
+    - name: "Check FIM agent status"
+      systemd:
+        name: fim-agent-prometheus
+      register: fim_agent_status
+      become: yes
+
+    - name: "Display FIM agent status"
+      debug:
+        msg: "FIM agent status: {{ fim_agent_status.status.ActiveState }}"
+
+    - name: "Check FIM agent logs for errors"
+      shell: |
+        journalctl -u fim-agent-prometheus --no-pager -n 50 | grep -i error
+      register: fim_agent_errors
+      changed_when: false
+      become: yes
+
+    - name: "Display FIM agent errors"
+      debug:
+        msg: "{{ fim_agent_errors.stdout_lines }}"
+
+    - name: "Stop FIM agent"
+      systemd:
+        name: fim-agent-prometheus
+        state: stopped
+      become: yes
+      when: fim_agent_status.status.ActiveState != "inactive"
+
+    - name: "Wait for FIM agent to stop"
+      wait_for:
+        timeout: 10
+      when: fim_agent_status.status.ActiveState != "inactive"
+
+    - name: "Check FIM agent configuration"
+      stat:
+        path: /opt/lab-environment/fim-config.json
+      register: fim_config_status
+      become: yes
+
+    - name: "Display FIM config status"
+      debug:
+        msg: "FIM config exists: {{ fim_config_status.stat.exists }}"
+
+    - name: "Validate FIM agent configuration"
+      shell: |
+        if [ -f /opt/lab-environment/fim-config.json ]; then
+          python3 -m json.tool /opt/lab-environment/fim-config.json > /dev/null
+          echo "Config valid"
+        else
+          echo "Config missing"
+        fi
+      register: fim_config_validation
+      changed_when: false
+      become: yes
+
+    - name: "Display FIM config validation"
+      debug:
+        msg: "{{ fim_config_validation.stdout }}"
+
+    - name: "Check FIM agent Python environment"
+      shell: |
+        /opt/lab-env/bin/python --version
+      register: fim_python_version
+      changed_when: false
+      become: yes
+
+    - name: "Display FIM Python version"
+      debug:
+        msg: "{{ fim_python_version.stdout }}"
+
+    - name: "Check FIM agent dependencies"
+      shell: |
+        /opt/lab-env/bin/python -c "import hashlib, json, os, time, prometheus_client; print('All dependencies available')"
+      register: fim_dependencies
+      changed_when: false
+      become: yes
+
+    - name: "Display FIM dependencies status"
+      debug:
+        msg: "{{ fim_dependencies.stdout }}"
+
+    - name: "Start FIM agent"
+      systemd:
+        name: fim-agent-prometheus
+        state: started
+        enabled: yes
+      become: yes
+
+    - name: "Wait for FIM agent to start"
+      wait_for:
+        timeout: 30
+
+    - name: "Check FIM agent status after restart"
+      systemd:
+        name: fim-agent-prometheus
+      register: fim_agent_status_after
+      become: yes
+
+    - name: "Display FIM agent status after restart"
+      debug:
+        msg: "FIM agent status after restart: {{ fim_agent_status_after.status.ActiveState }}"
+
+    - name: "Test FIM agent metrics endpoint"
+      uri:
+        url: "http://localhost:8080/metrics"
+        method: GET
+        status_code: 200
+      delegate_to: localhost
+      when: inventory_hostname == "manage-node-1"
+      register: fim_metrics_test
+
+    - name: "Display FIM metrics test result"
+      debug:
+        msg: "FIM metrics endpoint test: {{ 'PASSED' if fim_metrics_test.status == 200 else 'FAILED' }}"
+
+    - name: "Check FIM agent logs after restart"
+      shell: |
+        journalctl -u fim-agent-prometheus --no-pager -n 20
+      register: fim_agent_logs_after
+      changed_when: false
+      become: yes
+
+    - name: "Display FIM agent logs after restart"
+      debug:
+        msg: "{{ fim_agent_logs_after.stdout_lines }}"
+
+    - name: "Log FIM agent restart completion"
+      lineinfile:
+        path: "{{ remediation_log }}"
+        line: "{{ remediation_timestamp }} - COMPLETED - {{ alert_type }} - {{ inventory_hostname }} - Status: {{ fim_agent_status_after.status.ActiveState }}"
+        create: yes
+        mode: '0644'
+      become: yes
+
+    - name: "Send restart notification"
+      uri:
+        url: "http://localhost:9090/api/v1/admin/tsdb/snapshot"
+        method: POST
+        status_code: 200
+      delegate_to: localhost
+      when: send_notification | default(true)
+
+  handlers:
+    - name: "restart fim agent"
+      systemd:
+        name: fim-agent-prometheus
+        state: restarted
+      become: yes
+
+    - name: "reload systemd"
+      systemd:
+        daemon_reload: yes
+      become: yes
