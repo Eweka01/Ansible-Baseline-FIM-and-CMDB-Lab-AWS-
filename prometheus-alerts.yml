@@ -1,26 +1,37 @@
 groups:
 - name: fim-alerts
   rules:
-  - alert: FIMFileChange
-    expr: increase(fim_events_total[5m]) > 0
-    for: 0m
+  - alert: FIMCriticalFileChange
+    expr: increase(fim_events_total{path=~"/etc/.*|/root/.*|/home/.*/\\.ssh/.*|/var/log/.*"}[5m]) > 0
+    for: 1m
     labels:
       severity: warning
       service: fim
     annotations:
-      summary: "File integrity monitoring detected changes"
-      description: "FIM agent detected {{ $value }} file changes in the last 5 minutes on {{ $labels.instance }}"
+      summary: "Critical file change detected"
+      description: "FIM agent detected {{ $value }} changes to critical files in the last 5 minutes on {{ $labels.instance }}"
       runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: FIMHighActivity
-    expr: increase(fim_events_total[10m]) > 50
-    for: 2m
+    expr: increase(fim_events_total[10m]) > 200
+    for: 5m
     labels:
       severity: critical
       service: fim
     annotations:
       summary: "High FIM activity detected"
       description: "FIM agent detected {{ $value }} file changes in the last 10 minutes on {{ $labels.instance }} - possible security incident"
+      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
+
+  - alert: FIMUnauthorizedChange
+    expr: increase(fim_events_total{path=~"/etc/passwd|/etc/shadow|/etc/sudoers|/etc/ssh/sshd_config"}[5m]) > 0
+    for: 0m
+    labels:
+      severity: critical
+      service: fim
+    annotations:
+      summary: "Unauthorized system file change"
+      description: "FIM agent detected unauthorized change to critical system file {{ $labels.path }} on {{ $labels.instance }}"
       runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: FIMAgentDown
