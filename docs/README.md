@@ -24,13 +24,13 @@
 - [DRIFT-DETECTION-TESTING-GUIDE.md](guides/DRIFT-DETECTION-TESTING-GUIDE.md) - Comprehensive testing procedures
 
 ### **📚 Reference** (`reference/`)
-- [PROMETHEUS-ALERTING-DOCUMENTATION.md](reference/PROMETHEUS-ALERTING-DOCUMENTATION.md) - Complete alerting rules documentation
+- [FIM-CMDB-PROMETHEUS-METRICS-GUIDE.md](reference/FIM-CMDB-PROMETHEUS-METRICS-GUIDE.md) - FIM and CMDB Prometheus metrics guide- [PROMETHEUS-ALERTING-DOCUMENTATION.md](reference/PROMETHEUS-ALERTING-DOCUMENTATION.md) - Complete alerting rules documentation
 
 ### **🤖 Automation** (`automation/`)
 - [AUTOMATED-REMEDIATION-SYSTEM.md](automation/AUTOMATED-REMEDIATION-SYSTEM.md) - Automated drift detection and remediation
 
 ### **🔧 Troubleshooting** (`troubleshooting/`)
-- [COMPLETE-ERROR-HISTORY.md](troubleshooting/COMPLETE-ERROR-HISTORY.md) - All errors encountered and solutions
+- [PROMETHEUS-GRAFANA-FIX-SUMMARY.md](troubleshooting/PROMETHEUS-GRAFANA-FIX-SUMMARY.md) - Prometheus and Grafana fix summary- [COMPLETE-ERROR-HISTORY.md](troubleshooting/COMPLETE-ERROR-HISTORY.md) - All errors encountered and solutions
 - [TROUBLESHOOTING-SESSION.md](troubleshooting/TROUBLESHOOTING-SESSION.md) - Detailed troubleshooting sessions
 - [fix.md](troubleshooting/fix.md) - Current fixes and diagnostic reports
 
@@ -74,11 +74,11 @@
 
 ## 📊 **Documentation Statistics**
 
-- **Total Documents**: 15
+- **Total Documents**: 17
 - **Guides**: 2
-- **Reference**: 1
+- **Reference**: 2
 - **Automation**: 1
-- **Troubleshooting**: 3
+- **Troubleshooting**: 4
 - **System Documentation**: 8
 
 ---
