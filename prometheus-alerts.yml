@@ -1,116 +1,129 @@
 groups:
-  - name: fim-alerts
-    rules:
-      - alert: HighFIMEventRate
-        expr: rate(fim_events_total[5m]) * 60 > 10
-        for: 2m
-        labels:
-          severity: warning
-          service: fim
-        annotations:
-          summary: "High FIM event rate detected"
-          description: "FIM events are occurring at {{ $value }} events per minute, which is above the threshold of 10 events/min"
-          runbook_url: "https://docs.example.com/fim-alerts"
+- name: fim-alerts
+  rules:
+  - alert: FIMFileChange
+    expr: increase(fim_events_total[5m]) > 0
+    for: 0m
+    labels:
+      severity: warning
+      service: fim
+    annotations:
+      summary: "File integrity monitoring detected changes"
+      description: "FIM agent detected {{ $value }} file changes in the last 5 minutes on {{ $labels.instance }}"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
 
-      - alert: FIMAgentDown
-        expr: up{job="fim-agents"} == 0
-        for: 1m
-        labels:
-          severity: critical
-          service: fim
-        annotations:
-          summary: "FIM Agent is down"
-          description: "FIM Agent on {{ $labels.instance }} has been down for more than 1 minute"
-          runbook_url: "https://docs.example.com/fim-agent-troubleshooting"
+  - alert: FIMHighActivity
+    expr: increase(fim_events_total[10m]) > 50
+    for: 2m
+    labels:
+      severity: critical
+      service: fim
+    annotations:
+      summary: "High FIM activity detected"
+      description: "FIM agent detected {{ $value }} file changes in the last 10 minutes on {{ $labels.instance }} - possible security incident"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
 
-      - alert: ExcessiveFileModifications
-        expr: rate(fim_events_total{event_type="modified"}[5m]) * 60 > 5
-        for: 3m
-        labels:
-          severity: warning
-          service: fim
-        annotations:
-          summary: "Excessive file modifications detected"
-          description: "File modification rate is {{ $value }} per minute, indicating potential unauthorized changes"
-          runbook_url: "https://docs.example.com/file-modification-alerts"
+  - alert: FIMAgentDown
+    expr: up{job="fim-agents"} == 0
+    for: 1m
+    labels:
+      severity: critical
+      service: fim
+    annotations:
+      summary: "FIM agent is down"
+      description: "FIM agent on {{ $labels.instance }} has been down for more than 1 minute"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
 
-      - alert: CriticalFileDeleted
-        expr: increase(fim_events_total{event_type="deleted"}[1m]) > 0
-        for: 0m
-        labels:
-          severity: critical
-          service: fim
-        annotations:
-          summary: "Critical file deletion detected"
-          description: "{{ $value }} critical files have been deleted on {{ $labels.instance }}"
-          runbook_url: "https://docs.example.com/file-deletion-response"
+- name: cmdb-alerts
+  rules:
+  - alert: CMDBCollectionFailure
+    expr: increase(cmdb_collections_total[15m]) == 0
+    for: 5m
+    labels:
+      severity: warning
+      service: cmdb
+    annotations:
+      summary: "CMDB collection failure"
+      description: "CMDB collector on {{ $labels.instance }} has not collected data in the last 15 minutes"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
 
-  - name: cmdb-alerts
-    rules:
-      - alert: CMDBCollectorDown
-        expr: up{job="cmdb-collectors"} == 0
-        for: 1m
-        labels:
-          severity: critical
-          service: cmdb
-        annotations:
-          summary: "CMDB Collector is down"
-          description: "CMDB Collector on {{ $labels.instance }} has been down for more than 1 minute"
-          runbook_url: "https://docs.example.com/cmdb-collector-troubleshooting"
+  - alert: CMDBCollectorDown
+    expr: up{job="cmdb-collectors"} == 0
+    for: 1m
+    labels:
+      severity: critical
+      service: cmdb
+    annotations:
+      summary: "CMDB collector is down"
+      description: "CMDB collector on {{ $labels.instance }} has been down for more than 1 minute"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
 
-      - alert: CMDBCollectionFailure
-        expr: rate(cmdb_collections_total[1h]) == 0
-        for: 2h
-        labels:
-          severity: warning
-          service: cmdb
-        annotations:
-          summary: "CMDB collection has stopped"
-          description: "No CMDB collections have occurred in the last 2 hours on {{ $labels.instance }}"
-          runbook_url: "https://docs.example.com/cmdb-collection-troubleshooting"
+- name: system-alerts
+  rules:
+  - alert: NodeExporterDown
+    expr: up{job="aws-nodes"} == 0
+    for: 1m
+    labels:
+      severity: critical
+      service: node-exporter
+    annotations:
+      summary: "Node Exporter is down"
+      description: "Node Exporter on {{ $labels.instance }} has been down for more than 1 minute"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
 
-      - alert: SystemPackageChange
-        expr: abs(delta(system_packages_total[1h])) > 10
-        for: 0m
-        labels:
-          severity: info
-          service: cmdb
-        annotations:
-          summary: "Significant package changes detected"
-          description: "{{ $value }} packages have been added/removed on {{ $labels.instance }} in the last hour"
-          runbook_url: "https://docs.example.com/package-change-monitoring"
+  - alert: HighCPUUsage
+    expr: 100 - (avg by(instance) (irate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+    for: 5m
+    labels:
+      severity: warning
+      service: system
+    annotations:
+      summary: "High CPU usage detected"
+      description: "CPU usage is above 80% for more than 5 minutes on {{ $labels.instance }}"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
 
-  - name: system-alerts
-    rules:
-      - alert: HighCPUUsage
-        expr: 100 - (avg by (instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
-        for: 5m
-        labels:
-          severity: warning
-          service: system
-        annotations:
-          summary: "High CPU usage detected"
-          description: "CPU usage is {{ $value }}% on {{ $labels.instance }}"
-          runbook_url: "https://docs.example.com/cpu-usage-alerts"
+  - alert: HighMemoryUsage
+    expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
+    for: 5m
+    labels:
+      severity: warning
+      service: system
+    annotations:
+      summary: "High memory usage detected"
+      description: "Memory usage is above 85% for more than 5 minutes on {{ $labels.instance }}"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
 
-      - alert: HighMemoryUsage
-        expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 85
-        for: 5m
-        labels:
-          severity: warning
-          service: system
-        annotations:
-          summary: "High memory usage detected"
-          description: "Memory usage is {{ $value }}% on {{ $labels.instance }}"
-          runbook_url: "https://docs.example.com/memory-usage-alerts"
+  - alert: DiskSpaceLow
+    expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100 > 90
+    for: 5m
+    labels:
+      severity: critical
+      service: system
+    annotations:
+      summary: "Disk space low"
+      description: "Disk usage is above 90% for more than 5 minutes on {{ $labels.instance }}"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
 
-      - alert: DiskSpaceLow
-        expr: (1 - (node_filesystem_avail_bytes / node_filesystem_size_bytes)) * 100 > 90
-        for: 5m
-        labels:
-          severity: critical
-          service: system
-        annotations:
-          summary: "Low disk space"
-          description: "Disk usage is {{ $value }}% on {{ $labels.instance }}"
-          runbook_url: "https://docs.example.com/disk-space-alerts"
+- name: prometheus-alerts
+  rules:
+  - alert: PrometheusDown
+    expr: up{job="prometheus"} == 0
+    for: 1m
+    labels:
+      severity: critical
+      service: prometheus
+    annotations:
+      summary: "Prometheus is down"
+      description: "Prometheus monitoring system is down"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
+
+  - alert: PrometheusConfigReloadFailed
+    expr: prometheus_config_last_reload_successful == 0
+    for: 0m
+    labels:
+      severity: warning
+      service: prometheus
+    annotations:
+      summary: "Prometheus configuration reload failed"
+      description: "Prometheus configuration reload failed"
+      runbook_url: "https://github.com/Eweka01/Configuration-Management-Monitoring-Lab-Automated-Baselines-FIM-and-CMDB-on-AWS"
