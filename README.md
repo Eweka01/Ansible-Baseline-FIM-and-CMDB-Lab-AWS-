@@ -22,10 +22,10 @@ This is a **production-ready** Ansible Baseline, File Integrity Monitoring (FIM)
 ### **1. Start the Lab**
 ```bash
 # Complete lab startup (Docker + SSH tunnels + Dashboard)
-./start-monitoring-lab.sh
+./scripts/start-monitoring-lab.sh
 
 # OR start automated remediation system
-./start-automated-remediation.sh start
+./scripts/start-automated-remediation.sh start
 ```
 
 ### **2. Access Points**
@@ -52,14 +52,22 @@ echo "Test change" | sudo tee /etc/test-drift.txt
 │   ├── start-monitoring-lab.sh
 │   ├── restart-monitoring-lab.sh
 │   ├── stop-monitoring-lab.sh
-│   └── setup-ssh-tunnel-monitoring.sh
+│   ├── setup-ssh-tunnel-monitoring.sh
+│   ├── setup-fim-cmdb-tunnels.sh
+│   ├── start-automated-remediation.sh
+│   ├── production-testing-suite.sh
+│   ├── manage-tunnels.sh
+│   └── start_dashboard.sh
 ├── ansible/                    # Ansible playbooks and configuration
 ├── automated-remediation/      # Automated remediation system
 ├── fim/                       # File Integrity Monitoring
 ├── cmdb/                      # Configuration Management Database
 ├── grafana/                   # Grafana dashboards and configuration
 ├── docs/                      # Documentation
-└── test/                      # Testing scripts and scenarios
+├── test/                      # Testing scripts and scenarios
+├── baseline-configs/          # Baseline configuration files
+├── audit-logs/               # Audit logging system
+└── data/                     # Data storage and reports
 ```
 
 ## 📚 **Documentation**
@@ -106,23 +114,23 @@ echo "Test change" | sudo tee /etc/test-drift.txt
 ## 🛠️ **Management Scripts**
 
 ### **Lab Management**
-- `./start-monitoring-lab.sh` - Start complete lab
-- `./stop-monitoring-lab.sh` - Stop complete lab
-- `./restart-monitoring-lab.sh` - Emergency recovery
+- `./scripts/start-monitoring-lab.sh` - Start complete lab
+- `./scripts/stop-monitoring-lab.sh` - Stop complete lab
+- `./scripts/restart-monitoring-lab.sh` - Emergency recovery
 
 ### **Automated Remediation**
-- `./start-automated-remediation.sh start` - Start automated remediation
-- `./start-automated-remediation.sh status` - Check system status
-- `./start-automated-remediation.sh test` - Test webhook receiver
+- `./scripts/start-automated-remediation.sh start` - Start automated remediation
+- `./scripts/start-automated-remediation.sh status` - Check system status
+- `./scripts/start-automated-remediation.sh test` - Test webhook receiver
 
 ### **Tunnel Management**
-- `./manage-tunnels.sh start` - Start SSH tunnels
-- `./manage-tunnels.sh status` - Check tunnel status
-- `./manage-tunnels.sh stop` - Stop SSH tunnels
+- `./scripts/manage-tunnels.sh start` - Start SSH tunnels
+- `./scripts/manage-tunnels.sh status` - Check tunnel status
+- `./scripts/manage-tunnels.sh stop` - Stop SSH tunnels
 
 ### **Testing & Validation**
-- `./test-fim-cmdb-metrics.sh` - Test FIM and CMDB metrics
-- `./production-testing-suite.sh` - Comprehensive testing
+- `./test/test-fim-cmdb-metrics.sh` - Test FIM and CMDB metrics
+- `./scripts/production-testing-suite.sh` - Comprehensive testing
 
 ---
 
@@ -148,13 +156,13 @@ echo "Test change" | sudo tee /etc/test-drift.txt
 ### **Quick Fixes**
 ```bash
 # If dashboard not working
-./start_dashboard.sh
+./scripts/start_dashboard.sh
 
 # If tunnels down
-./manage-tunnels.sh restart
+./scripts/manage-tunnels.sh restart
 
 # If services down
-./restart-monitoring-lab.sh
+./scripts/restart-monitoring-lab.sh
 ```
 
 ### **Documentation**
@@ -187,14 +195,36 @@ echo "Test change" | sudo tee /etc/test-drift.txt
 ### **Emergency Recovery**
 ```bash
 # Full lab recovery
-./restart-monitoring-lab.sh
+./scripts/restart-monitoring-lab.sh
 
 # Check system status
-./start-automated-remediation.sh status
+./scripts/start-automated-remediation.sh status
 ```
 
 ---
 
-**Last Updated**: October 6, 2025  
+## 🔒 **Security & Cleanup**
+
+### **Repository Security**
+- **✅ Sensitive Data Removed**: All AWS IPs and SSH keys replaced with placeholders
+- **✅ Safe for Sharing**: Repository is now safe for public distribution
+- **✅ Clean Structure**: All scripts organized in `scripts/` directory
+- **✅ Documentation Updated**: All references updated to reflect new structure
+
+### **Setup Instructions**
+Before using this lab, replace the following placeholders with your actual values:
+- `REPLACED_IP_1`, `REPLACED_IP_2`, `REPLACED_IP_3` → Your AWS instance IPs
+- `/path/to/your/ssh-key.pem` → Your actual SSH key path
+
+### **Cleanup Summary**
+- All log files and sensitive data removed
+- Scripts organized into `scripts/` directory
+- Directory structure cleaned and optimized
+- Documentation updated with new paths
+
+---
+
+**Last Updated**: October 11, 2025  
 **Status**: ✅ Production-ready lab with automated remediation  
-**Documentation**: 📚 Fully organized in `docs/` directory
+**Documentation**: 📚 Fully organized in `docs/` directory  
+**Security**: 🔒 Cleaned and safe for public sharing
