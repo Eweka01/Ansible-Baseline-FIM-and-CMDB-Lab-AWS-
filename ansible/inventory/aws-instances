@@ -26,7 +26,7 @@ instance_type=t2.micro
 
 [webservers]
 # Web server group - using manage-node-1 (Amazon Linux)
-manage-node-1 ansible_host=18.234.152.228 ansible_user=ec2-user
+manage-node-1 ansible_host=REPLACED_IP_1 ansible_user=ec2-user
 
 [webservers:vars]
 # Web server specific variables
@@ -38,7 +38,7 @@ service_type=web
 
 [databases]
 # Database server group - using manage-node-2
-manage-node-2 ansible_host=54.242.234.69 ansible_user=ubuntu
+manage-node-2 ansible_host=REPLACED_IP_2 ansible_user=ubuntu
 
 [databases:vars]
 # Database specific variables
@@ -50,7 +50,7 @@ service_type=database
 
 [monitoring]
 # Monitoring server group - using manage-node-3
-manage-node-3 ansible_host=13.217.82.23 ansible_user=ubuntu
+manage-node-3 ansible_host=REPLACED_IP_3 ansible_user=ubuntu
 
 [monitoring:vars]
 # Monitoring specific variables

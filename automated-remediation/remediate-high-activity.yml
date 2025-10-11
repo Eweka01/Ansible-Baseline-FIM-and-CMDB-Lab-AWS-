@@ -9,7 +9,7 @@
   gather_facts: yes
   vars:
     remediation_timestamp: "{{ ansible_date_time.iso8601 }}"
-    alert_type: "{{ alert_type | default('FIMHighActivity') }}"
+    alert_type_fixed: "{{ alert_type | default('FIMHighActivity') }}"
     remediation_log: "/var/log/automated-remediation.log"
     security_incident_log: "/var/log/security-incidents.log"
     
@@ -17,7 +17,7 @@
     - name: "Log security incident start"
       lineinfile:
         path: "{{ security_incident_log }}"
-        line: "{{ remediation_timestamp }} - SECURITY INCIDENT - {{ alert_type }} - {{ inventory_hostname }} - HIGH ACTIVITY DETECTED"
+        line: "{{ remediation_timestamp }} - SECURITY INCIDENT - {{ alert_type_fixed }} - {{ inventory_hostname }} - HIGH ACTIVITY DETECTED"
         create: yes
         mode: '0644'
       become: yes
@@ -216,7 +216,7 @@
             - /etc/ssh/sshd_config
             - /etc/sudoers
           become: yes
-          when: item + '.backup' is file
+          when: (item + '.backup') is file
           register: restored_files
 
         - name: "Log restored files"
@@ -234,7 +234,7 @@
         name: "{{ item }}"
         state: restarted
       loop:
-        - sshd
+        - ssh
         - fim-agent-prometheus
         - cmdb-collector-prometheus
       become: yes
@@ -250,7 +250,7 @@
     - name: "Log security incident completion"
       lineinfile:
         path: "{{ security_incident_log }}"
-        line: "{{ remediation_timestamp }} - INCIDENT RESPONSE COMPLETED - {{ alert_type }} - {{ inventory_hostname }}"
+        line: "{{ remediation_timestamp }} - INCIDENT RESPONSE COMPLETED - {{ alert_type_fixed }} - {{ inventory_hostname }}"
         create: yes
         mode: '0644'
       become: yes

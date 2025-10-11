@@ -65,19 +65,19 @@ cd "/Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab"
 ### **Option C: Manual Tunnel Commands**
 ```bash
 # Node Exporter Tunnels (System Metrics)
-ssh -f -N -L 9101:localhost:9100 -i /Users/osamudiameneweka/Desktop/key-p3.pem ec2-user@18.234.152.228
-ssh -f -N -L 9102:localhost:9100 -i /Users/osamudiameneweka/Desktop/key-p3.pem ubuntu@54.242.234.69
-ssh -f -N -L 9103:localhost:9100 -i /Users/osamudiameneweka/Desktop/key-p3.pem ubuntu@13.217.82.23
+ssh -f -N -L 9101:localhost:9100 -i /Users/osamudiameneweka/Desktop/key-p3.pem ec2-user@18.207.193.228
+ssh -f -N -L 9102:localhost:9100 -i /Users/osamudiameneweka/Desktop/key-p3.pem ubuntu@34.229.187.190
+ssh -f -N -L 9103:localhost:9100 -i /Users/osamudiameneweka/Desktop/key-p3.pem ubuntu@52.207.162.175
 
 # FIM Agent Tunnels (File Integrity Monitoring)
-ssh -f -N -L 8080:localhost:8080 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ec2-user@18.234.152.228
-ssh -f -N -L 8082:localhost:8080 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@54.242.234.69
-ssh -f -N -L 8084:localhost:8080 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@13.217.82.23
+ssh -f -N -L 8080:localhost:8080 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ec2-user@18.207.193.228
+ssh -f -N -L 8082:localhost:8080 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@34.229.187.190
+ssh -f -N -L 8084:localhost:8080 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@52.207.162.175
 
 # CMDB Collector Tunnels (Asset Management)
-ssh -f -N -L 8081:localhost:8081 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ec2-user@18.234.152.228
-ssh -f -N -L 8083:localhost:8081 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@54.242.234.69
-ssh -f -N -L 8085:localhost:8081 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@13.217.82.23
+ssh -f -N -L 8081:localhost:8081 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ec2-user@18.207.193.228
+ssh -f -N -L 8083:localhost:8081 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@34.229.187.190
+ssh -f -N -L 8085:localhost:8081 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@52.207.162.175
 ```
 
 ## 🐳 **Step 2: Start Docker Services**

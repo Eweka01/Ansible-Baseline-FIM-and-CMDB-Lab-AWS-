@@ -35,15 +35,7 @@ receivers:
         username: 'webhook'
         password: 'webhook123'
   email_configs:
-  - to: 'admin@lab.local'
-    subject: 'CRITICAL ALERT: {{ .GroupLabels.alertname }}'
-    body: |
-      {{ range .Alerts }}
-      Alert: {{ .Annotations.summary }}
-      Description: {{ .Annotations.description }}
-      Instance: {{ .Labels.instance }}
-      Severity: {{ .Labels.severity }}
-      {{ end }}
+  - to: 'oseweka1@gmail.com'
 
 - name: 'warning-alerts'
   webhook_configs:
@@ -54,15 +46,7 @@ receivers:
         username: 'webhook'
         password: 'webhook123'
   email_configs:
-  - to: 'admin@lab.local'
-    subject: 'WARNING ALERT: {{ .GroupLabels.alertname }}'
-    body: |
-      {{ range .Alerts }}
-      Alert: {{ .Annotations.summary }}
-      Description: {{ .Annotations.description }}
-      Instance: {{ .Labels.instance }}
-      Severity: {{ .Labels.severity }}
-      {{ end }}
+  - to: 'oseweka1@gmail.com'
 
 inhibit_rules:
   - source_match:

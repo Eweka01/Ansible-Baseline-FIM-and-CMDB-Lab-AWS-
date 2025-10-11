@@ -39,9 +39,9 @@ log_error() {
 }
 
 # AWS Instance details (replace with your actual IPs)
-MANAGE_NODE_1_IP="18.234.152.228"
-MANAGE_NODE_2_IP="54.242.234.69"
-MANAGE_NODE_3_IP="13.217.82.23"
+MANAGE_NODE_1_IP="REPLACED_IP_1"
+MANAGE_NODE_2_IP="REPLACED_IP_2"
+MANAGE_NODE_3_IP="REPLACED_IP_3"
 
 # Local ports for FIM and CMDB tunnels
 # FIM agents: 8080, 8082, 8084
@@ -58,7 +58,7 @@ FIM_REMOTE_PORT="8080"
 CMDB_REMOTE_PORT="8081"
 
 # SSH Key path
-SSH_KEY="/Users/osamudiameneweka/Desktop/key-p3.pem"
+SSH_KEY="/path/to/your/ssh-key.pem"
 SSH_USER_AMAZON="ec2-user"
 SSH_USER_UBUNTU="ubuntu"
 

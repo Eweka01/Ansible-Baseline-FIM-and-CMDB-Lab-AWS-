@@ -7,7 +7,7 @@
 set -e
 
 LAB_DIR="/Users/osamudiameneweka/Desktop/Ansible Baseline, FIM, and CMDB Lab"
-SSH_KEY="/Users/osamudiameneweka/Desktop/key-p3.pem"
+SSH_KEY="/path/to/your/ssh-key.pem"
 LOG_FILE="/tmp/alert-remediation-test.log"
 
 # Colors for output

@@ -1,0 +1,42 @@
+---
+- name: Gracefully shutdown all hosts in inventory
+  hosts: all
+  gather_facts: false
+  become: yes
+  any_errors_fatal: false
+  tasks:
+    - name: Announce impending shutdown (log + wall if available)
+      shell: |
+        echo "[{{ inventory_hostname }}] System will shutdown in 1 minute (triggered by Ansible)." | sudo tee -a /var/log/ansible-shutdown.log
+        command -v wall >/dev/null 2>&1 && echo "System will shutdown in 1 minute (Ansible)" | sudo wall || true
+      args:
+        executable: /bin/bash
+      changed_when: false
+
+    - name: Flush filesystem buffers
+      shell: sync
+      changed_when: false
+
+    - name: Schedule shutdown in 1 minute (non-blocking)
+      shell: |
+        nohup /sbin/shutdown -h +1 "Ansible requested shutdown" >/dev/null 2>&1 &
+      async: 0
+      poll: 0
+
+    - name: Provide immediate fallback if 'shutdown -h +1' is not supported
+      shell: |
+        ( sleep 5; /sbin/poweroff ) >/dev/null 2>&1 &
+      async: 0
+      poll: 0
+      ignore_errors: true
+
+    - name: Wait briefly to let commands dispatch
+      wait_for:
+        timeout: 5
+
+    - name: Acknowledge host will become unreachable soon
+      debug:
+        msg: "Shutdown triggered on {{ inventory_hostname }}; host will go offline shortly."
+
+
+

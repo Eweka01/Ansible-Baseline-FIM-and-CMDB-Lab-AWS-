@@ -35,6 +35,18 @@ logger = logging.getLogger(__name__)
 class AlertWebhookHandler(BaseHTTPRequestHandler):
     """HTTP request handler for Prometheus alert webhooks"""
     
+    def end_headers(self):
+        """Add CORS headers to allow cross-origin requests"""
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        super().end_headers()
+    
+    def do_OPTIONS(self):
+        """Handle preflight OPTIONS requests for CORS"""
+        self.send_response(200)
+        self.end_headers()
+    
     def do_POST(self):
         """Handle POST requests from Alertmanager"""
         try:

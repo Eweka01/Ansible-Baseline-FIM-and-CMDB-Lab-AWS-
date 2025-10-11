@@ -1,37 +1,26 @@
 groups:
 - name: fim-alerts
   rules:
-  - alert: FIMCriticalFileChange
-    expr: increase(fim_events_total{path=~"/etc/.*|/root/.*|/var/log/.*"}[2m]) > 1
-    for: 30s
+  - alert: FIMFileChange
+    expr: increase(fim_events_total[5m]) > 0
+    for: 0m
     labels:
       severity: warning
       service: fim
     annotations:
-      summary: "Critical file change detected"
-      description: "FIM agent detected {{ $value }} changes to critical files in the last 5 minutes on {{ $labels.instance }}"
+      summary: "File integrity monitoring detected changes"
+      description: "FIM agent detected {{ $value }} file changes in the last 5 minutes on {{ $labels.instance }}"
       runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: FIMHighActivity
-    expr: increase(fim_events_total[10m]) > 500
-    for: 3m
+    expr: increase(fim_events_total[10m]) > 50
+    for: 2m
     labels:
       severity: critical
       service: fim
     annotations:
       summary: "High FIM activity detected"
       description: "FIM agent detected {{ $value }} file changes in the last 10 minutes on {{ $labels.instance }} - possible security incident"
-      runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
-
-  - alert: FIMUnauthorizedChange
-    expr: increase(fim_events_total{path=~"/etc/passwd|/etc/shadow|/etc/sudoers|/etc/ssh/sshd_config"}[5m]) > 0
-    for: 1m
-    labels:
-      severity: critical
-      service: fim
-    annotations:
-      summary: "Unauthorized system file change"
-      description: "FIM agent detected unauthorized change to critical system file {{ $labels.path }} on {{ $labels.instance }}"
       runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: FIMAgentDown
@@ -48,14 +37,14 @@ groups:
 - name: cmdb-alerts
   rules:
   - alert: CMDBCollectionFailure
-    expr: increase(cmdb_collections_total[30m]) == 0
+    expr: increase(cmdb_collections_total[15m]) == 0
     for: 5m
     labels:
       severity: warning
       service: cmdb
     annotations:
       summary: "CMDB collection failure"
-      description: "CMDB collector on {{ $labels.instance }} has not collected data in the last 30 minutes"
+      description: "CMDB collector on {{ $labels.instance }} has not collected data in the last 15 minutes"
       runbook_url: "http://localhost:8088/DRIFT-DETECTION-TESTING-GUIDE.md"
 
   - alert: CMDBCollectorDown

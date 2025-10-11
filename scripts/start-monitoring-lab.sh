@@ -110,19 +110,19 @@ else
     pkill -f "ssh.*-L" 2>/dev/null || true
     
     # Start Node Exporter tunnels
-    ssh -f -N -L 9101:localhost:9100 -i /Users/osamudiameneweka/Desktop/key-p3.pem ec2-user@18.234.152.228
-    ssh -f -N -L 9102:localhost:9100 -i /Users/osamudiameneweka/Desktop/key-p3.pem ubuntu@54.242.234.69
-    ssh -f -N -L 9103:localhost:9100 -i /Users/osamudiameneweka/Desktop/key-p3.pem ubuntu@13.217.82.23
+    ssh -f -N -L 9101:localhost:9100 -i /path/to/your/ssh-key.pem ec2-user@REPLACED_IP_1
+    ssh -f -N -L 9102:localhost:9100 -i /path/to/your/ssh-key.pem ubuntu@REPLACED_IP_2
+    ssh -f -N -L 9103:localhost:9100 -i /path/to/your/ssh-key.pem ubuntu@REPLACED_IP_3
     
     # Start FIM Agent tunnels
-    ssh -f -N -L 8080:localhost:8080 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ec2-user@18.234.152.228
-    ssh -f -N -L 8082:localhost:8080 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@54.242.234.69
-    ssh -f -N -L 8084:localhost:8080 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@13.217.82.23
+    ssh -f -N -L 8080:localhost:8080 -i /path/to/your/ssh-key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ec2-user@REPLACED_IP_1
+    ssh -f -N -L 8082:localhost:8080 -i /path/to/your/ssh-key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@REPLACED_IP_2
+    ssh -f -N -L 8084:localhost:8080 -i /path/to/your/ssh-key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@REPLACED_IP_3
     
     # Start CMDB Collector tunnels
-    ssh -f -N -L 8081:localhost:8081 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ec2-user@18.234.152.228
-    ssh -f -N -L 8083:localhost:8081 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@54.242.234.69
-    ssh -f -N -L 8085:localhost:8081 -i /Users/osamudiameneweka/Desktop/key-p3.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@13.217.82.23
+    ssh -f -N -L 8081:localhost:8081 -i /path/to/your/ssh-key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ec2-user@REPLACED_IP_1
+    ssh -f -N -L 8083:localhost:8081 -i /path/to/your/ssh-key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@REPLACED_IP_2
+    ssh -f -N -L 8085:localhost:8081 -i /path/to/your/ssh-key.pem -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -o LogLevel=ERROR ubuntu@REPLACED_IP_3
     
     print_success "SSH tunnels started manually"
 fi

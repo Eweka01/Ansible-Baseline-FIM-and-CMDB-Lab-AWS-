@@ -49,18 +49,18 @@ sleep 2
 log_info "Creating SSH tunnels for AWS instances..."
 
 # Instance 1: manage-node-1 (Amazon Linux)
-log_info "Setting up tunnel for manage-node-1 (18.234.152.228:9100 -> localhost:9101)"
-ssh -f -N -L 9101:localhost:9100 -i "$SSH_KEY" ec2-user@18.234.152.228 &
+log_info "Setting up tunnel for manage-node-1 (REPLACED_IP_1:9100 -> localhost:9101)"
+ssh -f -N -L 9101:localhost:9100 -i "$SSH_KEY" ec2-user@REPLACED_IP_1 &
 TUNNEL1_PID=$!
 
 # Instance 2: manage-node-2 (Ubuntu)
-log_info "Setting up tunnel for manage-node-2 (54.242.234.69:9100 -> localhost:9102)"
-ssh -f -N -L 9102:localhost:9100 -i "$SSH_KEY" ubuntu@54.242.234.69 &
+log_info "Setting up tunnel for manage-node-2 (REPLACED_IP_2:9100 -> localhost:9102)"
+ssh -f -N -L 9102:localhost:9100 -i "$SSH_KEY" ubuntu@REPLACED_IP_2 &
 TUNNEL2_PID=$!
 
 # Instance 3: manage-node-3 (Ubuntu)
-log_info "Setting up tunnel for manage-node-3 (13.217.82.23:9100 -> localhost:9103)"
-ssh -f -N -L 9103:localhost:9100 -i "$SSH_KEY" ubuntu@13.217.82.23 &
+log_info "Setting up tunnel for manage-node-3 (REPLACED_IP_3:9100 -> localhost:9103)"
+ssh -f -N -L 9103:localhost:9100 -i "$SSH_KEY" ubuntu@REPLACED_IP_3 &
 TUNNEL3_PID=$!
 
 # Wait for tunnels to establish

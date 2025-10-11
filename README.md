@@ -37,13 +37,30 @@ This is a **production-ready** Ansible Baseline, File Integrity Monitoring (FIM)
 ### **3. Test Drift Detection**
 ```bash
 # SSH into a node and make a change
-ssh -i /Users/osamudiameneweka/Desktop/key-p3.pem ec2-user@18.234.152.228
+ssh -i /path/to/your/ssh-key.pem ec2-user@REPLACED_IP_1
 echo "Test change" | sudo tee /etc/test-drift.txt
 
 # System will automatically detect and remediate the change
 ```
 
 ---
+
+## 📁 **Project Structure**
+
+```
+├── scripts/                    # All shell scripts organized here
+│   ├── start-monitoring-lab.sh
+│   ├── restart-monitoring-lab.sh
+│   ├── stop-monitoring-lab.sh
+│   └── setup-ssh-tunnel-monitoring.sh
+├── ansible/                    # Ansible playbooks and configuration
+├── automated-remediation/      # Automated remediation system
+├── fim/                       # File Integrity Monitoring
+├── cmdb/                      # Configuration Management Database
+├── grafana/                   # Grafana dashboards and configuration
+├── docs/                      # Documentation
+└── test/                      # Testing scripts and scenarios
+```
 
 ## 📚 **Documentation**
 
