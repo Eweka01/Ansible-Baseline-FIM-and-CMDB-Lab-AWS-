@@ -203,14 +203,6 @@ echo "Test change" | sudo tee /etc/test-drift.txt
 
 ---
 
-## 🔒 **Security & Cleanup**
-
-### **Repository Security**
-- **✅ Sensitive Data Removed**: All AWS IPs and SSH keys replaced with placeholders
-- **✅ Safe for Sharing**: Repository is now safe for public distribution
-- **✅ Clean Structure**: All scripts organized in `scripts/` directory
-- **✅ Documentation Updated**: All references updated to reflect new structure
-
 ### **Setup Instructions**
 Before using this lab, replace the following placeholders with your actual values:
 - `REPLACED_IP_1`, `REPLACED_IP_2`, `REPLACED_IP_3` → Your AWS instance IPs
@@ -224,7 +216,6 @@ Before using this lab, replace the following placeholders with your actual value
 
 ---
 
-**Last Updated**: October 11, 2025  
 **Status**: ✅ Production-ready lab with automated remediation  
 **Documentation**: 📚 Fully organized in `docs/` directory  
 **Security**: 🔒 Cleaned and safe for public sharing
